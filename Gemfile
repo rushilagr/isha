@@ -80,7 +80,10 @@ gem 'pg'
 # gem 'google_drive'
 
 group :development, :test do
+  gem 'rspec-rails', '~> 3.7'
+
   gem 'dotenv-rails'
+  
   gem 'pry'
   gem 'pry-rails'
   gem 'pry-doc'
