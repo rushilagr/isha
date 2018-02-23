@@ -7,4 +7,21 @@ html
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
   body
-    = yield
+    nav.navbar.navbar-expand-lg.navbar-dark.bg-primary
+      = link_to 'Upheo', '#', class: 'navbar-brand'
+      .navbar-nav
+        a.nav-item.nav-link[href='']
+          | Link
+        a.nav-item.nav-link[href='']
+          | Link
+        a.nav-item.nav-link[href='']
+          | Link
+        a.nav-item.nav-link[href='']
+          | Link
+    br
+    br
+
+    .container
+      = yield
+      p.notice = notice
+      p.alert = alert

@@ -62,7 +62,9 @@ gem 'bootstrap', '~> 4.0.0'
 gem 'jquery-rails'
 gem 'simple_form'
 
-gem 'pg'
+gem 'mysql2'
+
+gem 'devise'
 
 # gem 'dry-configurable'
 # gem 'dry-validation'
