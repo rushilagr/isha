@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180225165835) do
+ActiveRecord::Schema.define(version: 20180225181018) do
 
   create_table "centers", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name"
@@ -26,6 +26,29 @@ ActiveRecord::Schema.define(version: 20180225165835) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "meditator_program_attendances", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.bigint "meditator_id"
+    t.bigint "program_id"
+    t.string "batch"
+    t.datetime "date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["meditator_id"], name: "index_meditator_program_attendances_on_meditator_id"
+    t.index ["program_id"], name: "index_meditator_program_attendances_on_program_id"
+  end
+
+  create_table "meditator_programs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.bigint "meditator_id"
+    t.bigint "program_id"
+    t.string "batch"
+    t.datetime "date"
+    t.string "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["meditator_id"], name: "index_meditator_programs_on_meditator_id"
+    t.index ["program_id"], name: "index_meditator_programs_on_program_id"
+  end
+
   create_table "meditators", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name"
     t.string "phone"
@@ -36,25 +59,6 @@ ActiveRecord::Schema.define(version: 20180225165835) do
     t.string "occupation"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "meditators_programs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.bigint "meditator_id"
-    t.bigint "program_id"
-    t.string "batch"
-    t.datetime "date"
-    t.string "status"
-    t.index ["meditator_id"], name: "index_meditators_programs_on_meditator_id"
-    t.index ["program_id"], name: "index_meditators_programs_on_program_id"
-  end
-
-  create_table "meditators_programs_attendances", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.bigint "meditator_id"
-    t.bigint "program_id"
-    t.string "batch"
-    t.datetime "date"
-    t.index ["meditator_id"], name: "index_meditators_programs_attendances_on_meditator_id"
-    t.index ["program_id"], name: "index_meditators_programs_attendances_on_program_id"
   end
 
   create_table "programs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -86,15 +90,18 @@ ActiveRecord::Schema.define(version: 20180225165835) do
     t.string "last_sign_in_ip"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "city_id"
+    t.index ["city_id"], name: "index_users_on_city_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
   add_foreign_key "centers", "cities"
-  add_foreign_key "meditators_programs", "meditators"
-  add_foreign_key "meditators_programs", "programs"
-  add_foreign_key "meditators_programs_attendances", "meditators"
-  add_foreign_key "meditators_programs_attendances", "programs"
+  add_foreign_key "meditator_program_attendances", "meditators"
+  add_foreign_key "meditator_program_attendances", "programs"
+  add_foreign_key "meditator_programs", "meditators"
+  add_foreign_key "meditator_programs", "programs"
   add_foreign_key "programs", "centers"
   add_foreign_key "programs", "users"
+  add_foreign_key "users", "cities"
 end
