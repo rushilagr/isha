@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   resources :programs
-  root to: 'users/sessions#new'
+  root to: 'programs#index'
+  
   devise_for :users, controllers: {
     sessions: 'users/sessions',
     registrations: 'users/registrations',

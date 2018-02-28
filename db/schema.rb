@@ -77,8 +77,7 @@ ActiveRecord::Schema.define(version: 20180225181018) do
   create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name"
     t.string "role"
-    t.string "phone"
-    t.string "email", default: "", null: false
+    t.string "phone", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
@@ -92,7 +91,7 @@ ActiveRecord::Schema.define(version: 20180225181018) do
     t.datetime "updated_at", null: false
     t.bigint "city_id"
     t.index ["city_id"], name: "index_users_on_city_id"
-    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["phone"], name: "index_users_on_phone", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 

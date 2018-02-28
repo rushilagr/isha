@@ -9,20 +9,18 @@ html
     
   body
     nav.navbar.navbar-expand-lg.navbar-dark.bg-primary
-      = link_to 'Upheo', '#', class: 'navbar-brand'
+      = link_to 'IshaOps', '#', class: 'navbar-brand'
       .navbar-nav
-        a.nav-item.nav-link[href='']
-          | Link
-        a.nav-item.nav-link[href='']
-          | Link
-        a.nav-item.nav-link[href='']
-          | Link
-        a.nav-item.nav-link[href='']
-          | Link
+          = link_to('Sign Up', new_user_registration_path, class: 'nav-item nav-link') 
+          = link_to('Sign In', new_user_session_path, class: 'nav-item nav-link') 
+          = link_to('Logout', destroy_user_session_path, method: :delete, class: 'nav-item nav-link') if current_user
     br
     br
 
     .container
       = yield
-      p.notice = notice
-      p.alert = alert
+      
+      - if notice
+        p.alert.alert-success = notice 
+      - if alert
+        p.alert.alert-danger = alert if alert
