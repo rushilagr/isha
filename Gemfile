@@ -67,8 +67,7 @@ gem 'mysql2'
 gem 'devise'
 
 # gem 'dry-configurable'
-# gem 'dry-validation'
-# gem 'dry-types'
+gem 'dry-validation'
 
 # gem 'jwt'
 # gem 'mqtt'

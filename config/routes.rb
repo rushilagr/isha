@@ -7,4 +7,7 @@ Rails.application.routes.draw do
     registrations: 'users/registrations',
     password: 'users/password' 
   }
+
+  resources :users
+  post 'users/create', to: 'users#create', as: :create_user
 end

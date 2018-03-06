@@ -16,3 +16,11 @@ module IshaOps
     # -- all .rb files in that directory are automatically loaded.
   end
 end
+
+# Load custom classes from gists
+require './lib/utils/dry_validate'
+require './lib/utils/enumerable_ext'
+require './lib/utils/form_object'
+# require './lib/utils/outbounds'
+# require './lib/utils/jwt_token'
+# require './lib/utils/retry'

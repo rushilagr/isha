@@ -1,0 +1,9 @@
+h2
+  | Create a user
+= simple_form_for(@user, url: create_user_path) do |f|
+  = f.error_notification
+  .form-inputs
+    = f.input :phone, required: true, autofocus: true
+    = f.input :name, required: true, autofocus: true
+  .form-actions
+    = f.button :submit, 'Create'
