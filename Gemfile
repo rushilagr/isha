@@ -93,6 +93,8 @@ group :development, :test do
   gem 'pry-byebug'
   gem 'pry-coolline'
   gem 'pry-loudmouth'  
+
+  gem 'guard-livereload', '~> 2.5', require: false
 end
 
 group :production do
