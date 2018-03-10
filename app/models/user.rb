@@ -16,15 +16,7 @@ class User < ApplicationRecord
   end
 
   ## ------------------------------
-  ## Custom Create method
-  ## ------------------------------
-
-  # def self.validate_and_create params
-  #   User.create DryValidate[self.schema, params]
-  # end
-
-  ## ------------------------------
-  ## Schema
+  ## Dry Schema
   ## ------------------------------
 
   # def self.schema
