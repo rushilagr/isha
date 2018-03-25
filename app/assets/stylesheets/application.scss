@@ -22,9 +22,9 @@
  $green:   #28a745 !default;
  $teal:    #20c997 !default;
  $cyan:    #17a2b8 !default;
- $gray-100:    #17a2b8 !default;
- $gray-600:    #17a2b8 !default;
- $gray-800:    #17a2b8 !default;
+ $gray-100:    #B3B3B3 !default;
+ $gray-600:    #7F7F7F   !default;
+ $gray-800:    #555555   !default;
 
  $colors: (
    blue: $blue,
@@ -54,10 +54,22 @@
 
 @import "bootstrap";
 
+@each $color, $value in $theme-colors {
+  .swatch-#{$color} {
+    color: color-yiq($value);
+  }
+}
+
 .nav-link {
     color: rgb(255, 255, 255) !important;
 }
 
-.help-block {
+span.help-block {
    color: red;
+}
+
+p.help-block {
+   color: color('gray');
+   // color: theme-color-level("light", 5);
+
 }

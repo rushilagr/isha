@@ -5,7 +5,7 @@ class CreatePrograms < ActiveRecord::Migration[5.1]
       t.datetime :ends_at 
       
       t.integer :length
-      t.string :batches
+      t.serialize :batches
       t.string :status
       t.string :teachers
     end

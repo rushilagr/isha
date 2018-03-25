@@ -9,12 +9,21 @@ html
     
   body
     nav.navbar.navbar-expand-lg.navbar-dark.bg-primary
-      = link_to 'IshaOps', '#', class: 'navbar-brand'
+      = link_to 'IshaOps', root_path, class: 'navbar-brand'
       .navbar-nav
-          = link_to('Sign Up', new_user_registration_path, class: 'nav-item nav-link') 
-          = link_to('Sign In', new_user_session_path, class: 'nav-item nav-link') 
-          = link_to('Create User', new_user_path, class: 'nav-item nav-link') 
-          = link_to('Logout', destroy_user_session_path, method: :delete, class: 'nav-item nav-link') if current_user
+          - if !current_user
+            = link_to('Sign Up', new_user_registration_path, class: 'nav-item nav-link') 
+            = link_to('Sign In', new_user_session_path, class: 'nav-item nav-link') 
+          - else
+            = link_to('Create User', new_user_path, class: 'nav-item nav-link') 
+            = link_to('View Users', users_path, class: 'nav-item nav-link') 
+            = link_to('Create Program', new_program_path, class: 'nav-item nav-link') 
+            = link_to('View Programs', programs_path, class: 'nav-item nav-link') 
+            / = link_to('Create City', new_city_path, class: 'nav-item nav-link') 
+            / = link_to('View Cities', cities_path, class: 'nav-item nav-link') 
+            / = link_to('Create Center', new_center_path, class: 'nav-item nav-link') 
+            / = link_to('View Centers', centers_path, class: 'nav-item nav-link') 
+            = link_to('Logout', destroy_user_session_path, method: :delete, class: 'nav-item nav-link') if current_user
     br
     br
 

@@ -3,13 +3,23 @@ h1 Listing programs
 table
   thead
     tr
-      th
-      th
-      th
-
+      th starts_at
+      th ends_at
+      th length
+      th batches
+      th teachers
+      th status
+      th Created_by
   tbody
     - @programs.each do |program|
       tr
+        td = program.starts_at.strftime("%d %B, %Y")
+        td = program.ends_at.strftime("%d %B, %Y")
+        td = program.length.to_s + ' Days'
+        td = program.batches.join(', ')
+        td = program.teachers
+        td = program.status
+        td = program.user.name + ', ' + program.user.phone
         td = link_to 'Show', program
         td = link_to 'Edit', edit_program_path(program)
         td = link_to 'Destroy', program, data: { confirm: 'Are you sure?' }, method: :delete

@@ -4,6 +4,7 @@ h2
   = f.error_notification
   .form-inputs
     = f.input :phone, required: true, autofocus: true
-    = f.input :name, required: true, autofocus: true
+    = f.input :name, required: true
+    = f.association :city, collection: City.all, label_method: :name, value_method: :id
   .form-actions
     = f.button :submit, 'Create'

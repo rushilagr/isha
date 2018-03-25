@@ -10,8 +10,7 @@ class UsersController < ApplicationController
     @user = User.new params
 
     if @user.save
-      ## Send sms. 
-      ## validated_params[:password]
+      ## Send sms with pass. 
       redirect_to users_path
     else
       render :new and return
@@ -25,6 +24,6 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:phone, :name)
+    params.require(:user).permit(:phone, :name, :city_id)
   end
 end

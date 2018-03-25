@@ -69,6 +69,8 @@ gem 'devise'
 # gem 'dry-configurable'
 gem 'dry-validation'
 
+gem 'validates_timeliness', '~> 4.0'
+
 # gem 'jwt'
 # gem 'mqtt'
 # gem 'faraday'
