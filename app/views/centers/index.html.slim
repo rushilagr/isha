@@ -1,0 +1,19 @@
+h1 Listing centers
+
+table
+  thead
+    tr
+      th
+      th
+      th
+
+  tbody
+    - @centers.each do |center|
+      tr
+        td = link_to 'Show', center
+        td = link_to 'Edit', edit_center_path(center)
+        td = link_to 'Destroy', center, data: { confirm: 'Are you sure?' }, method: :delete
+
+br
+
+= link_to 'New Center', new_center_path

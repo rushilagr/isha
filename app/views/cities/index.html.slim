@@ -1,0 +1,19 @@
+h1 Listing cities
+
+table
+  thead
+    tr
+      th
+      th
+      th
+
+  tbody
+    - @cities.each do |city|
+      tr
+        td = link_to 'Show', city
+        td = link_to 'Edit', edit_city_path(city)
+        td = link_to 'Destroy', city, data: { confirm: 'Are you sure?' }, method: :delete
+
+br
+
+= link_to 'New City', new_city_path

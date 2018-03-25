@@ -1,0 +1,19 @@
+h1 Listing meditators
+
+table
+  thead
+    tr
+      th
+      th
+      th
+
+  tbody
+    - @meditators.each do |meditator|
+      tr
+        td = link_to 'Show', meditator
+        td = link_to 'Edit', edit_meditator_path(meditator)
+        td = link_to 'Destroy', meditator, data: { confirm: 'Are you sure?' }, method: :delete
+
+br
+
+= link_to 'New Meditator', new_meditator_path
