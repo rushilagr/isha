@@ -1,6 +1,7 @@
 doctype html
 html
   head
+    meta name="viewport" content="width=device-width, initial-scale=1"
     title
       | IshaOps
     = csrf_meta_tags
@@ -10,20 +11,20 @@ html
   body
     nav.navbar.navbar-expand-lg.navbar-dark.bg-primary
       = link_to 'IshaOps', root_path, class: 'navbar-brand'
-      .navbar-nav
+
+      button.navbar-toggler aria-controls="navbarSupportedContent" aria-expanded="false" aria-label=("Toggle navigation") data-target="#navbarSupportedContent" data-toggle="collapse" type="button" 
+        span.navbar-toggler-icon
+      #navbarSupportedContent.collapse.navbar-collapse
+        .navbar-nav style='width:100%'
           - if !current_user
             = link_to('Sign Up', new_user_registration_path, class: 'nav-item nav-link') 
             = link_to('Sign In', new_user_session_path, class: 'nav-item nav-link') 
           - else
-            = link_to('Create User', new_user_path, class: 'nav-item nav-link') 
-            = link_to('View Users', users_path, class: 'nav-item nav-link') 
-            = link_to('Create Program', new_program_path, class: 'nav-item nav-link') 
-            = link_to('View Programs', programs_path, class: 'nav-item nav-link') 
-            / = link_to('Create City', new_city_path, class: 'nav-item nav-link') 
-            / = link_to('View Cities', cities_path, class: 'nav-item nav-link') 
-            / = link_to('Create Center', new_center_path, class: 'nav-item nav-link') 
-            / = link_to('View Centers', centers_path, class: 'nav-item nav-link') 
-            = link_to('Logout', destroy_user_session_path, method: :delete, class: 'nav-item nav-link') if current_user
+            = link_to('Programs', programs_path, class: 'nav-item nav-link') 
+            = link_to('Users', users_path, class: 'nav-item nav-link') 
+            = link_to('Centers', centers_path, class: 'nav-item nav-link') 
+            = link_to('Cities', cities_path, class: 'nav-item nav-link') 
+            = link_to('Logout', destroy_user_session_path, method: :delete, class: 'nav-item nav-link ml-auto')
     br
     br
 
