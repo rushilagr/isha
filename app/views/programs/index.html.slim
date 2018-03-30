@@ -6,20 +6,27 @@ table
       th Starts at
       th Ends at
       th Length
+      th Central ID
+      th Type
       th Batches
       th Teachers
       th Status
-      th Created by
+      th Creating Vol. Name
+      th Creating Vol. Phone
   tbody
     - @programs.each do |program|
       tr
         td = program.starts_at.strftime("%d %B, %Y")
         td = program.ends_at.strftime("%d %B, %Y")
         td = program.length.to_s + ' Days'
+        td = program.central_id
+        td = program.type
         td = program.batches.join(', ')
         td = program.teachers
         td = program.status
-        td = program.user.name + ', ' + program.user.phone
+        td = program.user.name
+        td = program.user.phone
+
         td = link_to 'Show', program
         td = link_to 'Edit', edit_program_path(program)
         td = link_to 'Destroy', program, data: { confirm: 'Are you sure?' }, method: :delete

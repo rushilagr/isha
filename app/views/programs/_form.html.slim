@@ -3,9 +3,10 @@
   .form-inputs
     = f.input :starts_at, as: :date
     = f.input :ends_at, as: :date
-    = f.input :length, as: :integer
-    = f.input :batches, as: :check_boxes, collection: ['Morning', 'Afternoon', 'Evening']
-    = f.input :teachers
+    = f.input :batches, as: :check_boxes, collection: Program.batch_enum
+    = f.input :central_id, label: 'Central Id', hint: 'ID of program from Isha Central Database'
+    = f.input :type, collection: Program.type_enum
+    = f.input :teachers, hint: 'Names separated by commas'
     = f.association :center, collection: Center.all, label_method: :name, value_method: :id
     
     = f.input :status, :input_html => { :value => 'pending'}, as: :hidden
