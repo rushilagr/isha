@@ -1,10 +1,11 @@
 class Program < ApplicationRecord
   self.inheritance_column = :_type_disabled
-  
+
   belongs_to :user
   belongs_to :center
-  has_many :meditators, through: :meditator_programs
-  has_many :meditator_program_attendances
+  has_many :program_participants
+  has_many :participants, through: :program_participants
+  # has_many :attendance, through: :program_participants
   serialize :batches
 
   def self.status_enum
@@ -35,8 +36,8 @@ class Program < ApplicationRecord
       errors.add(:batches, "Select from #{batch_enum.join(', ')}")
     end
   end
-  
+
   def length
     ((ends_at - starts_at)/1.day).to_i
-  end  
+  end
 end
