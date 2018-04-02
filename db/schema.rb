@@ -26,45 +26,10 @@ ActiveRecord::Schema.define(version: 20180330081739) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "meditator_program_attendances", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.bigint "meditator_id"
-    t.bigint "program_id"
-    t.string "batch"
-    t.datetime "date"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["meditator_id"], name: "index_meditator_program_attendances_on_meditator_id"
-    t.index ["program_id"], name: "index_meditator_program_attendances_on_program_id"
-  end
-
-  create_table "meditator_programs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.bigint "meditator_id"
-    t.bigint "program_id"
-    t.string "batch"
-    t.datetime "date"
-    t.string "status"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["meditator_id"], name: "index_meditator_programs_on_meditator_id"
-    t.index ["program_id"], name: "index_meditator_programs_on_program_id"
-  end
-
-  create_table "meditators", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.string "name"
-    t.string "phone"
-    t.string "email"
-    t.string "pin_code"
-    t.string "gender"
-    t.string "status"
-    t.string "occupation"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "programs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.datetime "starts_at"
     t.datetime "ends_at"
-    t.string "batches"
+    t.text "batches"
     t.string "status"
     t.string "teachers"
     t.bigint "center_id"
@@ -97,10 +62,6 @@ ActiveRecord::Schema.define(version: 20180330081739) do
   end
 
   add_foreign_key "centers", "cities"
-  add_foreign_key "meditator_program_attendances", "meditators"
-  add_foreign_key "meditator_program_attendances", "programs"
-  add_foreign_key "meditator_programs", "meditators"
-  add_foreign_key "meditator_programs", "programs"
   add_foreign_key "programs", "centers"
   add_foreign_key "programs", "users"
   add_foreign_key "users", "cities"
