@@ -1,0 +1,27 @@
+p#notice = notice
+
+p
+  strong Name:
+  = @participant.name
+p
+  strong Phone:
+  = @participant.phone
+p
+  strong Email:
+  = @participant.email
+p
+  strong Pincode:
+  = @participant.pincode
+p
+  strong Gender:
+  = @participant.gender
+p
+  strong Occupation:
+  = @participant.occupation
+p
+  strong City:
+  = @participant.city
+
+=> link_to 'Edit', edit_participant_path(@participant)
+'|
+=< link_to 'Back', participants_path

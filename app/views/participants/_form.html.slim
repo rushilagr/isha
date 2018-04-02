@@ -1,0 +1,14 @@
+= simple_form_for(@participant) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.input :name
+    = f.input :phone
+    = f.input :email
+    = f.input :pincode
+    = f.input :gender
+    = f.input :occupation
+    = f.association :city
+
+  .form-actions
+    = f.button :submit

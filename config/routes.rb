@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :participants
   root to: 'home#root'
   
   resources :programs
