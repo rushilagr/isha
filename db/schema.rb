@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180402084432) do
+ActiveRecord::Schema.define(version: 20180411145013) do
 
   create_table "centers", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name"
@@ -24,6 +24,14 @@ ActiveRecord::Schema.define(version: 20180402084432) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "participant_attendances", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.bigint "program_participant_id"
+    t.string "batch"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["program_participant_id"], name: "index_participant_attendances_on_program_participant_id"
   end
 
   create_table "participants", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -43,7 +51,6 @@ ActiveRecord::Schema.define(version: 20180402084432) do
     t.bigint "participant_id"
     t.bigint "program_id"
     t.string "batch"
-    t.datetime "date"
     t.string "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -87,6 +94,7 @@ ActiveRecord::Schema.define(version: 20180402084432) do
   end
 
   add_foreign_key "centers", "cities"
+  add_foreign_key "participant_attendances", "program_participants"
   add_foreign_key "participants", "cities"
   add_foreign_key "program_participants", "participants"
   add_foreign_key "program_participants", "programs"

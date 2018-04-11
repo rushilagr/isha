@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :participant_attendances
   resources :participants
   root to: 'home#root'
   

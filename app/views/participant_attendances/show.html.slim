@@ -1,0 +1,12 @@
+p#notice = notice
+
+p
+  strong Program participant:
+  = @participant_attendance.program_participant
+p
+  strong Batch:
+  = @participant_attendance.batch
+
+=> link_to 'Edit', edit_participant_attendance_path(@participant_attendance)
+'|
+=< link_to 'Back', participant_attendances_path
