@@ -1,19 +1,19 @@
 class Program < ApplicationRecord
   self.inheritance_column = :_type_disabled
+  serialize :batches
 
   belongs_to :user
   belongs_to :center
   has_many :program_participants
   has_many :participants, through: :program_participants
-  # has_many :attendance, through: :program_participants
-  serialize :batches
+  has_many :attendances, through: :program_participants
 
   def self.status_enum
     ['pending', 'ongoing', 'ended']
   end
 
   def self.type_enum
-    ['IE 4 days', 'IE 7 days', 'IE retreat']
+    ['Inner Engineering 7 days', 'Inner Engineering Retreat', 'Angamardana', 'Surya Kriya', 'Bhoota Shuddi', 'Yogasana', 'Up Yoga', 'Guru Puja', 'Practice Correction IE', 'Practice Correction Hatha Yoga', 'Sathsang', "Children's Program"]
   end
 
   def self.batch_enum

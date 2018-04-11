@@ -7,7 +7,7 @@
     = f.input :email
     = f.input :pincode
     = f.input :gender
-    = f.input :occupation
+    = f.input :occupation, collection: Participant.occupation_enum
     = f.association :city
 
   .form-actions
