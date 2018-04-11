@@ -1,0 +1,30 @@
+.table-responsive
+  table.table.table-striped.table-bordered
+    thead
+      tr
+        th Name
+        th Programs Registered
+        th Phone
+        th Email
+        th Pincode
+        th Gender
+        th Occupation
+        th City
+        - if actions == true
+          th Actions
+
+    tbody
+      - participants.each do |participant|
+        tr
+          td = participant.name
+          td = participant.programs.count
+          td = participant.phone
+          td = participant.email
+          td = participant.pincode
+          td = participant.gender
+          td = participant.occupation
+          td = participant.city.name
+          - if actions == true
+            td = link_to 'Show', participant
+            td = link_to 'Edit', edit_participant_path(participant)
+            td = link_to 'Destroy', participant, data: { confirm: 'Are you sure?' }, method: :delete

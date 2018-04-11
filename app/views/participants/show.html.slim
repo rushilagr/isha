@@ -1,26 +1,8 @@
-p#notice = notice
+h1 Listing participants
 
-p
-  strong Name:
-  = @participant.name
-p
-  strong Phone:
-  = @participant.phone
-p
-  strong Email:
-  = @participant.email
-p
-  strong Pincode:
-  = @participant.pincode
-p
-  strong Gender:
-  = @participant.gender
-p
-  strong Occupation:
-  = @participant.occupation
-p
-  strong City:
-  = @participant.city
+== render partial: 'table', locals: {participants: [@participant], actions: true}
+
+br
 
 => link_to 'Edit', edit_participant_path(@participant)
 '|

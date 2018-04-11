@@ -71,6 +71,7 @@ gem 'dry-validation'
 
 gem 'validates_timeliness', '~> 4.0'
 
+gem 'bootstrap_form'
 # gem 'jwt'
 # gem 'mqtt'
 # gem 'faraday'
@@ -86,7 +87,7 @@ group :development, :test do
   gem 'rspec-rails', '~> 3.7'
 
   gem 'dotenv-rails'
-  
+
   gem "better_errors"
   gem 'pry'
   gem 'pry-rails'
@@ -95,7 +96,7 @@ group :development, :test do
   gem 'pry-stack_explorer'
   gem 'pry-byebug'
   gem 'pry-coolline'
-  gem 'pry-loudmouth'  
+  gem 'pry-loudmouth'
 
   gem 'guard-livereload', '~> 2.5', require: false
 end

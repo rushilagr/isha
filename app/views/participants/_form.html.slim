@@ -1,4 +1,4 @@
-= simple_form_for(@participant) do |f|
+= simple_form_for(@participant, url: url) do |f|
   = f.error_notification
 
   .form-inputs
@@ -6,9 +6,14 @@
     = f.input :phone
     = f.input :email
     = f.input :pincode
-    = f.input :gender
+    = f.input :gender, collection: Participant.gender_enum
     = f.input :occupation, collection: Participant.occupation_enum
     = f.association :city
+
+    = f.simple_fields_for :program_participants do |a|
+      = a.input :batch, collection: Program.batch_enum
+      = a.hidden_field :program_id, :value => @program.id
+      = a.hidden_field :status, :value => 'pending'
 
   .form-actions
     = f.button :submit

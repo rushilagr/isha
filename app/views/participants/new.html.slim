@@ -1,5 +1,26 @@
-h1 New participant
+- if @program.nil?
+  h1 Select Program
+  br
 
-== render 'form'
+  - unless params[:central_id].nil?
+    .alert.alert-danger Invalid program ID
 
-= link_to 'Back', participants_path
+  = bootstrap_form_tag url: new_participant_path, method: :get do |f|
+    = f.text_field :central_id, label: 'Enter Program ID', placeholder: 'ID of program from Isha Central Database'
+    = f.submit("Submit", class:'btn btn-primary btn-block')
+
+- else
+  h3 = 'Create participants for program'
+  br
+
+  = button_to 'View Existing Participants', program_path(@program.id), class: 'd-inline mr-2 btn btn-primary', method: :get
+  br
+
+  h5.d-inline.mr-2 Program Details
+  = link_to 'Choose another program', new_participant_path, class: 'd-inline mr-2'
+
+  == render partial: 'programs/table', locals: {programs: [@program], actions: true}
+  br
+
+  h5 Enter Participant Details
+  == render partial: 'form', locals: {url: participants_path(central_id: params[:central_id])}

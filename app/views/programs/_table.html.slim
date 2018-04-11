@@ -1,0 +1,36 @@
+.table-responsive
+  table.table.table-striped.table-bordered
+    thead
+      tr
+        th Central ID
+        th Participant Count
+        th Starts at
+        / th Ends at
+        th Length
+        th Type
+        th Batches
+        th Teachers
+        th Status
+        th Creating Vol. Name
+        th Creating Vol. Phone
+        - if actions == true
+          th Actions
+    tbody
+      - programs.each do |program|
+        tr
+          td = program.central_id
+          td = program.participants.count
+          td = program.starts_at.strftime("%d %B, %Y")
+          / td = program.ends_at.strftime("%d %B, %Y")
+          td = program.length.to_s + ' Day'
+          td = program.type
+          td = program.batches.join(', ')
+          td = program.teachers
+          td = program.status
+          td = program.user.name
+          td = program.user.phone
+
+          - if actions == true
+            td = link_to 'Show', program
+            td = link_to 'Edit', edit_program_path(program)
+            td = link_to 'Destroy', program, data: { confirm: 'Are you sure?' }, method: :delete

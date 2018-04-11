@@ -29,7 +29,7 @@ class ProgramsController < ApplicationController
 
     respond_to do |format|
       if @program.save
-        format.html { redirect_to @program, notice: 'Program was successfully created.' }
+        format.html { redirect_to @program, notice: 'Program created. You can create participants now or later.' }
       else
         format.html { render :new }
       end

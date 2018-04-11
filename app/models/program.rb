@@ -38,6 +38,6 @@ class Program < ApplicationRecord
   end
 
   def length
-    ((ends_at - starts_at)/1.day).to_i
+    ((ends_at - starts_at)/1.day).to_i + 1
   end
 end

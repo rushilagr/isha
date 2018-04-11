@@ -1,5 +1,6 @@
 class ParticipantsController < ApplicationController
   before_action :set_participant, only: [:show, :edit, :update, :destroy]
+  before_action :set_program, only: [:new, :create]
 
   # GET /participants
   # GET /participants.json
@@ -15,10 +16,12 @@ class ParticipantsController < ApplicationController
   # GET /participants/new
   def new
     @participant = Participant.new
+    @participant.program_participants.build
   end
 
   # GET /participants/1/edit
   def edit
+    @program = @participant.programs.first
   end
 
   # POST /participants
@@ -28,7 +31,10 @@ class ParticipantsController < ApplicationController
 
     respond_to do |format|
       if @participant.save
-        format.html { redirect_to @participant, notice: 'Participant was successfully created.' }
+        format.html {
+          redirect_to new_participant_path(central_id: params[:central_id]),
+          notice: 'Participant created. You can create more, view existing ones or stop.'
+        }
         format.json { render :show, status: :created, location: @participant }
       else
         format.html { render :new }
@@ -62,6 +68,12 @@ class ParticipantsController < ApplicationController
   end
 
   private
+    def set_program
+      unless params[:central_id].nil?
+        @program = Program.find_by(central_id: params[:central_id])
+      end
+    end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_participant
       @participant = Participant.find(params[:id])
@@ -69,6 +81,6 @@ class ParticipantsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def participant_params
-      params.require(:participant).permit(:name, :phone, :email, :pincode, :gender, :occupation, :city_id)
+      params.require(:participant).permit(:name, :phone, :email, :pincode, :gender, :occupation, :city_id, program_participants_attributes: [:program_id, :batch, :status])
     end
 end
