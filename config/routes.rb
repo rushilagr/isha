@@ -1,8 +1,10 @@
 Rails.application.routes.draw do
   root to: 'home#root'
 
-  resources :participant_attendances
+  post 'participants/temp', to: 'participants#create_temp'
   resources :participants
+
+  resources :participant_attendances
   resources :programs
   resources :cities
   resources :centers

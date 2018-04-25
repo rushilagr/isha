@@ -1,6 +1,7 @@
 class ParticipantsController < ApplicationController
   before_action :set_participant, only: [:show, :edit, :update, :destroy]
   before_action :set_program, only: [:new, :create]
+  skip_before_action :verify_authenticity_token, :only => [:create_temp]
 
   # GET /participants
   # GET /participants.json
@@ -22,6 +23,23 @@ class ParticipantsController < ApplicationController
   # GET /participants/1/edit
   def edit
     @program = @participant.programs.first
+  end
+
+  # POST /participants/temp.json
+  def create_temp
+    @fails = []
+    temp_participants_params.each do |prms|
+      @t_p = TempParticipant.new(prms)
+      @fails << @t_p.errors unless @t_p.save
+    end
+
+    respond_to do |format|
+      if @fails.empty?
+        format.json { head :ok }
+      else
+        format.json { render json: @fails, status: :unprocessable_entity }
+      end
+    end
   end
 
   # POST /participants
@@ -68,6 +86,7 @@ class ParticipantsController < ApplicationController
   end
 
   private
+
     def set_program
       unless params[:central_id].nil?
         @program = Program.find_by(central_id: params[:central_id])
@@ -79,8 +98,11 @@ class ParticipantsController < ApplicationController
       @participant = Participant.find(params[:id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
     def participant_params
       params.require(:participant).permit(:name, :phone, :email, :pincode, :gender, :occupation, :city_id, program_participants_attributes: [:program_id, :batch, :status])
+    end
+
+    def temp_participants_params
+      params.permit(:participants => [:name, :phone, :email, :pincode, :gender, :city]).require(:participants)
     end
 end
