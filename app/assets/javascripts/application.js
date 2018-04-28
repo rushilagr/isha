@@ -12,8 +12,12 @@
 //
 //= require rails-ujs
 //= require turbolinks
-//= require_tree .
-
 //= require jquery3
 //= require popper
 //= require bootstrap-sprockets
+//= require select2
+
+$(document).ready(function() { $('select').select2({
+  allowClear: "true",
+  theme: "bootstrap"
+}); });

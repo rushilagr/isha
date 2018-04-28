@@ -1,3 +1,4 @@
+
 = simple_form_for(@program) do |f|
   = f.error_notification
   .form-inputs
@@ -8,7 +9,7 @@
     = f.input :type, collection: Program.type_enum
     = f.input :teachers, hint: 'Names separated by commas'
     = f.association :center, collection: Center.all, label_method: :name, value_method: :id
-    
+
     = f.input :status, :input_html => { :value => 'pending'}, as: :hidden
     = f.association :user, as: :hidden, :input_html => { :value => current_user.id}
   .form-actions

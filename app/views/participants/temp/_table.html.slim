@@ -1,0 +1,15 @@
+.table-responsive
+  table.table.table-striped.table-bordered.table-sm
+    thead
+      tr
+        th Name
+        th Phone
+        th Email
+        th Register
+    tbody
+      - participants.each do |participant|
+        tr
+          td = participant.name
+          td = participant.phone
+          td = participant.email
+          td = link_to 'Register', new_participant_path(central_id: participant.program.central_id, t_participant_id: participant.id, anchor: 'register')

@@ -6,7 +6,8 @@ class CreateTempParticipants < ActiveRecord::Migration[5.1]
       t.string :email
       t.string :pincode
       t.string :gender
-      t.references :city, foreign_key: true
+      t.string :city
+      t.string :program_central_id
 
       t.timestamps
     end

@@ -1,6 +1,6 @@
 h1 Editing participant
 
-== render partial: 'form', locals: {url: participant_path(@participant.id, central_id: @program.central_id)}
+== render partial: 'form', locals: {url: participant_path(@participant.id, central_id: @program.central_id), participant: @participant}
 
 => link_to 'Show', @participant
 '|

@@ -1,6 +1,5 @@
 class ParticipantsController < ApplicationController
   before_action :set_participant, only: [:show, :edit, :update, :destroy]
-  before_action :set_program, only: [:new, :create]
   skip_before_action :verify_authenticity_token, :only => [:create_temp]
 
   # GET /participants
@@ -16,8 +15,9 @@ class ParticipantsController < ApplicationController
 
   # GET /participants/new
   def new
-    @participant = Participant.new
+    @participant = params[:t_participant_id] ? TempParticipant.find(params[:t_participant_id]).to_participant : Participant.new
     @participant.program_participants.build
+    set_program
   end
 
   # GET /participants/1/edit
@@ -46,6 +46,7 @@ class ParticipantsController < ApplicationController
   # POST /participants.json
   def create
     @participant = Participant.new(participant_params)
+    set_program
 
     respond_to do |format|
       if @participant.save

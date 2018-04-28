@@ -61,6 +61,8 @@ gem "slim-rails"
 gem 'bootstrap', '~> 4.0.0'
 gem 'jquery-rails'
 gem 'simple_form'
+gem 'bootstrap_form'
+gem "select2-rails"
 
 gem 'mysql2'
 
@@ -68,10 +70,8 @@ gem 'devise'
 
 # gem 'dry-configurable'
 gem 'dry-validation'
-
 gem 'validates_timeliness', '~> 4.0'
 
-gem 'bootstrap_form'
 # gem 'jwt'
 # gem 'mqtt'
 # gem 'faraday'

@@ -1,26 +1,46 @@
 - if @program.nil?
+  // --------------------------------------------
+  // Select Program
+  // --------------------------------------------
+
   h1 Select Program
   br
 
   - unless params[:central_id].nil?
-    .alert.alert-danger Invalid program ID
+    .alert.alert-danger This program does not exist. 
 
   = bootstrap_form_tag url: new_participant_path, method: :get do |f|
-    = f.text_field :central_id, label: 'Enter Program ID', placeholder: 'ID of program from Isha Central Database'
-    = f.submit("Submit", class:'btn btn-primary btn-block')
+    = f.select :central_id, options_for_select(Program.all.pluck(:central_id)), :include_blank => true, label: 'Enter Program ID', placeholder: 'ID of program from Isha Central Database', :input_html => { :value => 'pending'}
+    = f.submit("Submit", class: 'btn btn-primary btn-block')
+
+
 
 - else
-  h3 = 'Create participants for program'
-  br
+  // --------------------------------------------
+  // Program Selected
+  // --------------------------------------------
 
-  = button_to 'View Existing Participants', program_path(@program.id), class: 'd-inline mr-2 btn btn-primary', method: :get
+  h1 Register program participants
   br
 
   h5.d-inline.mr-2 Program Details
   = link_to 'Choose another program', new_participant_path, class: 'd-inline mr-2'
-
-  == render partial: 'programs/table', locals: {programs: [@program], actions: true}
+  == render partial: 'programs/table', locals: {programs: [@program], actions: false}
   br
 
-  h5 Enter Participant Details
-  == render partial: 'form', locals: {url: participants_path(central_id: params[:central_id])}
+  h5.d-inline.mr-2 Registered Participants
+  .d-inline.mr-2.btn-link aria-expanded="false" data-toggle="collapse" data-target="#registered-p" show / hide
+  #registered-p.collapse
+    == render partial: 'participants/table', locals: {participants: @program.participants, short: true}
+  br
+  br
+
+  h5.d-inline.mr-2 Pending Registrations
+  .d-inline.mr-2.btn-link aria-expanded="false" data-toggle="collapse" data-target="#temp-p" show / hide
+  #temp-p.collapse
+    == render partial: 'participants/temp/table', locals: {participants: @program.temp_participants}
+  br
+  br
+
+  h5#register Create Registration
+  == render partial: 'form', locals: { url: participants_path(central_id: params[:central_id], anchor: 'register'), participant: @participant }

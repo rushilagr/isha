@@ -40,4 +40,8 @@ class Program < ApplicationRecord
   def length
     ((ends_at - starts_at)/1.day).to_i + 1
   end
+
+  def temp_participants
+    TempParticipant.where(program_central_id: central_id)
+  end
 end

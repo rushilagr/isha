@@ -5,10 +5,14 @@ p#notice = notice
 == render partial: 'table', locals: {programs: [@program], actions: true}
 br
 
-h3.d-inline.mr-2 Participants
-= link_to 'Create More', new_participant_path(central_id: @program.central_id), class: 'btn btn-primary'
+h4.d-inline.mr-2 Registered Participants
+= link_to 'Register More', new_participant_path(central_id: @program.central_id), class: 'btn btn-primary'
 br
-== render partial: 'participants/table', locals: {participants: @program.participants, actions: false}
+== render partial: 'participants/table', locals: {participants: @program.participants, short: true}
+br
+
+h4.d-inline.mr-2 Pending Registrations
+== render partial: 'participants/temp/table', locals: {participants: @program.temp_participants}
 
 
 => link_to 'Edit', edit_program_path(@program)

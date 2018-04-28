@@ -1,5 +1,5 @@
 .table-responsive
-  table.table.table-striped.table-bordered
+  table.table.table-striped.table-bordered.table-sm
     thead
       tr
         th Central ID
@@ -31,6 +31,7 @@
           td = program.user.phone
 
           - if actions == true
-            td = link_to 'Show', program
-            td = link_to 'Edit', edit_program_path(program)
-            td = link_to 'Destroy', program, data: { confirm: 'Are you sure?' }, method: :delete
+            td
+              = link_to 'Show ', program
+              = link_to 'Edit ', edit_program_path(program)
+              = link_to 'Destroy ', program, data: { confirm: 'Are you sure?' }, method: :delete
