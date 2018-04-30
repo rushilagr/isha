@@ -1,4 +1,6 @@
 class Program < ApplicationRecord
+  extend BatchEnum
+
   self.inheritance_column = :_type_disabled
   serialize :batches
 
@@ -8,16 +10,13 @@ class Program < ApplicationRecord
   has_many :participants, through: :program_participants
   has_many :attendances, through: :program_participants
 
+
   def self.status_enum
     ['pending', 'ongoing', 'ended']
   end
 
   def self.type_enum
     ['Inner Engineering 7 days', 'Inner Engineering Retreat', 'Angamardana', 'Surya Kriya', 'Bhoota Shuddi', 'Yogasana', 'Up Yoga', 'Guru Puja', 'Practice Correction IE', 'Practice Correction Hatha Yoga', 'Sathsang', "Children's Program"]
-  end
-
-  def self.batch_enum
-    ['Morning', 'Afternoon', 'Evening']
   end
 
   validates_date :starts_at, presence: true, :on_or_after => lambda { Date.current }, on_or_after_message: 'Must be on or after today'

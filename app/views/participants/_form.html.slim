@@ -13,7 +13,7 @@
     = f.simple_fields_for :program_participants do |a|
       = a.input :batch, collection: Program.batch_enum, :include_blank => true
       = a.hidden_field :program_id, :value => @program.id
-      = a.hidden_field :status, :value => 'pending'
+      = a.hidden_field :status, :value => 'ongoing'
 
   .form-actions
     = f.button :submit, value: "Submit"

@@ -17,7 +17,13 @@
 //= require bootstrap-sprockets
 //= require select2
 
-$(document).ready(function() { $('select').select2({
-  allowClear: "true",
-  theme: "bootstrap"
-}); });
+$(document).on("turbolinks:before-cache", function() {
+    $('select').select2('destroy');
+});
+
+$(document).on('turbolinks:load', function(){
+  $('select').select2({
+    allowClear: "true",
+    theme: "bootstrap"
+  });
+});
