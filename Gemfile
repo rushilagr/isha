@@ -68,9 +68,12 @@ gem 'mysql2'
 
 gem 'devise'
 
-# gem 'dry-configurable'
+gem 'dry-configurable'
 gem 'dry-validation'
 gem 'validates_timeliness', '~> 4.0'
+
+gem 'google_drive'
+gem 'rufus-scheduler'
 
 # gem 'jwt'
 # gem 'mqtt'
@@ -78,10 +81,6 @@ gem 'validates_timeliness', '~> 4.0'
 
 # gem 'retriable'
 # gem 'sentry-raven'
-
-# gem 'rufus-scheduler'
-
-# gem 'google_drive'
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.7'
