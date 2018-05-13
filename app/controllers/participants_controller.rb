@@ -18,6 +18,7 @@ class ParticipantsController < ApplicationController
     @participant = params[:t_participant_id] ? TempParticipant.find(params[:t_participant_id]).to_participant : Participant.new
     @participant.program_participants.build
     set_program
+    redirect_to program_registrable_path if @program.nil?
   end
 
   # GET /participants/1/edit
@@ -52,7 +53,8 @@ class ParticipantsController < ApplicationController
       if @participant.save
         format.html {
           redirect_to new_participant_path(program_id: params[:program_id]),
-          notice: 'Participant created. You can create more, view existing ones or stop.'
+          notice: 'Participant created. You can create more, view existing ones or stop.',
+          flash: {success: 'YESSSS'}
         }
         format.json { render :show, status: :created, location: @participant }
       else
@@ -89,9 +91,7 @@ class ParticipantsController < ApplicationController
   private
 
     def set_program
-      unless params[:program_id].nil?
-        @program = Program.find(params[:program_id])
-      end
+      @program = Program.find(params[:program_id])
     end
 
     # Use callbacks to share common setup or constraints between actions.

@@ -1,12 +1,12 @@
 class Participant < ApplicationRecord
   extend ParticipantEnums
+  attr_accessor :temp_participant_id
 
   belongs_to :city
-  has_many :programs, through: :program_participants
-  has_many :attendances, through: :program_participants
-
   has_many :program_participants, dependent: :destroy, validate: true
   accepts_nested_attributes_for :program_participants
+  has_many :programs, through: :program_participants
+
   validates :program_participants, presence: true
 
   validates :name, presence: true

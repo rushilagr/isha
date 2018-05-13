@@ -4,7 +4,9 @@ Rails.application.routes.draw do
   post 'participants/temp', to: 'participants#create_temp'
   resources :participants
 
+  get 'programs/registrable', to: 'programs#registrable', as: 'program_registrable'
   resources :programs
+
   resources :cities
   resources :centers
 
@@ -14,5 +16,5 @@ Rails.application.routes.draw do
     password: 'users/password'
   }
   resources :users
-  post 'users/create', to: 'users#create', as: :create_user
+  post 'users/create', to: 'users#create', as: 'create_user'
 end

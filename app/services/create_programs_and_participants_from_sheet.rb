@@ -12,14 +12,10 @@ class CreateProgramsAndParticipantsFromSheet
 
   def create_programs_and_participants
     @list
-      .first(1)
+      .select { |row| row['AutoBot'].empty? }
+      .first(50)
       .each_with_index do |row, i|
         Rails.logger.info "\n AUTOBOT: processing row: #{i + 2}"
-        ## Skip this row if already processed
-        if row['AutoBot'] == 'DONE'
-          Rails.logger.info "AUTOBOT: skipping"
-          next
-        end
 
         ## Extract program keys from row
         program_hash = {

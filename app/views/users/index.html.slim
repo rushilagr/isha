@@ -1,21 +1,22 @@
-h2 Listing users
+h1 Users
 
-table
-  thead
-    tr
-      th Name
-      th Phone
-      th City
-
-  tbody
-    - @users.each do |user|
+.table-responsive
+  table.table.table-striped.table-bordered.table-sm
+    thead
       tr
-        td = user.name
-        td = user.phone
-        td = user.city.name
-        td = link_to 'Show', user
-        td = link_to 'Edit', edit_user_path(user)
-        td = link_to 'Destroy', user, data: { confirm: 'Are you sure?' }, method: :delete
+        th Name
+        th Phone
+        th City
+
+    tbody
+      - @users.each do |user|
+        tr
+          td = user.name
+          td = user.phone
+          td = user.city.name
+          td = link_to 'Show', user
+          td = link_to 'Edit', edit_user_path(user)
+          td = link_to 'Destroy', user, data: { confirm: 'Are you sure?' }, method: :delete
 
 br
 

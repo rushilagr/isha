@@ -7,7 +7,7 @@
         th Email
 
         - unless defined?(short) && short == true
-          / th Programs Registered
+          th Programs Registered Count
           th Pincode
           th Gender
           th Occupation
@@ -22,7 +22,7 @@
           td = participant.email
 
           - unless defined?(short) && short == true
-            / td = participant.programs.count
+            td = participant.programs.count
             td = participant.pincode
             td = participant.gender
             td = participant.occupation

@@ -3,6 +3,11 @@ class ProgramsController < ApplicationController
 
   # GET /programs
   # GET /programs.json
+  def registrable
+    @programs = Program.registrable
+    render :index
+  end
+
   def index
     @programs = Program.all
   end

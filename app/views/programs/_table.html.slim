@@ -2,25 +2,29 @@
   table.table.table-striped.table-bordered.table-sm
     thead
       tr
-        th Participant Count
+        th Registered Participants
+        th Pending Participants
         th Starts at
         th Length
         th Type
         th Center
-        th Creating Vol. Name
-        th Creating Vol. Phone
+        th Register
+        / th Creating Vol. Name
+        / th Creating Vol. Phone
         - if actions == true
           th Actions
     tbody
       - programs.each do |program|
         tr
           td = program.participants.count
+          td = program.temp_participants.count
           td = program.starts_at.strftime("%d %B, %Y")
           td = program.length.to_s + ' Day'
           td = program.type
           td = program.center.name
-          td = program.user.name
-          td = program.user.phone
+          td = link_to 'Register', new_participant_path(program_id: program.id)
+          / td = program.user.name
+          / td = program.user.phone
 
           - if actions == true
             td

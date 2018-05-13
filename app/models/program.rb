@@ -11,6 +11,8 @@ class Program < ApplicationRecord
   has_many :temp_participants
   has_many :attendances, through: :program_participants
 
+  scope :registrable, -> { where('starts_at >= ? AND starts_at <= ?', Date.current, 7.days.from_now) }
+
   def self.type_enum
     ['Yogasanas', 'Bhuta Shuddhi', 'Inner Engineering - 4 Days', 'Surya Kriya', 'Inner Engineering', 'Angamardana', 'Guru Pooja Training', 'Hatha Yoga 21 Days', 'Isha Yoga for Children']
   end

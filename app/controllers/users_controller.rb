@@ -6,13 +6,11 @@ class UsersController < ApplicationController
   end
 
   def create
-    params = user_params
-    puts params[:password] = User.generate_password
-
-    @user = User.new params
+    @user = User.new user_params
+    puts User.generate_password
 
     if @user.save
-      ## Send sms with pass. 
+      ## Send sms with pass.
       redirect_to users_path, notice: 'User was successfully created.'
     else
       render :new and return

@@ -1,48 +1,24 @@
-- if @program.nil?
+h1 Register Program Participants
+br
 
-  // --------------------------------------------
-  // Select Program
-  // --------------------------------------------
+h5.d-inline.mr-2 Program Details
+= link_to 'Choose another program', new_participant_path, class: 'd-inline mr-2'
+== render partial: 'programs/table', locals: {programs: [@program], actions: false}
+br
 
-  h1 Select Program
-  br
+h5.d-inline.mr-2 Registered Participants
+.d-inline.mr-2.btn-link aria-expanded="false" data-toggle="collapse" data-target="#registered-p" show / hide
+#registered-p.collapse
+  == render partial: 'participants/table', locals: {participants: @program.participants, short: true}
+br
+br
 
-  - unless params[:program_id].nil?
-    .alert.alert-danger This program does not exist.
+h5.d-inline.mr-2 Pending Registrations
+.d-inline.mr-2.btn-link aria-expanded="false" data-toggle="collapse" data-target="#temp-p" show / hide
+#temp-p.collapse
+  == render partial: 'participants/temp/table', locals: {participants: @program.temp_participants.order(:name)}
+br
+br
 
-  = bootstrap_form_tag url: new_participant_path, method: :get do |f|
-    = f.select :program_id, options_for_select(Program.all.pluck :id), :include_blank => true, label: 'Enter Program ID', :input_html => { :value => 'pending'}
-    = f.submit "Submit", class: 'btn btn-primary btn-block'
-
-
-
-- else
-
-  // --------------------------------------------
-  // Program Selected
-  // --------------------------------------------
-
-  h1 Register program participants
-  br
-
-  h5.d-inline.mr-2 Program Details
-  = link_to 'Choose another program', new_participant_path, class: 'd-inline mr-2'
-  == render partial: 'programs/table', locals: {programs: [@program], actions: false}
-  br
-
-  h5.d-inline.mr-2 Registered Participants
-  .d-inline.mr-2.btn-link aria-expanded="false" data-toggle="collapse" data-target="#registered-p" show / hide
-  #registered-p.collapse
-    == render partial: 'participants/table', locals: {participants: @program.participants, short: true}
-  br
-  br
-
-  h5.d-inline.mr-2 Pending Registrations
-  .d-inline.mr-2.btn-link aria-expanded="false" data-toggle="collapse" data-target="#temp-p" show / hide
-  #temp-p.collapse
-    == render partial: 'participants/temp/table', locals: {participants: @program.temp_participants}
-  br
-  br
-
-  h5#register Create Registration
-  == render partial: 'form', locals: { url: participants_path(program_id: params[:program_id], anchor: 'register'), participant: @participant }
+h5#register Create Registration
+== render partial: 'form', locals: { url: participants_path(program_id: params[:program_id], anchor: 'register'), participant: @participant }
