@@ -4,6 +4,6 @@ module ParticipantEnums
   end
 
   def gender_enum
-    ['Male', 'Female']
+    ['male', 'female']
   end
 end
