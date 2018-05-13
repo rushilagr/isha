@@ -1,13 +1,25 @@
 City.create([
   {name: 'Delhi'},
   {name: 'Noida'},
+  {name: 'Ghaziabad'},
   {name: 'Gurgaon'},
-  {name: 'Mumbai1'},
 ])
 
 Center.create([
-  {city_id: 2, name: 'Greater Noida'},
-  {city_id: 1, name: 'South Delhi'},
+  {city_id: City.find_by(name: 'Delhi').id, name: 'South Delhi'},
+  {city_id: City.find_by(name: 'Delhi').id, name: 'Mehrauli'},
+  {city_id: City.find_by(name: 'Delhi').id, name: 'Dwarka'},
+  {city_id: City.find_by(name: 'Delhi').id, name: 'East Delhi'},
+  {city_id: City.find_by(name: 'Delhi').id, name: 'Faridabad'},
+  {city_id: City.find_by(name: 'Delhi').id, name: 'Janakpuri'},
+  {city_id: City.find_by(name: 'Delhi').id, name: 'Delhi'},
+  {city_id: City.find_by(name: 'Delhi').id, name: 'North Delhi'},
+  {city_id: City.find_by(name: 'Delhi').id, name: 'Central Delhi'},
+  {city_id: City.find_by(name: 'Delhi').id, name: 'Street-10, Laxmi Nagar'},
+
+  {city_id: City.find_by(name: 'Gurgaon').id, name: 'Gurgaon'},
+  {city_id: City.find_by(name: 'Noida').id, name: 'Noida'},
+  {city_id: City.find_by(name: 'Ghaziabad').id, name: 'Ghaziabad'},
 ])
 
 ## Volunteers
