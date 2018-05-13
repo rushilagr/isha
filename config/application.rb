@@ -17,11 +17,5 @@ module IshaOps
   end
 end
 
-# Load custom classes from gists
-require './lib/utils/dry_validate'
-require './lib/utils/enumerable_ext'
-require './lib/utils/g_sheet'
-# require './lib/utils/form_object'
-# require './lib/utils/outbounds'
-# require './lib/utils/jwt_token'
-# require './lib/utils/retry'
+Rails.logger = ActiveSupport::Logger.new(STDOUT)
+Rails.logger.level = :info

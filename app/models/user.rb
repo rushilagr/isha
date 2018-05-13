@@ -16,20 +16,7 @@ class User < ApplicationRecord
   end
 
   ## ------------------------------
-  ## Dry Schema
-  ## ------------------------------
-
-  # def self.schema
-  #   Dry::Validation.Form do
-  #     # add uniqueness check
-  #     required(:name).filled(:str?)
-  #     required(:phone).filled(:str?, size?: 10)
-  #     required(:password).filled(:str?, min_size?: 6)
-  #   end
-  # end
-  
-  ## ------------------------------
-  ## Devise email removal 
+  ## Devise email removal
   ## ------------------------------
 
   def email_required?

@@ -1,5 +1,3 @@
-require './lib/utils/g_sheet.rb'
-
 GSheet.configure do |c|
   c.auth_json = ENV['SHEET_AUTH_JSON']
   c.sheet_id = ENV['SHEET_ID']

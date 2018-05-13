@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180513115204) do
+ActiveRecord::Schema.define(version: 20180513165648) do
 
   create_table "centers", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name"
@@ -55,6 +55,7 @@ ActiveRecord::Schema.define(version: 20180513115204) do
     t.bigint "center_id"
     t.bigint "user_id"
     t.string "type"
+    t.string "digest"
     t.index ["center_id"], name: "index_programs_on_center_id"
     t.index ["user_id"], name: "index_programs_on_user_id"
   end

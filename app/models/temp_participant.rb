@@ -3,16 +3,18 @@ class TempParticipant < ApplicationRecord
 
   belongs_to :program
 
-  validates :name, presence: true
+  validates :name, presence: true, uniqueness: { scope: [:phone, :program_id, :email] }
   validates :phone, presence: true
   validates :email, presence: true
   validates :pincode, presence: true
   validates :gender, presence: true
+  validates :city, presence: true
 
   def to_participant
-    attrs = attributes
-      .except('city', 'id', 'program_id')
-      .merge(city_id: City.find_by(name: city)&.id)
-    Participant.new attrs
+    Participant.new(
+      attributes
+        .except('city', 'id', 'program_id')
+        .merge(city_id: City.find_by(name: city)&.id)
+    )
   end
 end

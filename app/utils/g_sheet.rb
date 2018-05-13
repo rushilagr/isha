@@ -10,14 +10,18 @@ class GSheet
   setting :program_sheet_title, reader: true
   setting :participant_sheet_title, reader: true
 
+  def self.get
+    self.config.auth_json = ENV['SHEET_AUTH_JSON']
+    self.config.sheet_id = ENV['SHEET_ID']
+    self.config.program_sheet_title = ENV['PROGRAM_SHEET_TITLE']
+    self.config.participant_sheet_title = ENV['PARTICIPANT_SHEET_TITLE']
 
-  def self.initialize
-    File.open(path = "./config.json","w") do |f|
-      f.write(config.auth_json)
-    end
+        path = "./config.json"
+      File.open(path, "w") { |f| f.write(config.auth_json) } if File.read(path).empty?
     session = GoogleDrive::Session.from_config path
 
-    @sheet = session.spreadsheet_by_key config.sheet_id
+    sheet = session.spreadsheet_by_key config.sheet_id
+    sheet.worksheet_by_title GSheet.participant_sheet_title
   end
 end
 
