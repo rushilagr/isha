@@ -25,7 +25,6 @@ class ProgramsController < ApplicationController
   # POST /programs.json
   def create
     @program = Program.new(program_params)
-    @program.batches = program_params[:batches].reject(&:empty?)
 
     respond_to do |format|
       if @program.save
@@ -65,6 +64,6 @@ class ProgramsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def program_params
-      params.require(:program).permit :starts_at, :ends_at, :type, :central_id, :status, :teachers, :center_id, :user_id, :batches, batches: []
+      params.require(:program).permit :starts_at, :ends_at, :type, :center_id, :user_id
     end
 end

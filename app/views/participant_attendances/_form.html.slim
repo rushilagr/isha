@@ -1,9 +1,0 @@
-= simple_form_for(@participant_attendance) do |f|
-  = f.error_notification
-
-  .form-inputs
-    = f.association :program_participant
-    = f.input :batch
-
-  .form-actions
-    = f.button :submit

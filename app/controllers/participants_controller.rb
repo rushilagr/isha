@@ -51,7 +51,7 @@ class ParticipantsController < ApplicationController
     respond_to do |format|
       if @participant.save
         format.html {
-          redirect_to new_participant_path(central_id: params[:central_id]),
+          redirect_to new_participant_path(program_id: params[:program_id]),
           notice: 'Participant created. You can create more, view existing ones or stop.'
         }
         format.json { render :show, status: :created, location: @participant }
@@ -89,8 +89,8 @@ class ParticipantsController < ApplicationController
   private
 
     def set_program
-      unless params[:central_id].nil?
-        @program = Program.find_by(central_id: params[:central_id])
+      unless params[:program_id].nil?
+        @program = Program.find(params[:program_id])
       end
     end
 
@@ -100,7 +100,7 @@ class ParticipantsController < ApplicationController
     end
 
     def participant_params
-      params.require(:participant).permit(:name, :phone, :email, :pincode, :gender, :occupation, :city_id, program_participants_attributes: [:program_id, :batch, :status])
+      params.require(:participant).permit(:name, :phone, :email, :pincode, :gender, :occupation, :city_id, program_participants_attributes: [:program_id, :status])
     end
 
     def temp_participants_params

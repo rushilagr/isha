@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180421180629) do
+ActiveRecord::Schema.define(version: 20180513115204) do
 
   create_table "centers", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name"
@@ -24,14 +24,6 @@ ActiveRecord::Schema.define(version: 20180421180629) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "participant_attendances", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.bigint "program_participant_id"
-    t.string "batch"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["program_participant_id"], name: "index_participant_attendances_on_program_participant_id"
   end
 
   create_table "participants", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -50,7 +42,6 @@ ActiveRecord::Schema.define(version: 20180421180629) do
   create_table "program_participants", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.bigint "participant_id"
     t.bigint "program_id"
-    t.string "batch"
     t.string "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -61,12 +52,8 @@ ActiveRecord::Schema.define(version: 20180421180629) do
   create_table "programs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.datetime "starts_at"
     t.datetime "ends_at"
-    t.text "batches"
-    t.string "status"
-    t.string "teachers"
     t.bigint "center_id"
     t.bigint "user_id"
-    t.string "central_id"
     t.string "type"
     t.index ["center_id"], name: "index_programs_on_center_id"
     t.index ["user_id"], name: "index_programs_on_user_id"
@@ -79,9 +66,10 @@ ActiveRecord::Schema.define(version: 20180421180629) do
     t.string "pincode"
     t.string "gender"
     t.string "city"
-    t.string "program_central_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "program_id"
+    t.index ["program_id"], name: "index_temp_participants_on_program_id"
   end
 
   create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -106,11 +94,11 @@ ActiveRecord::Schema.define(version: 20180421180629) do
   end
 
   add_foreign_key "centers", "cities"
-  add_foreign_key "participant_attendances", "program_participants"
   add_foreign_key "participants", "cities"
   add_foreign_key "program_participants", "participants"
   add_foreign_key "program_participants", "programs"
   add_foreign_key "programs", "centers"
   add_foreign_key "programs", "users"
+  add_foreign_key "temp_participants", "programs"
   add_foreign_key "users", "cities"
 end

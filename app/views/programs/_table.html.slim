@@ -2,15 +2,11 @@
   table.table.table-striped.table-bordered.table-sm
     thead
       tr
-        th Central ID
         th Participant Count
         th Starts at
-        / th Ends at
         th Length
         th Type
-        th Batches
-        th Teachers
-        th Status
+        th Center
         th Creating Vol. Name
         th Creating Vol. Phone
         - if actions == true
@@ -18,15 +14,11 @@
     tbody
       - programs.each do |program|
         tr
-          td = program.central_id
           td = program.participants.count
           td = program.starts_at.strftime("%d %B, %Y")
-          / td = program.ends_at.strftime("%d %B, %Y")
           td = program.length.to_s + ' Day'
           td = program.type
-          td = program.batches.join(', ')
-          td = program.teachers
-          td = program.status
+          td = program.center.name
           td = program.user.name
           td = program.user.phone
 

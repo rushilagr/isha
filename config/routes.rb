@@ -4,7 +4,6 @@ Rails.application.routes.draw do
   post 'participants/temp', to: 'participants#create_temp'
   resources :participants
 
-  resources :participant_attendances
   resources :programs
   resources :cities
   resources :centers

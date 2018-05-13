@@ -5,7 +5,6 @@
         th Name
         th Phone
         th Email
-        th Batch
 
         - unless defined?(short) && short == true
           / th Programs Registered
@@ -21,7 +20,6 @@
           td = participant.name
           td = participant.phone
           td = participant.email
-          td = participant.batch if participant.class.to_s == "Participant"
 
           - unless defined?(short) && short == true
             / td = participant.programs.count

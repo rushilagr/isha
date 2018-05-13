@@ -7,11 +7,11 @@
   h1 Select Program
   br
 
-  - unless params[:central_id].nil?
+  - unless params[:program_id].nil?
     .alert.alert-danger This program does not exist.
 
   = bootstrap_form_tag url: new_participant_path, method: :get do |f|
-    = f.select :central_id, options_for_select(Program.all.pluck :central_id), :include_blank => true, label: 'Enter Program ID', :input_html => { :value => 'pending'}
+    = f.select :program_id, options_for_select(Program.all.pluck :id), :include_blank => true, label: 'Enter Program ID', :input_html => { :value => 'pending'}
     = f.submit "Submit", class: 'btn btn-primary btn-block'
 
 
@@ -45,4 +45,4 @@
   br
 
   h5#register Create Registration
-  == render partial: 'form', locals: { url: participants_path(central_id: params[:central_id], anchor: 'register'), participant: @participant }
+  == render partial: 'form', locals: { url: participants_path(program_id: params[:program_id], anchor: 'register'), participant: @participant }

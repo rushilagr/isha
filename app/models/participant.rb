@@ -14,8 +14,4 @@ class Participant < ApplicationRecord
   validates_format_of :email, :with => /\A[^@,\s]+@[^@,\s]+\.[^@,\s]+\z/
   validates :pincode, presence: true
   validates :gender, presence: true, inclusion: {in: self.gender_enum}
-
-  def batch
-    program_participants.first.batch
-  end
 end

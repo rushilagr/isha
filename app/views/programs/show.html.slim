@@ -6,7 +6,7 @@ p#notice = notice
 br
 
 h4.d-inline.mr-2 Registered Participants
-= link_to 'Register More', new_participant_path(central_id: @program.central_id), class: 'btn btn-primary'
+= link_to 'Register More', new_participant_path(program_id: @program.id), class: 'btn btn-primary'
 br
 == render partial: 'participants/table', locals: {participants: @program.participants, short: true}
 br

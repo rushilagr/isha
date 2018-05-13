@@ -1,5 +1,5 @@
 h1.d-inline.mr-3 Edit program
-= link_to 'Create Participants', new_participant_path(central_id: @program.central_id), class: 'btn btn-primary d-inline mr-2'
+= link_to 'Create Participants', new_participant_path(program_id: @program.id), class: 'btn btn-primary d-inline mr-2'
 br
 
 == render 'form'

@@ -7,8 +7,6 @@ class CreateTempParticipants < ActiveRecord::Migration[5.1]
       t.string :pincode
       t.string :gender
       t.string :city
-      t.string :program_central_id
-
       t.timestamps
     end
   end
