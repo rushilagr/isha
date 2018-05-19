@@ -2,6 +2,8 @@ class Participant < ApplicationRecord
   extend ParticipantEnums
   attr_accessor :temp_participant_id
 
+  after_create :destroy_temp_participant
+
   belongs_to :city
   has_many :program_participants, dependent: :destroy, validate: true
   accepts_nested_attributes_for :program_participants
@@ -14,4 +16,20 @@ class Participant < ApplicationRecord
   validates_format_of :email, :with => /\A[^@,\s]+@[^@,\s]+\.[^@,\s]+\z/
   validates :pincode, presence: true
   validates :gender, presence: true, inclusion: {in: self.gender_enum}
+
+  def destroy_temp_participant
+    TempParticipant.find(temp_participant_id).destroy if temp_participant_id.is_a?(Integer)
+  end
+
+  def self.from_temp_participant t_id
+    t_p = TempParticipant.find(t_id)
+    Participant.new(
+      t_p.attributes
+        .except('city', 'id', 'program_id')
+        .merge(
+          city_id: City.find_by(name: t_p.city)&.id,
+          temp_participant_id: t_p.id
+        )
+    )
+  end
 end

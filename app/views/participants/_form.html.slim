@@ -16,6 +16,7 @@
     = f.input :gender, collection: Participant.gender_enum
     = f.association :city
     = f.input :occupation, collection: Participant.occupation_enum
+    = f.input :temp_participant_id, as: :hidden
 
     = f.simple_fields_for :program_participants do |a|
       = a.hidden_field :program_id, :value => @program.id

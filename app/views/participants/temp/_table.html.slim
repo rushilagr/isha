@@ -12,4 +12,4 @@
           td = participant.name
           td = participant.phone
           td = participant.email
-          td = link_to 'Register', new_participant_path(program_id: participant.program.id, t_participant_id: participant.id, anchor: 'register')
+          td = link_to 'Register', new_participant_path(program_id: participant.program.id, temp_participant_id: participant.id, anchor: 'register'), onClick: "tempClicked(#{participant.id});"

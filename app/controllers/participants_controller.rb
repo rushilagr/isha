@@ -15,7 +15,7 @@ class ParticipantsController < ApplicationController
 
   # GET /participants/new
   def new
-    @participant = params[:t_participant_id] ? TempParticipant.find(params[:t_participant_id]).to_participant : Participant.new
+    @participant = params[:temp_participant_id] ? Participant.from_temp_participant(params[:temp_participant_id]) : Participant.new
     @participant.program_participants.build
     set_program
     redirect_to program_registrable_path if @program.nil?
@@ -24,23 +24,6 @@ class ParticipantsController < ApplicationController
   # GET /participants/1/edit
   def edit
     @program = @participant.programs.first
-  end
-
-  # POST /participants/temp.json
-  def create_temp
-    @fails = []
-    temp_participants_params.each do |prms|
-      @t_p = TempParticipant.new(prms)
-      @fails << @t_p.errors unless @t_p.save
-    end
-
-    respond_to do |format|
-      if @fails.empty?
-        format.json { head :ok }
-      else
-        format.json { render json: @fails, status: :unprocessable_entity }
-      end
-    end
   end
 
   # POST /participants
@@ -100,10 +83,6 @@ class ParticipantsController < ApplicationController
     end
 
     def participant_params
-      params.require(:participant).permit(:name, :phone, :email, :pincode, :gender, :occupation, :city_id, program_participants_attributes: [:program_id, :status])
-    end
-
-    def temp_participants_params
-      params.permit(:participants => [:name, :phone, :email, :pincode, :gender, :city]).require(:participants)
+      params.require(:participant).permit(:name, :phone, :email, :pincode, :gender, :occupation, :city_id, :temp_participant_id, program_participants_attributes: [:program_id, :status])
     end
 end

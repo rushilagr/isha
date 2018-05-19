@@ -1,14 +1,12 @@
 Rails.application.routes.draw do
   root to: 'home#root'
 
-  post 'participants/temp', to: 'participants#create_temp'
-  resources :participants
-
   get 'programs/registrable', to: 'programs#registrable', as: 'program_registrable'
   resources :programs
 
   resources :cities
   resources :centers
+  resources :participants
 
   devise_for :users, controllers: {
     sessions: 'users/sessions',

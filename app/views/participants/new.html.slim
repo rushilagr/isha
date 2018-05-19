@@ -20,5 +20,7 @@ h5.d-inline.mr-2 Pending Registrations
 br
 br
 
-h5#register Create Registration
+h5#register.d-inline.mr-2 Create Registration
+.d-inline.mr-2
+  = link_to 'New Registration', new_participant_path(program_id: @program.id, anchor: 'register')
 == render partial: 'form', locals: { url: participants_path(program_id: params[:program_id], anchor: 'register'), participant: @participant }
