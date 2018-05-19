@@ -1,7 +1,7 @@
 require 'digest/bubblebabble'
 
 class Program < ApplicationRecord
-  before_validation :set_digest
+  before_save :set_digest
   self.inheritance_column = :_type_disabled
 
   belongs_to :user
@@ -20,7 +20,6 @@ class Program < ApplicationRecord
   # validates_date :starts_at, presence: true, :on_or_after => lambda { Date.current }, on_or_after_message: 'Must be on or after today'
   # validates_date :ends_at, presence: true, on_or_after: :starts_at, on_or_after_message: 'Must be on or after start_date'
   validates :type, presence: true, inclusion: {in: self.type_enum}
-  validates :digest, presence: true, uniqueness: true
 
   def length
     ((ends_at - starts_at)/1.day).to_i + 1

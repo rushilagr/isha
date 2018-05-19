@@ -1,7 +1,11 @@
 class CreateProgramsAndParticipantsFromSheet
   def self.call
+    Rails.logger.info "AUTOBOT: initializing sheet"
     obj = self.new
+
+    Rails.logger.info "AUTOBOT: initialized, starting creation"
     obj.create_programs_and_participants
+
     # obj.delete_done_rows
     true
   end
@@ -12,10 +16,13 @@ class CreateProgramsAndParticipantsFromSheet
 
   def create_programs_and_participants
     @list
-      .select { |row| row['AutoBot'].empty? }
-      .first(50)
-      .each_with_index do |row, i|
+    .each_with_index do |row, i|
+      with_rescue do
+        @current_row = row
         Rails.logger.info "\n AUTOBOT: processing row: #{i + 2}"
+
+        ## Next row if row empty or row already processed
+        next if !row['AutoBot'].empty? | row.to_h.values.uniq == ""
 
         ## Extract program keys from row
         program_hash = {
@@ -33,7 +40,7 @@ class CreateProgramsAndParticipantsFromSheet
           p_id = Program.create!(program_hash).id
           Rails.logger.info "AUTOBOT: created new program"
         else
-          Rails.logger.info "AUTOBOT: program exists"
+          Rails.logger.info "AUTOBOT: program exists, re-using"
         end
 
         ## Create temp_participant using program_id and participant data from row
@@ -55,19 +62,19 @@ class CreateProgramsAndParticipantsFromSheet
         @ws.save
         Rails.logger.info "AUTOBOT: row marked DONE"
       end
+    end
   end
 
-  def delete_done_rows
-    Rails.logger.info "AUTOBOT: starting processed row deletion"
-    @list
-      .first(4)
-      .select { |row| row['AutoBot'] == 'DONE' }
-      .each_with_index do |row, i|
-        @ws.delete_rows(i + 2, 1)
-      end
-    @ws.save
-    Rails.logger.info "AUTOBOT: processed rows deleted"
-  end
+  # def delete_done_rows
+  #   Rails.logger.info "AUTOBOT: starting processed row deletion"
+  #   @list
+  #     .select { |row| row['AutoBot'] == 'DONE' }
+  #     .each_with_index do |row, i|
+  #       @ws.delete_rows(i + 2, 1)
+  #     end
+  #   @ws.save
+  #   Rails.logger.info "AUTOBOT: processed rows deleted"
+  # end
 
   def initialize
     @@program_colums = ['ProgramType', 'StartDate', 'EndDate', 'Center']
@@ -81,10 +88,25 @@ class CreateProgramsAndParticipantsFromSheet
 
   private
 
-    def validate_sheet
-      unless (val = @columns -@list.keys).empty?
-        msg = "Columns Mismatch. Should include: #{@columns} Diff Is: #{val}"
-        raise GSheet::FormatError.new(@ws), msg
-      end
+  def with_rescue
+    begin
+      yield
+
+    rescue ActiveRecord::ActiveRecordError => ex
+      ## Log Error
+      Rails.logger.error ex
+      Rails.logger.error(@current_row.to_h.slice(*@columns)) if defined?(@current_row)
+
+      ## Fill autobot column with error message
+      @current_row['AutoBot'] = ex.message
+      @ws.save
     end
+  end
+
+  def validate_sheet
+    unless (val = @columns - @list.keys).empty?
+      msg = "Columns Mismatch. Should include: #{@columns} Missing ones are: #{val}"
+      raise GSheet::FormatError.new(@ws), msg
+    end
+  end
 end
