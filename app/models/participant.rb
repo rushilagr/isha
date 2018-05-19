@@ -12,7 +12,7 @@ class Participant < ApplicationRecord
   validates :program_participants, presence: true
 
   validates :name, presence: true
-  validates :phone, presence: true, :numericality => true, :length => { :is => 10}, uniqueness: true
+  validates :phone, presence: true, :numericality => {message: 'Phone number mast have 10 digits only. No spaces, No symbols'}, :length => { :is => 10}, uniqueness: true
   validates_format_of :email, :with => /\A[^@,\s]+@[^@,\s]+\.[^@,\s]+\z/
   validates :pincode, presence: true
   validates :gender, presence: true, inclusion: {in: self.gender_enum}
@@ -21,11 +21,16 @@ class Participant < ApplicationRecord
     TempParticipant.find(temp_participant_id).destroy if temp_participant_id.is_a?(Integer)
   end
 
-  def self.from_temp_participant t_id
-    t_p = TempParticipant.find(t_id)
+  def self.from_temp_participant t_p_id
+    t_p = TempParticipant.find(t_p_id)
+
     Participant.new(
       t_p.attributes
-        .except('city', 'id', 'program_id')
+        .except(
+          'city',
+          'id',
+          'program_id'
+        )
         .merge(
           city_id: City.find_by(name: t_p.city)&.id,
           temp_participant_id: t_p.id
