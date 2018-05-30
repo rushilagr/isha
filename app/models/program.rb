@@ -17,8 +17,8 @@ class Program < ApplicationRecord
     ['Yogasanas', 'Bhuta Shuddhi', 'Inner Engineering - 4 Days', 'Surya Kriya', 'Inner Engineering', 'Angamardana', 'Guru Pooja Training', 'Hatha Yoga 21 Days', 'Isha Yoga for Children']
   end
 
-  # validates_date :starts_at, presence: true, :on_or_after => lambda { Date.current }, on_or_after_message: 'Must be on or after today'
-  # validates_date :ends_at, presence: true, on_or_after: :starts_at, on_or_after_message: 'Must be on or after start_date'
+  validates_date :starts_at, presence: true, :on_or_after => lambda { 7.days.ago }, on_or_after_message: 'Must start within previous 7 days'
+  validates_date :ends_at, presence: true, on_or_after: :starts_at, on_or_after_message: 'Must be on or after start_date'
   validates :type, presence: true, inclusion: {in: self.type_enum}
 
   def length

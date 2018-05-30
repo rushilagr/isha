@@ -16,9 +16,14 @@ class GSheet
     self.config.program_sheet_title = ENV['PROGRAM_SHEET_TITLE']
     self.config.participant_sheet_title = ENV['PARTICIPANT_SHEET_TITLE']
 
-        path = "./config.json"
-      File.open(path, "w") { |f| f.write(config.auth_json) } if File.read(path).empty?
-    session = GoogleDrive::Session.from_config path
+    ## Authenticate using client secret
+    # path = "./config.json"
+    # File.open(path, "w") { |f| f.write(config.auth_json) } if File.read(path).empty?
+    # session = GoogleDrive::Session.from_config path
+
+    ## Authenticate using session account
+    io_obj = StringIO.new config.auth_json
+    session = GoogleDrive::Session.from_service_account_key io_obj
 
     sheet = session.spreadsheet_by_key config.sheet_id
     sheet.worksheet_by_title GSheet.participant_sheet_title

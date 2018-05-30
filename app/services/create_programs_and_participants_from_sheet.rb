@@ -21,7 +21,7 @@ class CreateProgramsAndParticipantsFromSheet
         @current_row = row
         Rails.logger.info "\n AUTOBOT: processing row: #{i + 2}"
 
-        ## Next row if row empty or row already processed
+        ## Next row if row already processed or row empty
         next if !row['AutoBot'].empty? | row.to_h.values.uniq == ""
 
         ## Extract program keys from row
@@ -47,7 +47,7 @@ class CreateProgramsAndParticipantsFromSheet
         t_p = {
           program_id: p_id,
 
-          phone: row['Cell Phone'],
+          phone: row['Cell Phone'].gsub(/\s+/, "").gsub(/\+91/, ""),
           email: row['Email'],
           name: row['Name'],
           pincode: row['PostalCode'],
