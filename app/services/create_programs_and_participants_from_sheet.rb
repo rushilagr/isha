@@ -36,7 +36,7 @@ class CreateProgramsAndParticipantsFromSheet
         ## Mark row STALE and skip IF start_date stale
         if program_hash[:starts_at] < 7.days.ago
           row['AutoBot'] = 'STALE'
-          Rails.logger.info "AUTOBOT: row marked STALE. Date: #{program_hash[:starts_at]}"
+          Rails.logger.info "AUTOBOT: row marked STALE. ProgramDate: #{program_hash[:starts_at]}"
           next
         end
 
