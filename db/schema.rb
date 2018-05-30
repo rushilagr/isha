@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180513165648) do
+ActiveRecord::Schema.define(version: 20180530182907) do
 
   create_table "centers", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name"
@@ -42,9 +42,9 @@ ActiveRecord::Schema.define(version: 20180513165648) do
   create_table "program_participants", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.bigint "participant_id"
     t.bigint "program_id"
-    t.string "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.date "dropped_out"
     t.index ["participant_id"], name: "index_program_participants_on_participant_id"
     t.index ["program_id"], name: "index_program_participants_on_program_id"
   end
