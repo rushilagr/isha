@@ -17,7 +17,7 @@ class CreateProgramsAndParticipantsFromSheet
   def create_programs_and_participants
     @list
     .each_with_index do |row, i|
-      with_rescue do
+      with_rescue_and_save_wrapper do
         @current_row = row
         Rails.logger.info "\n AUTOBOT: processing row: #{i + 2}"
 
@@ -32,6 +32,13 @@ class CreateProgramsAndParticipantsFromSheet
           center_id: Center.find_by(name: row['Center']).id,
           user_id: 1
         }
+
+        ## Mark row STALE and skip IF start_date stale
+        if program_hash[:starts_at] < 7.days.ago
+          row['AutoBot'] = 'STALE'
+          Rails.logger.info "AUTOBOT: row marked STALE. Date: #{program_hash[:starts_at]}"
+          next
+        end
 
         ## Find if program exists, else create new. Return id
           digest = Program.get_digest program_hash
@@ -59,7 +66,6 @@ class CreateProgramsAndParticipantsFromSheet
 
         ## Mark row as processed
         row['AutoBot'] = 'DONE'
-        @ws.save
         Rails.logger.info "AUTOBOT: row marked DONE"
       end
     end
@@ -88,7 +94,7 @@ class CreateProgramsAndParticipantsFromSheet
 
   private
 
-  def with_rescue
+  def with_rescue_and_save_wrapper
     begin
       yield
 
@@ -99,6 +105,8 @@ class CreateProgramsAndParticipantsFromSheet
 
       ## Fill autobot column with error message
       @current_row['AutoBot'] = ex.message
+
+    ensure
       @ws.save
     end
   end
