@@ -2,6 +2,9 @@ Rails.application.routes.draw do
   root to: 'home#root'
 
   get 'programs/registrable', to: 'programs#registrable', as: 'program_registrable'
+  get 'programs/attendanceable', to: 'programs#attendanceable', as: 'program_attendanceable'
+  get 'programs/:id/attendance', to: 'programs#attendance', as: 'program_attendance'
+  post 'programs/:id/attendance/toggle', to: 'programs#attendance_toggle', as: 'program_attendance_toggle'
   resources :programs
 
   resources :cities

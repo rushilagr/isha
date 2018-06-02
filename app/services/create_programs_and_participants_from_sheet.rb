@@ -27,8 +27,8 @@ class CreateProgramsAndParticipantsFromSheet
         ## Extract program keys from row
         program_hash = {
           type: row['ProgramType'],
-          starts_at: Date.strptime(row['StartDate'], "%d-%m-%Y"),
-          ends_at: Date.strptime(row['EndDate'], "%d-%m-%Y"),
+          starts_at: Date.strptime(row['StartDate'], "%d %b %Y"),
+          ends_at: Date.strptime(row['EndDate'], "%d %b %Y"),
           center_id: Center.find_by(name: row['Center']).id,
           user_id: 1
         }

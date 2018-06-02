@@ -1,11 +1,24 @@
 class ProgramsController < ApplicationController
-  before_action :set_program, only: [:show, :edit, :update, :destroy]
-
   # GET /programs
   # GET /programs.json
   def registrable
     @programs = Program.registrable
     render :index
+  end
+
+  def attendanceable
+    @programs = Program.attendanceable
+    render :index
+  end
+
+  def attendance
+    set_program
+  end
+
+  def attendance_toggle
+    set_program
+    Participant.find(params[:participant_id]).set_dropped_out(params[:id], params[:dropped_out_status])
+    render :attendance
   end
 
   def index
@@ -15,6 +28,7 @@ class ProgramsController < ApplicationController
   # GET /programs/1
   # GET /programs/1.json
   def show
+    set_program
   end
 
   # GET /programs/new
@@ -24,6 +38,7 @@ class ProgramsController < ApplicationController
 
   # GET /programs/1/edit
   def edit
+    set_program
   end
 
   # POST /programs
@@ -43,6 +58,7 @@ class ProgramsController < ApplicationController
   # PATCH/PUT /programs/1
   # PATCH/PUT /programs/1.json
   def update
+    set_program
     respond_to do |format|
       if @program.update(program_params)
         format.html { redirect_to @program, notice: 'Program was successfully updated.' }
@@ -55,6 +71,7 @@ class ProgramsController < ApplicationController
   # DELETE /programs/1
   # DELETE /programs/1.json
   def destroy
+    set_program
     @program.destroy
     respond_to do |format|
       format.html { redirect_to programs_url, notice: 'Program was successfully destroyed.' }

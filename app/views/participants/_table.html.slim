@@ -6,6 +6,9 @@
         th Phone
         th Email
 
+        - if defined?(attendance) && defined?(program_id)
+          th Attendance
+
         - unless defined?(short) && short == true
           th Programs Registered Count
           th Pincode
@@ -20,6 +23,12 @@
           td = participant.name
           td = participant.phone
           td = participant.email
+
+          - if defined?(attendance) && defined?(program_id)
+            - if participant.dropped_out(program_id)
+              td = button_to 'Attending', program_attendance_toggle_path(id: program_id, participant_id: participant.id, dropped_out_status: false)
+            - else
+              td = button_to 'Drop Out', program_attendance_toggle_path(id: program_id, participant_id: participant.id, dropped_out_status: true)
 
           - unless defined?(short) && short == true
             td = participant.programs.count

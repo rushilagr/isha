@@ -9,9 +9,9 @@ class Program < ApplicationRecord
   has_many :program_participants
   has_many :participants, through: :program_participants
   has_many :temp_participants
-  has_many :attendances, through: :program_participants
 
   scope :registrable, -> { where('starts_at >= ? AND starts_at <= ?', Date.current, 7.days.from_now) }
+  scope :attendanceable, -> { where('ends_at >= ?', 7.days.ago) }
 
   def self.type_enum
     ['Yogasanas', 'Bhuta Shuddhi', 'Inner Engineering - 4 Days', 'Surya Kriya', 'Inner Engineering', 'Angamardana', 'Guru Pooja Training', 'Hatha Yoga 21 Days', 'Isha Yoga for Children']
@@ -23,6 +23,12 @@ class Program < ApplicationRecord
 
   def length
     ((ends_at - starts_at)/1.day).to_i + 1
+  end
+
+  def attendance_percentage
+    attending_count = participants.select { |p| p.dropped_out(id) == false }.count
+    percentage = ((attending_count.to_f / participants.count) * 100).to_i
+    percentage.to_s + '%'
   end
 
   def self.get_digest data
@@ -44,4 +50,13 @@ class Program < ApplicationRecord
   def set_digest
     self.digest = get_digest
   end
+
+  def dropped_out_participants
+    participants.joins(:program_participants).where.not(program_participants: {dropped_out: nil})
+  end
+
+  def ongoing_participants
+    participants.joins(:program_participants).where(program_participants: {dropped_out: nil})
+  end
+
 end

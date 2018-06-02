@@ -6,6 +6,7 @@ City.create!([
 ])
 
 Center.create!([
+  {city_id: City.find_by(name: 'Delhi').id, name: 'Pitampura'},
   {city_id: City.find_by(name: 'Delhi').id, name: 'South Delhi'},
   {city_id: City.find_by(name: 'Delhi').id, name: 'Mehrauli'},
   {city_id: City.find_by(name: 'Delhi').id, name: 'Dwarka'},
