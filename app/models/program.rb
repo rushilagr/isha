@@ -27,7 +27,7 @@ class Program < ApplicationRecord
 
   def attendance_percentage
     attending_count = participants.select { |p| p.dropped_out(id) == false }.count
-    return '0 %' if participants.count == 0
+    return 'N/A' if participants.count == 0
     percentage = ((attending_count.to_f / participants.count) * 100).to_i
     percentage.to_s + '%'
   end

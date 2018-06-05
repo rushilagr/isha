@@ -2,12 +2,12 @@ class ProgramsController < ApplicationController
   # GET /programs
   # GET /programs.json
   def registrable
-    @programs = Program.registrable
+    @programs = Program.registrable.order(:starts_at)
     render :index
   end
 
   def attendanceable
-    @programs = Program.attendanceable
+    @programs = Program.attendanceable.order(:starts_at)
     render :index
   end
 
@@ -22,7 +22,7 @@ class ProgramsController < ApplicationController
   end
 
   def index
-    @programs = Program.all
+    @programs = Program.all.order(:starts_at)
   end
 
   # GET /programs/1
