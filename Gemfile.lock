@@ -206,7 +206,6 @@ GEM
     minitest (5.11.3)
     multi_json (1.13.1)
     multipart-post (2.0.0)
-    mysql2 (0.5.1)
     nenv (0.3.0)
     nio4r (2.3.0)
     nokogiri (1.8.2)
@@ -216,6 +215,7 @@ GEM
       shellany (~> 0.0)
     orm_adapter (0.5.0)
     os (0.9.6)
+    pg (1.0.0)
     popper_js (1.12.9)
     pry (0.11.3)
       coderay (~> 1.1.0)
@@ -391,7 +391,7 @@ DEPENDENCIES
   jbuilder (~> 2.5)
   jquery-rails
   listen (>= 3.0.5, < 3.2)
-  mysql2
+  pg
   pry
   pry-byebug
   pry-coolline

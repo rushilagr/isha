@@ -12,7 +12,10 @@
 
 ActiveRecord::Schema.define(version: 20180530182907) do
 
-  create_table "centers", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
+  create_table "centers", force: :cascade do |t|
     t.string "name"
     t.bigint "city_id"
     t.datetime "created_at", null: false
@@ -20,13 +23,13 @@ ActiveRecord::Schema.define(version: 20180530182907) do
     t.index ["city_id"], name: "index_centers_on_city_id"
   end
 
-  create_table "cities", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "cities", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "participants", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "participants", force: :cascade do |t|
     t.string "name"
     t.string "phone"
     t.string "email"
@@ -39,7 +42,7 @@ ActiveRecord::Schema.define(version: 20180530182907) do
     t.index ["city_id"], name: "index_participants_on_city_id"
   end
 
-  create_table "program_participants", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "program_participants", force: :cascade do |t|
     t.bigint "participant_id"
     t.bigint "program_id"
     t.datetime "created_at", null: false
@@ -49,7 +52,7 @@ ActiveRecord::Schema.define(version: 20180530182907) do
     t.index ["program_id"], name: "index_program_participants_on_program_id"
   end
 
-  create_table "programs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "programs", force: :cascade do |t|
     t.datetime "starts_at"
     t.datetime "ends_at"
     t.bigint "center_id"
@@ -60,7 +63,7 @@ ActiveRecord::Schema.define(version: 20180530182907) do
     t.index ["user_id"], name: "index_programs_on_user_id"
   end
 
-  create_table "temp_participants", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "temp_participants", force: :cascade do |t|
     t.string "name"
     t.string "phone"
     t.string "email"
@@ -73,7 +76,7 @@ ActiveRecord::Schema.define(version: 20180530182907) do
     t.index ["program_id"], name: "index_temp_participants_on_program_id"
   end
 
-  create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "users", force: :cascade do |t|
     t.string "name"
     t.string "role"
     t.string "phone", default: "", null: false

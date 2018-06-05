@@ -64,7 +64,8 @@ gem 'simple_form'
 gem 'bootstrap_form'
 gem "select2-rails"
 
-gem 'mysql2'
+gem 'pg'
+# gem 'mysql2'
 
 gem 'devise'
 
