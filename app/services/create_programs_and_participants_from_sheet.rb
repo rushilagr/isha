@@ -22,7 +22,7 @@ class CreateProgramsAndParticipantsFromSheet
         Rails.logger.info "\n AUTOBOT: processing row: #{i + 2}"
 
         ## Next row if row already processed or row empty
-        next if !row['AutoBot'].empty? | row.to_h.values.uniq == ""
+        next if !row['AutoBot'].empty? || row.to_h.values.uniq == ""
 
         ## Extract program keys from row
         program_hash = {
