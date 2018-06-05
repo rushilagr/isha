@@ -7,15 +7,15 @@ h5.d-inline.mr-2 Program Details
 br
 
 h5.d-inline.mr-2 Registered Participants
-.d-inline.mr-2.btn-link aria-expanded="false" data-toggle="collapse" data-target="#registered-p" show / hide
-#registered-p.collapse
+.d-inline.mr-2.btn-link aria-expanded="true" data-toggle="collapse" data-target="#registered-p" show / hide
+#registered-p.collapse.show
   == render partial: 'participants/table', locals: {participants: @program.participants, short: true}
 br
 br
 
 h5.d-inline.mr-2 Pending Registrations
-.d-inline.mr-2.btn-link aria-expanded="false" data-toggle="collapse" data-target="#temp-p" show / hide
-#temp-p.collapse
+.d-inline.mr-2.btn-link aria-expanded="true" data-toggle="collapse" data-target="#temp-p" show / hide
+#temp-p.collapse.show
   == render partial: 'participants/temp/table', locals: {participants: @program.temp_participants.order(:name)}
 br
 br

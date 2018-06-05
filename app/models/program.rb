@@ -11,7 +11,7 @@ class Program < ApplicationRecord
   has_many :temp_participants
 
   scope :registrable, -> { where('starts_at >= ? AND starts_at <= ?', Date.current, 7.days.from_now) }
-  scope :attendanceable, -> { where('ends_at >= ?', 7.days.ago) }
+  scope :attendanceable, -> { where('ends_at >= ?', 7.days.ago).joins(:program_participants) }
 
   def self.type_enum
     ['Yogasanas', 'Bhuta Shuddhi', 'Inner Engineering - 4 Days', 'Surya Kriya', 'Inner Engineering', 'Angamardana', 'Guru Pooja Training', 'Hatha Yoga 21 Days', 'Isha Yoga for Children']
@@ -27,6 +27,7 @@ class Program < ApplicationRecord
 
   def attendance_percentage
     attending_count = participants.select { |p| p.dropped_out(id) == false }.count
+    return '0 %' if participants.count == 0
     percentage = ((attending_count.to_f / participants.count) * 100).to_i
     percentage.to_s + '%'
   end
