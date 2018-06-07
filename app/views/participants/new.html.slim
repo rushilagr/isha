@@ -1,4 +1,4 @@
-h1 Register Program Participants
+h1 Confirm Program Participants
 br
 
 h5.d-inline.mr-2 Program Details
@@ -6,16 +6,16 @@ h5.d-inline.mr-2 Program Details
 == render partial: 'programs/table', locals: {programs: [@program], actions: false}
 br
 
-h5.d-inline.mr-2 Registered Participants
-.d-inline.mr-2.btn-link aria-expanded="true" data-toggle="collapse" data-target="#registered-p" show / hide
-#registered-p.collapse.show
+h5.d-inline.mr-2 Online Registered Participants
+.d-inline.mr-2.btn-link aria-expanded="true" data-toggle="collapse" data-target="#confirmed-p" show / hide
+#confirmed-p.collapse.show
   == render partial: 'participants/table', locals: {participants: @program.participants, short: true}
 br
 br
 
-h5.d-inline.mr-2 Pending Registrations
-.d-inline.mr-2.btn-link aria-expanded="true" data-toggle="collapse" data-target="#temp-p" show / hide
-#temp-p.collapse.show
+h5.d-inline.mr-2 Confirmed Participants
+.d-inline.mr-2.btn-link aria-expanded="true" data-toggle="collapse" data-target="#registered" show / hide
+#registered.collapse.show
   == render partial: 'participants/temp/table', locals: {participants: @program.temp_participants.order(:name)}
 br
 br

@@ -5,13 +5,13 @@ p#notice = notice
 == render partial: 'table', locals: {programs: [@program], actions: true}
 br
 
-h4.d-inline.mr-2 Registered Participants
+h4.d-inline.mr-2 Confirmed Participants
 = link_to 'Register More', new_participant_path(program_id: @program.id), class: 'btn btn-primary'
 br
 == render partial: 'participants/table', locals: {participants: @program.participants, short: true}
 br
 
-h4.d-inline.mr-2 Pending Registrations
+h4.d-inline.mr-2 Registered Participants
 == render partial: 'participants/temp/table', locals: {participants: @program.temp_participants}
 
 

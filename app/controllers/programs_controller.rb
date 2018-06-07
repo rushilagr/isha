@@ -1,8 +1,8 @@
 class ProgramsController < ApplicationController
   # GET /programs
   # GET /programs.json
-  def registrable
-    @programs = Program.registrable.order(:starts_at)
+  def confirmable
+    @programs = Program.confirmable.order(:starts_at)
     render :index
   end
 

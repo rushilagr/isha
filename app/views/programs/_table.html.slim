@@ -2,14 +2,14 @@
   table.table.table-striped.table-bordered.table-sm
     thead
       tr
-        th Registered Participants
-        th Pending Participants
+        th Online Registered Participants
+        th Confirmed Participants
         th Attendance
         th Starts at
         th Length
         th Type
         th Center
-        th Register
+        th Confirm
         th Attendance
         / th Creating Vol. Name
         / th Creating Vol. Phone
@@ -18,14 +18,14 @@
     tbody
       - programs.each do |program|
         tr
-          td = program.participants.count
           td = program.temp_participants.count
+          td = program.participants.count
           td = program.attendance_percentage
           td = program.starts_at.strftime("%d %B, %Y")
           td = program.length.to_s + ' Day'
           td = program.type
           td = program.center.name
-          td = link_to 'Register', new_participant_path(program_id: program.id)
+          td = link_to 'Confirm', new_participant_path(program_id: program.id)
           td = link_to 'Attendance', program_attendance_path(id: program.id)
           / td = program.user.name
           / td = program.user.phone

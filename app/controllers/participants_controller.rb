@@ -18,7 +18,7 @@ class ParticipantsController < ApplicationController
     @participant = params[:temp_participant_id] ? Participant.from_temp_participant(params[:temp_participant_id]) : Participant.new
     @participant.program_participants.build
     set_program
-    redirect_to program_registrable_path if @program.nil?
+    redirect_to program_confirmable_path if @program.nil?
   end
 
   # GET /participants/1/edit
