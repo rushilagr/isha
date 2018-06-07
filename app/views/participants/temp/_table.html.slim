@@ -5,11 +5,11 @@
         th Name
         th Phone
         th Email
-        th Register
+        th Confirm
     tbody
       - participants.each do |participant|
         tr
           td = participant.name
           td = participant.phone
           td = participant.email
-          td = link_to 'Register', new_participant_path(program_id: participant.program.id, temp_participant_id: participant.id, anchor: 'register')
+          td = link_to 'Confirm', new_participant_path(program_id: participant.program.id, temp_participant_id: participant.id, anchor: 'register')

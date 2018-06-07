@@ -3,11 +3,13 @@ class ProgramsController < ApplicationController
   # GET /programs.json
   def confirmable
     @programs = Program.confirmable.order(:starts_at)
+    @header = 'Confirm Program Registrations'
     render :index
   end
 
   def attendanceable
     @programs = Program.attendanceable.order(:starts_at)
+    @header = 'Mark Program Attendance'
     render :index
   end
 
@@ -22,7 +24,8 @@ class ProgramsController < ApplicationController
   end
 
   def index
-    @programs = Program.all.order(:starts_at)
+    @header = 'All Programs'
+    @programs = Program.index
   end
 
   # GET /programs/1

@@ -10,8 +10,9 @@ class Program < ApplicationRecord
   has_many :participants, through: :program_participants
   has_many :temp_participants
 
-  scope :confirmable, -> { where('starts_at >= ? AND starts_at <= ?', 7.days.ago, Date.current).order(:starts_at) }
-  scope :attendanceable, -> { where('ends_at >= ?', 7.days.ago).joins(:program_participants).distinct.order(:starts_at) }
+  scope :index, -> { order(:center_id, :starts_at) }
+  scope :confirmable, -> { where('starts_at >= ? AND starts_at <= ?', 7.days.ago, Date.current).order(:center_id, :starts_at) }
+  scope :attendanceable, -> { where('ends_at >= ?', 7.days.ago).joins(:program_participants).distinct.order(:center_id, :starts_at) }
 
   def self.type_enum
     ['Yogasanas', 'Bhuta Shuddhi', 'Inner Engineering - 4 Days', 'Surya Kriya', 'Inner Engineering', 'Angamardana', 'Guru Pooja Training', 'Hatha Yoga 21 Days', 'Isha Yoga for Children']

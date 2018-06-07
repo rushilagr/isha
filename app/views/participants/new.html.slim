@@ -6,14 +6,14 @@ h5.d-inline.mr-2 Program Details
 == render partial: 'programs/table', locals: {programs: [@program], actions: false}
 br
 
-h5.d-inline.mr-2 Online Registered Participants
+h5.d-inline.mr-2 Confirmed Participants
 .d-inline.mr-2.btn-link aria-expanded="true" data-toggle="collapse" data-target="#confirmed-p" show / hide
 #confirmed-p.collapse.show
   == render partial: 'participants/table', locals: {participants: @program.participants, short: true}
 br
 br
 
-h5.d-inline.mr-2 Confirmed Participants
+h5.d-inline.mr-2 Pending Online Registerations
 .d-inline.mr-2.btn-link aria-expanded="true" data-toggle="collapse" data-target="#registered" show / hide
 #registered.collapse.show
   == render partial: 'participants/temp/table', locals: {participants: @program.temp_participants.order(:name)}
