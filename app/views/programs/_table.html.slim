@@ -2,7 +2,7 @@
   table.table.table-striped.table-bordered.table-sm
     thead
       tr
-        th Online Registerations
+        th Online Registrations
         th Confirmed Participants
         th Attendance
         th Starts at
@@ -18,7 +18,7 @@
     tbody
       - programs.each do |program|
         tr
-          td = program.temp_participants.count
+          td = program.online_registration_count
           td = program.participants.count
           td = program.attendance_percentage
           td = program.starts_at.strftime("%d %B, %Y")

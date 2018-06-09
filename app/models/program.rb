@@ -21,6 +21,7 @@ class Program < ApplicationRecord
   validates_date :starts_at, presence: true, :on_or_after => lambda { 7.days.ago }, on_or_after_message: 'Must start within previous 7 days'
   validates_date :ends_at, presence: true, on_or_after: :starts_at, on_or_after_message: 'Must be on or after start_date'
   validates :type, presence: true, inclusion: {in: self.type_enum}
+  validates :online_registration_count, numericality: { greater_than: 0 }, if: -> {online_registration_count != nil}
 
   def length
     ((ends_at - starts_at)/1.day).to_i + 1

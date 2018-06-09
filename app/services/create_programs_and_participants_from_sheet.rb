@@ -22,11 +22,19 @@ class CreateProgramsAndParticipantsFromSheet
         Rails.logger.info "\n AUTOBOT: processing row: #{i + 2}"
 
         ## Next row if row already processed or row empty
-        next if !row['AutoBot'].empty? || row.to_h.values.uniq == ""
+        if !row['AutoBot'].empty?
+          Rails.logger.info "\n AUTOBOT: row already processed, skipping"
+          next
+        end
+        if row.to_h.values.uniq == [""]
+          Rails.logger.info "\n AUTOBOT: row empty, skipping"
+          next
+        end
 
         ## Extract program keys from row
         program_hash = {
           type: row['ProgramType'],
+          online_registration_count: row['Number of participants'].to_i,
           starts_at: Date.strptime(row['StartDate'], "%d %b %Y"),
           ends_at: Date.strptime(row['EndDate'], "%d %b %Y"),
           center_id: Center.find_by(name: row['Center']).id,
@@ -42,17 +50,19 @@ class CreateProgramsAndParticipantsFromSheet
 
         ## Find if program exists, else create new. Return id
           digest = Program.get_digest program_hash
-        p_id = Program.find_by(digest: digest)&.id
-        if p_id.nil?
-          p_id = Program.create!(program_hash).id
+        program = Program.find_by(digest: digest)
+        if program.nil?
+          program = Program.create!(program_hash)
           Rails.logger.info "AUTOBOT: created new program"
         else
+          new_online_registration_count = program_hash[:online_registration_count] + program.online_registration_count
+          program.update online_registration_count: new_online_registration_count
           Rails.logger.info "AUTOBOT: program exists, re-using"
         end
 
         ## Create temp_participant using program_id and participant data from row
         t_p = {
-          program_id: p_id,
+          program_id: program.id,
 
           phone: row['Cell Phone'].gsub(/\s+/, "").gsub(/\+91/, ""),
           email: row['Email'],
@@ -107,7 +117,7 @@ class CreateProgramsAndParticipantsFromSheet
       @current_row['AutoBot'] = ex.message
 
     ensure
-      @ws.save
+      @ws.save if @ws.dirty?
     end
   end
 
