@@ -321,6 +321,8 @@ GEM
     selenium-webdriver (3.11.0)
       childprocess (~> 0.5)
       rubyzip (~> 1.2)
+    sentry-raven (2.7.3)
+      faraday (>= 0.7.6, < 1.0)
     shellany (0.0.1)
     signet (0.8.1)
       addressable (~> 2.3)
@@ -415,6 +417,7 @@ DEPENDENCIES
   sass-rails (~> 5.0)
   select2-rails
   selenium-webdriver
+  sentry-raven
   simple_form
   slim-rails
   spring

@@ -78,12 +78,12 @@ gem 'rufus-scheduler'
 
 gem 'lograge'
 
+gem "sentry-raven"
 # gem 'jwt'
 # gem 'mqtt'
 # gem 'faraday'
 
 # gem 'retriable'
-# gem 'sentry-raven'
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.7'

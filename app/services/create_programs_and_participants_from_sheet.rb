@@ -6,7 +6,6 @@ class CreateProgramsAndParticipantsFromSheet
     Rails.logger.info "AUTOBOT: initialized, starting creation"
     obj.create_programs_and_participants
 
-    # obj.delete_done_rows
     true
   end
 
@@ -18,8 +17,13 @@ class CreateProgramsAndParticipantsFromSheet
     @list
     .each_with_index do |row, i|
       with_rescue_and_save_wrapper do
+
+        ## Save current row
         @current_row = row
         Rails.logger.info "\n AUTOBOT: processing row: #{i + 2}"
+
+        ## Save context for sentry
+        Raven.user_context(current_row: @current_row)
 
         ## Next row if row already processed or row empty
         if !row['AutoBot'].empty?
@@ -48,7 +52,8 @@ class CreateProgramsAndParticipantsFromSheet
           next
         end
 
-        ## Find if program exists, else create new. Return id
+        ## Find if program already exists, else create new.
+        ## Create or update online registration count
           digest = Program.get_digest program_hash
         program = Program.find_by(digest: digest)
         if program.nil?
@@ -80,17 +85,6 @@ class CreateProgramsAndParticipantsFromSheet
       end
     end
   end
-
-  # def delete_done_rows
-  #   Rails.logger.info "AUTOBOT: starting processed row deletion"
-  #   @list
-  #     .select { |row| row['AutoBot'] == 'DONE' }
-  #     .each_with_index do |row, i|
-  #       @ws.delete_rows(i + 2, 1)
-  #     end
-  #   @ws.save
-  #   Rails.logger.info "AUTOBOT: processed rows deleted"
-  # end
 
   def initialize
     @@program_colums = ['ProgramType', 'StartDate', 'EndDate', 'Center']

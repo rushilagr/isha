@@ -19,3 +19,7 @@ end
 
 Rails.logger = ActiveSupport::Logger.new(STDOUT)
 Rails.logger.level = :info
+
+Raven.configure do |config|
+  config.dsn = ENV['SENTRY_DSN']
+end

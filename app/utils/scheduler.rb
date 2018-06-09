@@ -6,7 +6,7 @@ class Scheduler
     scheduler = Rufus::Scheduler.new
     def scheduler.on_error job, error
       Rails.logger.error "JOB: #{job.opts[:name]} ERROR: #{error}"
-      raise error
+      Raven.capture_exception(error)
     end
     def scheduler.on_pre_trigger(job, trigger_time)
       Rails.logger.info "CRON_JOB_STARTED: #{job.opts[:name]}"
