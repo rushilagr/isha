@@ -76,6 +76,8 @@ gem 'validates_timeliness', '~> 4.0'
 gem 'google_drive'
 gem 'rufus-scheduler'
 
+gem 'lograge'
+
 # gem 'jwt'
 # gem 'mqtt'
 # gem 'faraday'
