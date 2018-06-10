@@ -1,11 +1,4 @@
 = simple_form_for(participant, url: url) do |f|
-  - if notice
-    p.alert.alert-success = notice
-    br
-  - if alert
-    p.alert.alert-danger = alert if alert
-    br
-
   = f.error_notification
 
   .form-inputs

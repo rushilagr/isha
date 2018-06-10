@@ -15,6 +15,7 @@ class Participant < ApplicationRecord
   validates_format_of :email, :with => /\A[^@,\s]+@[^@,\s]+\.[^@,\s]+\z/
   validates :pincode, presence: true
   validates :gender, presence: true, inclusion: {in: self.gender_enum}
+  validates :occupation, presence: true
 
   def dropped_out program_id
     pp = program_participants.find_by(program_id: program_id)
@@ -30,22 +31,5 @@ class Participant < ApplicationRecord
   def destroy_temp_participant
     puts temp_participant_id.class
     TempParticipant.find(temp_participant_id).destroy unless temp_participant_id.nil?
-  end
-
-  def self.from_temp_participant t_p_id
-    t_p = TempParticipant.find(t_p_id)
-
-    Participant.new(
-      t_p.attributes
-        .except(
-          'city',
-          'id',
-          'program_id'
-        )
-        .merge(
-          city_id: City.find_by(name: t_p.city)&.id,
-          temp_participant_id: t_p.id
-        )
-    )
   end
 end

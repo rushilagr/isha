@@ -5,11 +5,23 @@
         th Name
         th Phone
         th Email
-        th Confirm
+        th Occupation
     tbody
-      - participants.each do |participant|
+      - t_participants.each do |t_participant|
         tr
-          td = participant.name
-          td = participant.phone
-          td = participant.email
-          td = link_to 'Confirm', new_participant_path(program_id: participant.program.id, temp_participant_id: participant.id, anchor: 'register')
+          - participant = t_participant.to_participant
+          = simple_form_for(participant, url: participants_path(program_id: @program.id, anchor: 'post_submit')) do |f|
+            td = f.input :name, label: false
+            td = f.input :phone, label: false
+            td = f.input :email, label: false
+            td = f.input :occupation, collection: Participant.occupation_enum, label: false
+
+            = f.input :pincode, label: false, as: :hidden
+            = f.input :gender, collection: Participant.gender_enum, label: false, as: :hidden
+            = f.association :city, label: false, as: :hidden
+            = f.input :temp_participant_id, value: t_participant.id, label: false, as: :hidden
+            = f.simple_fields_for :program_participants do |a|
+              = a.hidden_field :program_id, :value => @program.id
+
+            td.form-actions
+                = f.button :submit, value: "&#10003;".html_safe

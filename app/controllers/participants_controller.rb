@@ -15,10 +15,11 @@ class ParticipantsController < ApplicationController
 
   # GET /participants/new
   def new
-    @participant = params[:temp_participant_id] ? Participant.from_temp_participant(params[:temp_participant_id]) : Participant.new
-    @participant.program_participants.build
     set_program
     redirect_to program_confirmable_path if @program.nil?
+    
+    @participant = Participant.new
+    @participant.program_participants.build
   end
 
   # GET /participants/1/edit
@@ -36,7 +37,7 @@ class ParticipantsController < ApplicationController
       if @participant.save
         format.html {
           redirect_to new_participant_path(program_id: params[:program_id]),
-          notice: 'Participant created. You can create more, view existing ones or stop.',
+          notice: 'Participant successfully created.',
           flash: {success: 'YESSSS'}
         }
         format.json { render :show, status: :created, location: @participant }

@@ -3,18 +3,15 @@
     thead
       tr
         th Online Registrations
-        th Confirmed Participants
+        th Confirmations
         th Attendance
         th Starts at
         th Length
         th Type
         th Center
-        th Confirm
-        th Attendance
-        / th Creating Vol. Name
-        / th Creating Vol. Phone
         - if actions == true
-          th Actions
+          th Confirm
+          th Attendance
     tbody
       - programs.each do |program|
         tr
@@ -25,13 +22,11 @@
           td = program.length.to_s + ' Day'
           td = program.type
           td = program.center.name
-          td = link_to 'Confirm', new_participant_path(program_id: program.id)
-          td = link_to 'Attendance', program_attendance_path(id: program.id)
-          / td = program.user.name
-          / td = program.user.phone
-
           - if actions == true
-            td
-              = link_to 'Show ', program
-              = link_to 'Edit ', edit_program_path(program)
-              = link_to 'Destroy ', program, data: { confirm: 'Are you sure?' }, method: :delete
+            td = link_to 'Confirm', new_participant_path(program_id: program.id)
+            td = link_to 'Attendance', program_attendance_path(id: program.id)
+
+            / td
+            /   = link_to 'Show ', program
+            /   = link_to 'Edit ', edit_program_path(program)
+            /   = link_to 'Destroy ', program, data: { confirm: 'Are you sure?' }, method: :delete

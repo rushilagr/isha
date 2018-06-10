@@ -32,12 +32,13 @@ html
     br
 
     .container
-      - if notice
-        p.alert.alert-success = notice
-        br
-      - if alert
-        p.alert.alert-danger = alert if alert
-        br
-
       = yield
+
+      - if notice
+        br
+        p.alert.alert-success = notice
+      - if alert
+        br
+        p.alert.alert-danger = alert if alert
+
       br
