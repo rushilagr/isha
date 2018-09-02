@@ -8,4 +8,9 @@ Rails.application.routes.draw do
   }
   resources :users
   post 'users/create', to: 'users#create', as: 'create_user'
+  
+  resources :centers
+
+  get 'participants', to: 'participants#index', as: 'participants'
+  get 'participants/:id', to: 'participants#show', as: 'participant'
 end
