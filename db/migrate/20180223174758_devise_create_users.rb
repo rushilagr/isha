@@ -43,7 +43,11 @@ class DeviseCreateUsers < ActiveRecord::Migration[5.1]
     end
 
     add_index :users, :phone,                unique: true
-    add_index :users, :reset_password_token, unique: true
+
+    ## Dealing with ms sql server
+    # add_index :users, :reset_password_token, unique: true
+    execute "CREATE UNIQUE NONCLUSTERED INDEX index_users_on_reset_password_token ON dbo.users (reset_password_token) WHERE reset_password_token IS NOT NULL;"
+
     # add_index :users, :confirmation_token,   unique: true
     # add_index :users, :unlock_token,         unique: true
   end

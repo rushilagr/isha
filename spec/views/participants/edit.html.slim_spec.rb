@@ -9,7 +9,6 @@ RSpec.describe "participants/edit", type: :view do
       :pincode => "MyString",
       :gender => "MyString",
       :occupation => "MyString",
-      :city => nil
     ))
   end
 

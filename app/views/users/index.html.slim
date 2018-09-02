@@ -6,14 +6,14 @@ h1 Users
       tr
         th Name
         th Phone
-        th City
+        th Center
 
     tbody
       - @users.each do |user|
         tr
           td = user.name
           td = user.phone
-          td = user.city.name
+          td = user.center.name
           td = link_to 'Show', user
           td = link_to 'Edit', edit_user_path(user)
           td = link_to 'Destroy', user, data: { confirm: 'Are you sure?' }, method: :delete

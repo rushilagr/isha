@@ -9,7 +9,6 @@ RSpec.describe "participants/show", type: :view do
       :pincode => "Pincode",
       :gender => "Gender",
       :occupation => "Occupation",
-      :city => nil
     ))
   end
 

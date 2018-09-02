@@ -23,28 +23,52 @@
 # Rename the tables correctly
 # Make sure the environment variables are set
 
+# default: &default
+#   adapter: postgresql
+#   prepared_statements: false
+#   encoding: SQL_ASCII
+#   pool: <%= ENV["DB_POOL"] || ENV['MAX_THREADS'] || 5 %>
+#   min_messages: warning
+#   username: <%= ENV['POSTGRES_USERNAME'] %>
+#   password: <%= ENV['POSTGRES_PASSWORD'] %>
+#
+# development:
+#   <<: *default
+#   database: isha_development
+#   host: localhost
+#   reaping_frequency: <%= ENV['DB_REAPING_FREQUENCY'] || 10 %>
+#
+# test:
+#   <<: *default
+#   database: isha_test
+#   host: localhost
+#
+# production:
+#   <<: *default
+#   database: <%= ENV['postgres_database'] %>
+#   host: <%= ENV['postgres_host'] %>
+#   timeout: 5000
+
 default: &default
-  adapter: postgresql
-  prepared_statements: false
-  encoding: SQL_ASCII
-  pool: <%= ENV["DB_POOL"] || ENV['MAX_THREADS'] || 5 %>
-  min_messages: warning
-  username: <%= ENV['POSTGRES_USERNAME'] %>
-  password: <%= ENV['POSTGRES_PASSWORD'] %>
+  adapter: sqlserver
+  host: localhost
+  username: sa
+  password: Infinity!1
+
+  # username: <%= ENV['POSTGRES_USERNAME'] %>
+  # password: <%= ENV['POSTGRES_PASSWORD'] %>
 
 development:
   <<: *default
   database: isha_development
-  host: localhost
-  reaping_frequency: <%= ENV['DB_REAPING_FREQUENCY'] || 10 %>
 
 test:
   <<: *default
   database: isha_test
-  host: localhost
 
 production:
   <<: *default
-  database: <%= ENV['postgres_database'] %>
-  host: <%= ENV['postgres_host'] %>
-  timeout: 5000
+  ## SET THESE!!!
+  # database: <%= ENV['postgres_database'] %>
+  # host: <%= ENV['postgres_host'] %>
+  # timeout: 5000

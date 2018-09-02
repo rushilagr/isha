@@ -51,6 +51,6 @@ private
   end
 
   def user_params
-    params.require(:user).permit(:phone, :name, :city_id)
+    params.require(:user).permit(:phone, :name, :center_id)
   end
 end

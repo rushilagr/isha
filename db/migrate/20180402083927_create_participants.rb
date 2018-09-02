@@ -7,7 +7,6 @@ class CreateParticipants < ActiveRecord::Migration[5.1]
       t.string :pincode
       t.string :gender
       t.string :occupation
-      t.references :city, foreign_key: true
 
       t.timestamps
     end

@@ -64,8 +64,10 @@ gem 'simple_form'
 gem 'bootstrap_form'
 gem "select2-rails"
 
-gem 'pg'
+# gem 'pg'
 # gem 'mysql2'
+gem 'tiny_tds'
+gem 'activerecord-sqlserver-adapter'
 
 gem 'devise'
 

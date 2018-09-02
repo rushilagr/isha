@@ -5,38 +5,3 @@
         th Name
         th Phone
         th Email
-
-        - if defined?(attendance) && defined?(program_id)
-          th Attendance
-
-        - unless defined?(short) && short == true
-          th Programs Registered Count
-          th Pincode
-          th Gender
-          th Occupation
-          th City
-          th Actions
-
-    tbody
-      - participants.each do |participant|
-        tr
-          td = participant.name
-          td = participant.phone
-          td = participant.email
-
-          - if defined?(attendance) && defined?(program_id)
-            - if participant.dropped_out(program_id)
-              td = button_to 'Attending', program_attendance_toggle_path(id: program_id, participant_id: participant.id, dropped_out_status: false)
-            - else
-              td = button_to 'Drop Out', program_attendance_toggle_path(id: program_id, participant_id: participant.id, dropped_out_status: true)
-
-          - unless defined?(short) && short == true
-            td = participant.programs.count
-            td = participant.pincode
-            td = participant.gender
-            td = participant.occupation
-            td = participant.city.name
-
-            td = link_to 'Show', participant
-            td = link_to 'Edit', edit_participant_path(participant)
-            td = link_to 'Destroy', participant, data: { confirm: 'Are you sure?' }, method: :delete

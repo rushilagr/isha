@@ -3,7 +3,6 @@
 
   .form-inputs
     = f.input :name
-    = f.association :city, collection: City.all, label_method: :name, value_method: :id
 
   .form-actions
     = f.button :submit

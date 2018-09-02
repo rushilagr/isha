@@ -10,7 +10,6 @@ RSpec.describe "participants/index", type: :view do
         :pincode => "Pincode",
         :gender => "Gender",
         :occupation => "Occupation",
-        :city => nil
       ),
       Participant.create!(
         :name => "Name",
@@ -19,7 +18,6 @@ RSpec.describe "participants/index", type: :view do
         :pincode => "Pincode",
         :gender => "Gender",
         :occupation => "Occupation",
-        :city => nil
       )
     ])
   end

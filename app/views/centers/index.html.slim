@@ -5,13 +5,11 @@ h1 Centers
     thead
       tr
         th Name
-        th City
 
     tbody
       - @centers.each do |center|
         tr
           td = center.name
-          td = center.city.name
           td = link_to 'Show', center
           td = link_to 'Edit', edit_center_path(center)
           td = link_to 'Destroy', center, data: { confirm: 'Are you sure?' }, method: :delete
