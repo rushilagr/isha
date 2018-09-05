@@ -8,7 +8,7 @@ class CreateParticipants < ActiveRecord::Migration[5.1]
       t.string :gender
       t.string :occupation
       t.string :company
-      t.string :pin_code
+      t.string :pincode
       t.date :dob
 
       t.string :first_program
