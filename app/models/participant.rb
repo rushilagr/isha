@@ -1,13 +1,15 @@
 class Participant < ApplicationRecord
-  extend ParticipantEnums
-  attr_accessor :temp_participant_id
 
-  after_create :destroy_temp_participant
-
+  validates :pid, presence: true, numericality: true
   validates :name, presence: true
-  validates :phone, presence: true, :numericality => {message: 'Phone number mast have 10 digits only. No spaces, No symbols'}, :length => { :is => 10}, uniqueness: true
-  validates_format_of :email, :with => /\A[^@,\s]+@[^@,\s]+\.[^@,\s]+\z/
-  validates :pincode, presence: true
-  validates :gender, presence: true, inclusion: {in: self.gender_enum}
-  validates :occupation, presence: true
+  validates :phone, presence: true
+  validates_date :dob
+
+  validates :first_program, presence: true
+  validates :first_program_teacher, presence: true
+  validates_date :first_program_date
+  validates_date :shoonya_date, allow_blank: true
+  validates_date :bsp_date, allow_blank: true
+  validates_date :silence_date, allow_blank: true
+  validates_date :hata_yoga_date, allow_blank: true
 end
