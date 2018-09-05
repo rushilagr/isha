@@ -1,7 +1,42 @@
+= paginate participants, window: 0
+
 .table-responsive
   table.table.table-striped.table-bordered.table-sm
     thead
       tr
-        th Name
-        th Phone
-        th Email
+        th name
+        th phone
+        th email
+        th gender
+        th occupation
+        th company
+        th pincode
+        th dob
+        th program
+        th program center
+        th program teacher
+        th program date
+        th shoonya date
+        th bsp date
+        th silence date
+        th hata yoga date
+
+    tbody
+      - participants.each do |p|
+        tr
+          td = p.name
+          td = p.phone
+          td = p.email
+          td = p.gender
+          td = p.occupation
+          td = p.company
+          td = p.pincode
+          td = p.dob
+          td = p.first_program
+          td = p.first_program_center
+          td = p.first_program_teacher
+          td = p.first_program_date
+          td = p.shoonya_date
+          td = p.bsp_date
+          td = p.silence_date
+          td = p.hata_yoga_date

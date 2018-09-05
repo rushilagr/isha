@@ -4,7 +4,8 @@ class ParticipantsController < ApplicationController
   # GET /participants
   # GET /participants.json
   def index
-    @participants = Participant.all
+    current_page = params[:page] || 1
+    @participants = Participant.page(current_page).per(10)
   end
 
   # GET /participants/1

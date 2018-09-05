@@ -66,17 +66,12 @@
     color: rgb(255, 255, 255) !important;
 }
 
-span.help-block {
-   color: red;
-}
-
-p.help-block {
-   color: color('gray');
-   // color: theme-color-level("light", 5);
-}
-
 @media (max-width: 1025px) {
   .container {
     max-width: none !important;
   }
+}
+
+.pagination span {
+  margin: 0 5px;
 }

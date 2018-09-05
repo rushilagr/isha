@@ -64,6 +64,7 @@ gem 'simple_form'
 gem 'bootstrap_form'
 gem "select2-rails"
 
+gem 'kaminari'
 # gem 'pg'
 # gem 'mysql2'
 gem 'tiny_tds'
@@ -79,6 +80,8 @@ gem 'google_drive'
 gem 'rufus-scheduler'
 
 gem 'lograge'
+
+gem 'ransack'
 
 gem "sentry-raven"
 # gem 'jwt'
