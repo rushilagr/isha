@@ -1,3 +1,42 @@
 // Place all the styles related to the participants controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+.participants-index {
+
+  .jumbotron{
+    padding: 2rem 2rem;
+    width: fit-content;
+    margin: 0rem auto 2rem;
+
+  }
+
+  form {
+    .warning-text {
+      margin: -11px 0px 10px;
+    }
+    
+    .select2-container--bootstrap {
+      display: inline-block;
+      margin-right: 10px;
+    }
+
+    .remove_fields {
+      margin: 0 10px;
+    }
+
+    .submit .btn{
+      width: 10rem;
+    }
+  }
+
+
+  .pagination span {
+    margin: 0 5px;
+  }
+
+  .participants-table{
+    td {
+      text-transform: capitalize;
+    }
+  }
+}

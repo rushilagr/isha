@@ -1,42 +1,46 @@
 = paginate participants, window: 0
 
-.table-responsive
+
+.participants-table.table-responsive
   table.table.table-striped.table-bordered.table-sm
     thead
       tr
-        th name
-        th phone
-        th email
-        th gender
-        th occupation
-        th company
-        th pincode
-        th dob
-        th program
-        th program center
-        th program teacher
-        th program date
-        th shoonya date
-        th bsp date
-        th silence date
-        th hata yoga date
+        th = 'name'.capitalize
+        th = 'phone'.capitalize
+        th = 'email'.capitalize
+        th = 'gender'.capitalize
+        th = 'occupation'.capitalize
+        th = 'company'.capitalize
+        th = 'pincode'.capitalize
+        th = 'dob'.capitalize
+        th = 'program'.capitalize
+        th = 'program center'.capitalize
+        th = 'program teacher'.capitalize
+        th = 'program date'.capitalize
+        th = 'shoonya date'.capitalize
+        th = 'bsp date'.capitalize
+        th = 'silence date'.capitalize
+        th = 'hata yoga date'.capitalize
 
     tbody
       - participants.each do |p|
         tr
-          td = p.name
+          td = p.name .capitalize
           td = p.phone
           td = p.email
           td = p.gender
-          td = p.occupation
-          td = p.company
+          td = p.occupation .capitalize
+          td = p.company  .capitalize
           td = p.pincode
-          td = p.dob
-          td = p.first_program
-          td = p.first_program_center
-          td = p.first_program_teacher
-          td = p.first_program_date
+          td = p.dob  .to_formatted_s(:short)
+          td = p.first_program  .capitalize
+          td = p.first_program_center .capitalize
+          td = p.first_program_teacher  .capitalize
+          td = p.first_program_date .to_formatted_s(:short)
           td = p.shoonya_date
-          td = p.bsp_date
-          td = p.silence_date
-          td = p.hata_yoga_date
+          td = p.bsp_date &.to_formatted_s(:short)
+          td = p.silence_date &.to_formatted_s(:short)
+          td = p.hata_yoga_date &.to_formatted_s(:short)
+
+
+= paginate participants, window: 0

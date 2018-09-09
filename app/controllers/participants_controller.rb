@@ -4,8 +4,12 @@ class ParticipantsController < ApplicationController
   # GET /participants
   # GET /participants.json
   def index
-    current_page = params[:page] || 1
-    @participants = Participant.page(current_page).per(10)
+    @search = Participant.ransack(params[:q])
+    @participants = @search.result
+      .page(params[:page] || 1) .per(10)
+
+    @search.build_condition if @search.conditions.empty?
+    @search.build_sort if @search.sorts.empty?
   end
 
   # GET /participants/1

@@ -17,6 +17,8 @@
 //= require bootstrap-sprockets
 //= require select2
 
+//= require participants
+
 $(document).on("turbolinks:before-cache", function() {
     $('select').select2('destroy');
 });
