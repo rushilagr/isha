@@ -250,6 +250,8 @@ GEM
     pry-loudmouth (0.1.0)
     pry-rails (0.3.6)
       pry (>= 0.10.4)
+    pry-rake (0.0.3)
+      pry
     pry-rescue (1.4.5)
       interception (>= 0.5)
       pry
@@ -429,6 +431,7 @@ DEPENDENCIES
   pry-doc
   pry-loudmouth
   pry-rails
+  pry-rake
   pry-rescue
   pry-stack_explorer
   puma (~> 3.7)
