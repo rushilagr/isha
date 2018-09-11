@@ -90,6 +90,10 @@ gem "sentry-raven"
 
 # gem 'retriable'
 
+# gem 'carrierwave', '~> 1.0'
+
+gem 'sucker_punch'
+
 group :development, :test do
   gem 'rspec-rails', '~> 3.7'
 

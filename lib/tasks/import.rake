@@ -1,41 +1,29 @@
 namespace :import do
-  desc "Importing data from csvs"
+  desc "Importing data from csv's"
 
-  task pin_code_and_related_csv: :environment do |task, args|
-    require 'pry'
-    require 'pry-rails'
-    require 'pry-byebug'
+  # All import tasks share boiler-plate. DRY-ed that into a task-definer method.
+  def define_task_and_with_file_input task_name
+    # Define Task
+    task task_name => :environment do |task, args|
 
-    require 'csv'
+      # Accept file path argument
+      ARGV.each { |a| task a.to_sym do ; end }
+      file_path = ARGV[1]
 
-    # Boiler plate for passing args through rake
-    ARGV.each { |a| task a.to_sym do ; end }
-    file_path = ARGV[1]
-
-    file = File.read file_path
-    csv = CSV.parse(file, headers: true)
-
-    csv.each_with_index do |row, i|
-      begin
-        puts "Progress #{(i/csv.count * 100).round(2)}%" if i%10 == 0
-
-        row = row.to_hash.transform_keys(&:underscore)
-
-        # Skip of pincode already exists OR sector is OutOfDelhi
-        next if PinCode.find_by(string: row.fetch('pin_code'))
-        next if row.fetch('sector') == 'OutOfDelhiCircle'
-
-        circle = Circle.find_or_create_by! name: row.fetch('circle'), coordinator: row.fetch('circle_coordinator')
-        sector = Sector.find_or_create_by! name: row.fetch('sector'), coordinator: row.fetch('sector_coordinator'), circle_id: circle.id
-        center = Center.find_or_create_by! name: row.fetch('center'), coordinator: row.fetch('center_coordinator'), sector_id: sector.id
-        PinCode.create! string: row.fetch('pin_code'), lat: row.fetch('lat'), lng: row.fetch('lng'), state: row.fetch('state'), center_id: center.id
-
-      rescue StandardError => ex
-        puts "Error row ##{i + 1}"
-        raise ex
-
-      end
+      yield file_path
     end
   end
 
+
+  ## Import PinCodes
+  define_task_and_with_file_input :pin_codes do |file_path|
+    ImportPinCodesJob.perform_async file_path
+    # ImportPinCodesJob.new.perform file_path
+    # ImportPinCodesJob.new.perform file_path
+  end
+
+  ## Import participants
+  define_task_and_with_file_input :participants do |file_path|
+    ImportParticipantsJob.new.perform file_path
+  end
 end

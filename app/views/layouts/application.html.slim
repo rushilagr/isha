@@ -21,8 +21,10 @@ html
             = link_to('Sign In', new_user_session_path, class: 'nav-item nav-link')
           - else
             = link_to('Participants', participants_path, class: 'nav-item nav-link')
-            = link_to('Users', users_path, class: 'nav-item nav-link')
+            = link_to('Volunteers', users_path, class: 'nav-item nav-link')
             = link_to('Centers', centers_path, class: 'nav-item nav-link')
+            = link_to('Import PinCodes', admin_import_pin_codes_path, class: 'nav-item nav-link')
+            = link_to('Import Participants', admin_import_participants_path, class: 'nav-item nav-link')
             = link_to('Logout', destroy_user_session_path, method: :delete, class: 'nav-item nav-link ml-auto')
     br
     br
