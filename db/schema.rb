@@ -36,7 +36,6 @@ ActiveRecord::Schema.define(version: 20180909104901) do
     t.string "gender"
     t.string "occupation"
     t.string "company"
-    t.string "pincode"
     t.date "dob"
     t.string "first_program"
     t.string "first_program_center"

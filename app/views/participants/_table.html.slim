@@ -5,22 +5,23 @@
   table.table.table-striped.table-bordered.table-sm
     thead
       tr
-        th = 'name'.capitalize
-        th = 'phone'.capitalize
-        th = 'email'.capitalize
-        th = 'gender'.capitalize
-        th = 'occupation'.capitalize
-        th = 'company'.capitalize
-        th = 'pincode'.capitalize
-        th = 'dob'.capitalize
-        th = 'program'.capitalize
-        th = 'program center'.capitalize
-        th = 'program teacher'.capitalize
-        th = 'program date'.capitalize
-        th = 'shoonya date'.capitalize
-        th = 'bsp date'.capitalize
-        th = 'silence date'.capitalize
-        th = 'hata yoga date'.capitalize
+        th = 'Name'
+        th = 'Phone'
+        th = 'Email'
+        th = 'Center'
+        th = 'Occupation'
+        th = 'Program date'
+        th = 'Shoonya date'
+        th = 'Bsp date'
+        th = 'Silence date'
+        th = 'Hata yoga date'
+
+        / th = 'gender'.capitalize
+        / th = 'company'.capitalize
+        / th = 'dob'.capitalize
+        / th = 'program'.capitalize
+        / th = 'program center'.capitalize
+        / th = 'program teacher'.capitalize
 
     tbody
       - participants.each do |p|
@@ -28,19 +29,20 @@
           td = p.name .capitalize
           td = p.phone
           td = p.email
-          td = p.gender
+          td = p.pin_code.center.name
           td = p.occupation .capitalize
-          td = p.company  .capitalize
-          td = p.pincode
-          td = p.dob  .to_formatted_s(:short)
-          td = p.first_program  .capitalize
-          td = p.first_program_center .capitalize
-          td = p.first_program_teacher  .capitalize
           td = p.first_program_date .to_formatted_s(:short)
           td = p.shoonya_date
           td = p.bsp_date &.to_formatted_s(:short)
           td = p.silence_date &.to_formatted_s(:short)
           td = p.hata_yoga_date &.to_formatted_s(:short)
+
+          / td = p.gender
+          / td = p.company  .capitalize
+          / td = p.dob  .to_formatted_s(:short)
+          / td = p.first_program  .capitalize
+          / td = p.first_program_center .capitalize
+          / td = p.first_program_teacher  .capitalize
 
 
 = paginate participants, window: 0

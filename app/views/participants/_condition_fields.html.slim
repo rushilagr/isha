@@ -1,7 +1,6 @@
 .field
   = f.attribute_fields do |a|
-    = a.attribute_select
-    / = a.attribute_select associations: [:category]
+    = a.attribute_select associations: [:pin_code, :pin_code_center, :pin_code_center_sector, :pin_code_center_sector_circle]
 
   = f.predicate_select
 

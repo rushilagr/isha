@@ -7,6 +7,7 @@ class ParticipantsController < ApplicationController
     @search = Participant.ransack(params[:q])
     @participants = @search.result
       .page(params[:page] || 1) .per(10)
+      .includes(pin_code: [:center])
 
     @search.build_condition if @search.conditions.empty?
     @search.build_sort if @search.sorts.empty?
