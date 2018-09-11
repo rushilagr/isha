@@ -7,10 +7,11 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new user_params
-    puts User.generate_password
+    puts @user.password = User.generate_password
+
 
     if @user.save
-      ## Send sms with pass.
+      ## Send sms with @user.password
       redirect_to users_path, notice: 'User was successfully created.'
     else
       render :new and return
@@ -51,6 +52,6 @@ private
   end
 
   def user_params
-    params.require(:user).permit(:phone, :name, :center_id)
+    params.require(:user).permit(:phone, :name, :center_id, :role)
   end
 end

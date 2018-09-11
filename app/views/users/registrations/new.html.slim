@@ -4,6 +4,7 @@ h1 Sign up
   .form-inputs
     = f.input :phone, required: true, autofocus: true
     = f.input :name, required: true, autofocus: true
+    = f.input :role, required: true, autofocus: true, collection: User.roles
     = f.association :center
     = f.input :password, required: true, hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length)
   .form-actions

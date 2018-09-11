@@ -4,5 +4,6 @@
     = f.input :phone, required: true, autofocus: true
     = f.input :name, required: true
     = f.association :center
+    = f.input :role, required: true, autofocus: true, collection: User.roles
   .form-actions
     = f.button :submit, 'Submit'

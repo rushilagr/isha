@@ -33,8 +33,9 @@ PinCode.create!([
 
 ## Volunteers
 User.create!([
-  { name: 'Rushil Agrawal', phone: '9886477775', password: 'asdasdasd', center_id: 1 },
-  { name: 'Rohan C', phone: '1234123412', password: 'asdasdasd', center_id: 2 },
+  { name: 'Rushil Agrawal', phone: '9886477775', password: 'asdasdasd', center_id: 1, role: 'admin' },
+  { name: 'Rohan C', phone: '1234123412', password: 'asdasdasd', center_id: 2, role: 'coordinator' },
+  { name: 'Bhushan', phone: '1234123410', password: 'asdasdasd', center_id: 3, role: 'volunteer' },
 ])
 
 ## Participants
