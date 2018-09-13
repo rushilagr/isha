@@ -31,7 +31,7 @@
           td = p.email
           td = p.pin_code.center.name
           td = p.occupation .capitalize
-          td = p.first_program_date .to_formatted_s(:short)
+          td = p.i_e_date .to_formatted_s(:short)
           td = p.shoonya_date
           td = p.bsp_date &.to_formatted_s(:short)
           td = p.silence_date &.to_formatted_s(:short)
@@ -40,9 +40,9 @@
           / td = p.gender
           / td = p.company  .capitalize
           / td = p.dob  .to_formatted_s(:short)
-          / td = p.first_program  .capitalize
-          / td = p.first_program_center .capitalize
-          / td = p.first_program_teacher  .capitalize
+          / td = p.i_e_program_type  .capitalize
+          / td = p.i_e_center .capitalize
+          / td = p.i_e_teacher  .capitalize
 
 
 = paginate participants, window: 0

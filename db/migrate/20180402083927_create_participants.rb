@@ -11,10 +11,10 @@ class CreateParticipants < ActiveRecord::Migration[5.1]
       t.string :pincode
       t.date :dob
 
-      t.string :first_program
-      t.string :first_program_center
-      t.string :first_program_teacher
-      t.date :first_program_date
+      t.string :i_e_program_type
+      t.string :i_e_center
+      t.string :i_e_teacher
+      t.date :i_e_date
       t.date :shoonya_date
       t.date :bsp_date
       t.date :silence_date

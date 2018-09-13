@@ -9,14 +9,14 @@ class ImportCSV
     ## Traverse through each row
     csv.each_with_index do |row, i|
       begin
-        Rails.logger.debug "Progress #{(i/total_count * 100).round(2)}%" if i%10 == 0
+        Rails.logger.info "Progress #{(i/total_count * 100).round(2)}%" if i%10 == 0
 
-        row = row.to_hash.transform_keys(&:underscore)
-        block.call row ## Delegate control to block
+        block.call row.to_h ## Delegate control to block
 
       ## Wraps context around original error
       rescue StandardError => ex
-        raise Error.new(ex, row, i + 1)
+        raise Error.new(ex, row.to_h, i + 2)
+
       end
     end
   end

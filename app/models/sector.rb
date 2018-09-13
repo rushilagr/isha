@@ -3,7 +3,6 @@ class Sector < ApplicationRecord
   belongs_to :circle
 
   validates :name, :presence => true, uniqueness: true
-  validates :coordinator, :presence => true
 
   UNRANSACKABLE_ATTRIBUTES = ["id", "updated_at", "created_at", 'circle_id']
 

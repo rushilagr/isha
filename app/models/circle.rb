@@ -2,7 +2,6 @@ class Circle < ApplicationRecord
   has_many :sectors
 
   validates :name, :presence => true, uniqueness: true
-  validates :coordinator, :presence => true
 
   UNRANSACKABLE_ATTRIBUTES = ["id", "updated_at", "created_at"]
 

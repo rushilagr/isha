@@ -20,4 +20,3 @@ module IshaOps
 end
 
 Rails.logger = ActiveSupport::Logger.new(STDOUT)
-Rails.logger.level = :info

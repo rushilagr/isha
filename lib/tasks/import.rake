@@ -17,9 +17,7 @@ namespace :import do
 
   ## Import PinCodes
   define_task_and_with_file_input :pin_codes do |file_path|
-    ImportPinCodesJob.perform_async file_path
-    # ImportPinCodesJob.new.perform file_path
-    # ImportPinCodesJob.new.perform file_path
+    ImportPinCodesJob.new.perform file_path
   end
 
   ## Import participants
