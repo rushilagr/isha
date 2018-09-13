@@ -1,4 +1,4 @@
-= paginate participants, window: 0
+= paginate participants, window: 1
 
 
 .participants-table.table-responsive
@@ -29,9 +29,9 @@
           td = p.name .capitalize
           td = p.phone
           td = p.email
-          td = p.pin_code.center.name
-          td = p.occupation .capitalize
-          td = p.i_e_date .to_formatted_s(:short)
+          td = p.pin_code &.center &.name
+          td = p.occupation &.capitalize
+          td = p.i_e_date &.to_formatted_s(:short)
           td = p.shoonya_date
           td = p.bsp_date &.to_formatted_s(:short)
           td = p.silence_date &.to_formatted_s(:short)
@@ -45,4 +45,4 @@
           / td = p.i_e_teacher  .capitalize
 
 
-= paginate participants, window: 0
+= paginate participants, window: 1
