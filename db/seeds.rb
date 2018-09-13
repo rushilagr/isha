@@ -1,12 +1,10 @@
 Circle.create!([
   { coordinator: 'Maa Madhuchandra, Vinodhini Akka', name: 'Delhi'},
-  { coordinator: '', name: 'DUMMY'},
 ])
 
 Sector.create!([
   { circle_id: 1, coordinator: 'Arundhati', name: 'Cenral_And_South'},
   { circle_id: 1, coordinator: 'Sandeep', name: 'EastDelhi_AND_UP'},
-  { coordinator: '', name: 'DUMMY', circle_id: Circle.find_by(name: 'DUMMY').id},
 ])
 
 Center.create!([
@@ -24,7 +22,6 @@ Center.create!([
   { sector_id: 1, coordinator: 'Sagarika', name: 'Gurgaon'},
   { sector_id: 1, coordinator: 'Sagarika', name: 'Noida'},
   { sector_id: 1, coordinator: 'Sagarika', name: 'Ghaziabad'},
-  { coordinator: '', name: 'DUMMY', sector_id: Sector.find_by(name: 'DUMMY').id},
 ])
 
 PinCode.create!([
@@ -32,8 +29,9 @@ PinCode.create!([
   { string: '110027', state: 'DELHI', lat: 25.5, lng: 12.5, center_id: 1 },
   { string: '110028', state: 'DELHI', lat: 25.5, lng: 12.5, center_id: 1 },
   { string: '110029', state: 'DELHI', lat: 25.5, lng: 12.5, center_id: 1 },
-  { string: '', state: '', center_id: Center.find_by(name: 'DUMMY').id},
 ])
+
+CreateUnknownPinCodes.call
 
 ## Volunteers
 User.create!([

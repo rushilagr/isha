@@ -4,7 +4,7 @@ class Center < ApplicationRecord
 
   validates :name, :presence => true, uniqueness: true
 
-  scope :presentable, -> {where.not(name: 'DUMMY')}
+  scope :presentable, -> {where.not(name: 'Unknown')}
 
   UNRANSACKABLE_ATTRIBUTES = ["id", "updated_at", "created_at", 'sector_id']
 

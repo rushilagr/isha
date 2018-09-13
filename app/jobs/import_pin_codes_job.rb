@@ -3,12 +3,8 @@ class ImportPinCodesJob
 
   def perform file_path
 
-    ## Create dummy rows for empty pin_code
-    Circle.create!([ { coordinator: '', name: 'DUMMY'}, ])
-    Sector.create!([ { coordinator: '', name: 'DUMMY', circle_id: Circle.find_by(name: 'DUMMY').id}, ])
-    Center.create!([ { coordinator: '', name: 'DUMMY', sector_id: Sector.find_by(name: 'DUMMY').id}, ])
-    PinCode.create!([ { string: '', state: '', center_id: Center.find_by(name: 'DUMMY').id}, ])
-
+    ## Create rows for empty pin_code
+    CreateUnknownPinCodes.call
 
     ImportCSV.for_each_row file_path do |row|
       next if PinCode.find_by(string: row.fetch('pin_code'))
