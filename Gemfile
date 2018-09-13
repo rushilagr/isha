@@ -86,7 +86,7 @@ gem 'ransack'
 gem "sentry-raven"
 # gem 'jwt'
 # gem 'mqtt'
-# gem 'faraday'
+gem 'faraday'
 
 # gem 'retriable'
 

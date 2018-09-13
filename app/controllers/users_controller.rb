@@ -7,15 +7,19 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new user_params
-    puts @user.password = User.generate_password
+    @user.password = User.generate_password
 
-
-    if @user.save
-      ## Send sms with @user.password
-      redirect_to users_path, notice: 'User was successfully created.'
-    else
+    if !@user.save
       render :new and return
     end
+
+    if !SMS.send_password(@user.name, @user.phone, @user.password)
+      @sms_failed = true
+      @user.destroy
+      render :new and return
+    end
+
+    redirect_to users_path, notice: 'User was successfully created.'
   end
 
   def index

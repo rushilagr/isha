@@ -1,9 +1,9 @@
 = simple_form_for(@user, url: url) do |f|
   = f.error_notification
   .form-inputs
-    = f.input :phone, required: true, autofocus: true
+    = f.input :phone, required: true, autofocus: true, placeholder: '10 digit mobile number without symbols or country code'
     = f.input :name, required: true
-    = f.association :center
+    = f.association :center, collection: Center.presentable
     = f.input :role, required: true, autofocus: true, collection: User.roles
   .form-actions
     = f.button :submit, 'Submit'

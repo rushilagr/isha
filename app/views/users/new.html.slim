@@ -1,2 +1,4 @@
 h2 Create a Volunteer
+- if @sms_failed
+  .text-danger Re-check this phone number.
 == render partial: 'form', locals: {url: create_user_path}
