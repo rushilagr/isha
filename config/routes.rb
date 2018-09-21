@@ -17,4 +17,6 @@ Rails.application.routes.draw do
 
   match 'admin/import_participants', to: 'admin#import_participants', as: 'admin_import_participants', via: [:get, :post]
   match 'admin/import_pin_codes', to: 'admin#import_pin_codes', as: 'admin_import_pin_codes', via: [:get, :post]
+
+  resources :call_tasks
 end

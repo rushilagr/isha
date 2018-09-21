@@ -1,0 +1,23 @@
+h1 Listing call_tasks
+
+table
+  thead
+    tr
+      th Name
+      th Creator
+      th Calls to make
+      th Callers
+      th
+
+  tbody
+    - @call_tasks.each do |call_task|
+      tr
+        td = call_task.name
+        td = call_task.creator.name
+        td = call_task.participants.count
+        td = call_task.callers.count
+        td = link_to 'Show', call_task
+
+br
+
+= link_to 'New Call task', new_call_task_path
