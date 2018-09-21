@@ -2,6 +2,9 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable, :authentication_keys => [:phone]
 
   belongs_to :center
+  has_many :created_call_tasks, foreign_key: 'creator_id', class_name: 'CallTask'
+  has_many :call_task_callers, foreign_key: :caller_id
+  has_many :assigned_call_tasks, through: :call_task_callers, source: :call_task
 
   validates :phone, :presence => true, :numericality => true, :length => { :is => 10}, uniqueness: true
   validates :name, presence: true

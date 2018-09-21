@@ -10,7 +10,37 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180909104901) do
+ActiveRecord::Schema.define(version: 20180921142252) do
+
+  create_table "call_task_callers", force: :cascade do |t|
+    t.bigint "caller_id"
+    t.bigint "call_task_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["call_task_id"], name: "index_call_task_callers_on_call_task_id"
+    t.index ["caller_id"], name: "index_call_task_callers_on_caller_id"
+  end
+
+  create_table "call_task_participants", force: :cascade do |t|
+    t.string "status"
+    t.string "caller_comment"
+    t.bigint "participant_id"
+    t.bigint "call_task_id"
+    t.bigint "call_task_caller_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["call_task_caller_id"], name: "index_call_task_participants_on_call_task_caller_id"
+    t.index ["call_task_id"], name: "index_call_task_participants_on_call_task_id"
+    t.index ["participant_id"], name: "index_call_task_participants_on_participant_id"
+  end
+
+  create_table "call_tasks", force: :cascade do |t|
+    t.string "name"
+    t.bigint "creator_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["creator_id"], name: "index_call_tasks_on_creator_id"
+  end
 
   create_table "centers", force: :cascade do |t|
     t.string "name"
@@ -92,6 +122,8 @@ ActiveRecord::Schema.define(version: 20180909104901) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, where: "([reset_password_token] IS NOT NULL)"
   end
 
+  add_foreign_key "call_task_callers", "users", column: "caller_id"
+  add_foreign_key "call_tasks", "users", column: "creator_id"
   add_foreign_key "centers", "sectors"
   add_foreign_key "participants", "pin_codes"
   add_foreign_key "pin_codes", "centers"

@@ -1,5 +1,7 @@
 class Participant < ApplicationRecord
   belongs_to :pin_code
+  has_many :call_task_participants
+  has_many :call_tasks, through: :call_task_participants
 
   validates :pid, presence: true
   validates :name, presence: true
@@ -16,7 +18,7 @@ class Participant < ApplicationRecord
   def strip_all_strings
     ["pid", "name", "phone", "email", "gender", "occupation", "company", "i_e_program_type", "i_e_center", "i_e_teacher"]
       .each do |atr|
-        
+
         atr_value = instance_eval(atr)
         self.send("#{atr}=", atr_value.strip) if atr_value
       end
