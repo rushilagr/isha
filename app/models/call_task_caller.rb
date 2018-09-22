@@ -4,4 +4,7 @@ class CallTaskCaller < ApplicationRecord
 
   has_many :call_task_participants
   has_many :participants, through: :call_task_participants
+
+  ## Each caller for a call_task should be unique
+  validates :caller_id, uniqueness: { scope: :call_task_id }
 end

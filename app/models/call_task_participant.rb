@@ -5,6 +5,9 @@ class CallTaskParticipant < ApplicationRecord
 
   delegate :caller, :to => :call_task_caller, :allow_nil => true
 
+  ## Each callee for a call_task should be unique
+  validates :participant_id, uniqueness: { scope: :call_task_id }
+
   def self.statuses
     ['unassigned', 'currently_shown', 'picked_up', 'not_picked_up', 'call_back', 'wrong_number', 'dnd']
   end
