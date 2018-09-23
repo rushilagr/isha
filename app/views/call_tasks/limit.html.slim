@@ -1,0 +1,29 @@
+
+h1.text-center Calls per volunteer
+h5.text-center
+  i Decide the number of calls each volunteer needs to make
+br
+
+.jumbotron style='width: fit-content; margin: 0 auto;'
+  .row
+
+    .col-md-auto.estimate
+      b.mb-1.d-block Estimate
+
+      i Total Participants
+      p.d-inline = ": #{@call_task.participants.count}"
+      br
+
+      i Total Volunteers
+      p.d-inline = ": #{@call_task.callers.count}"
+      br
+
+      i Avg. calls per volunteer
+      p.d-inline = ": #{@call_task.calculate_average_calls_per_caller}"
+      br
+
+    .col-md-auto
+      = simple_form_for @call_task, url: call_task_limit_path, method: :post do |f|
+        = f.error_notification
+        = f.input :max_calls_per_caller, label_html: {class: 'font-weight-bold'}, label: 'Current calls per Vol.'
+        = f.submit 'Submit'

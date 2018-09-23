@@ -59,7 +59,7 @@ Participant.create!([
 ])
 
 CallTask.create!([
-  { name: 'YnT JNT', creator_id: User.first.id },
+  { name: 'YnT JNT', creator_id: User.first.id, max_calls_per_caller: 5 },
 ])
 
 CallTaskCaller.create!([

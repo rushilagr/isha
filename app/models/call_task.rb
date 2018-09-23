@@ -8,8 +8,14 @@ class CallTask < ApplicationRecord
   has_many :participants, through: :call_task_participants
 
   validates :name, presence: true
+  validates :max_calls_per_caller, numericality: {greater_than: 0}, on: :update
 
   def incomplete?
-    (participants.count == 0 || callers.count == 0) ? true : false
+    (participants.count == 0 || callers.count == 0 || max_calls_per_caller.nil?) ? true : false
   end
+
+  def calculate_average_calls_per_caller
+    (participants.count / callers.count.to_f).to_i
+  end
+
 end

@@ -3,7 +3,7 @@
     h1 Edit Volunteers List
   .col-auto
     - unless @assigned_callers.empty?
-      = link_to 'Next Step', call_task_path(@call_task), class: 'btn btn-info btn-lg', flash_notice: ''
+      = link_to 'Next Step', call_task_limit_path(@call_task), class: 'btn btn-info btn-lg', flash_notice: ''
 
 br
 

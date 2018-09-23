@@ -34,5 +34,8 @@ Rails.application.routes.draw do
   # CT Destroy Participants
   post 'call_tasks/:id/participants/destroy', to: 'call_tasks#participants_destroy', as: 'call_task_participants_destroy'
 
+  match 'call_tasks/:id/limit', to: 'call_tasks#limit', as: 'call_task_limit', via: [:get, :post]
+
+
   ## -----------------------------------------------
 end

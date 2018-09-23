@@ -1,5 +1,5 @@
 class CallTasksController < ApplicationController
-  before_action :set_call_task, only: [:show, :edit, :update, :destroy, :callers, :participants, :participants_destroy]
+  before_action :set_call_task, only: [:show, :edit, :update, :destroy, :callers, :participants, :participants_destroy, :limit]
 
 
   ##-------------------------------------------------------------
@@ -61,7 +61,7 @@ class CallTasksController < ApplicationController
   def caller_toggle
     if request.put?
       CallTaskCaller.create! caller_id: params[:c_id], call_task_id: params[:id]
-      notice = "Volunteer created."
+      notice = "Volunteer added."
 
     elsif request.delete?
       CallTaskCaller.find_by(caller_id: params[:c_id]).destroy
@@ -110,6 +110,19 @@ class CallTasksController < ApplicationController
 
 
   ##-------------------------------------------------------------
+  ## Call Limit
+  ##-------------------------------------------------------------
+
+  def limit
+    if request.post?
+      if @call_task.update(call_task_params)
+        redirect_to call_task_path(@call_task), notice: 'Calling task successfully created.'
+      end
+    end
+  end
+
+
+  ##-------------------------------------------------------------
   ## Private
   ##-------------------------------------------------------------
 
@@ -124,7 +137,7 @@ class CallTasksController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def call_task_params
-      params.require(:call_task).permit(:name, :creator_id)
+      params.require(:call_task).permit(:name, :creator_id, :max_calls_per_caller)
     end
 
     def click_here_link_to_ct path
