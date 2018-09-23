@@ -15,6 +15,8 @@ class Participant < ApplicationRecord
 
   before_create :strip_all_strings
 
+  scope :valid_phone, -> {where.not(phone: nil)}
+
   def strip_all_strings
     ["pid", "name", "phone", "email", "gender", "occupation", "company", "i_e_program_type", "i_e_center", "i_e_teacher"]
       .each do |atr|

@@ -4,13 +4,11 @@ class ParticipantsController < ApplicationController
   # GET /participants
   # GET /participants.json
   def index
-    @search = Participant.ransack(params[:q])
-    @participants = @search.result
-      .page(params[:page] || 1) .per(10)
-      .includes(pin_code: [:center])
+    @search = build_ransack_search Participant
 
-    @search.build_condition if @search.conditions.empty?
-    @search.build_sort if @search.sorts.empty?
+    @participants = @search.result
+    .page(params[:page] || 1) .per(10)
+    .includes(pin_code: [:center])
   end
 
   # GET /participants/1

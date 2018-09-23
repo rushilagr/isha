@@ -8,4 +8,8 @@ class CallTask < ApplicationRecord
   has_many :participants, through: :call_task_participants
 
   validates :name, presence: true
+
+  def incomplete?
+    (participants.count == 0 || callers.count == 0) ? true : false
+  end
 end

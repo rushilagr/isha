@@ -31,4 +31,12 @@ class User < ApplicationRecord
   def will_save_change_to_email?
     false
   end
+
+  def incomplete_calling_task?
+    (created_call_tasks.any? { |ct| ct.incomplete? }) ? true : false
+  end
+
+  def last_incomplete_calling_task
+    created_call_tasks.select { |ct| ct.incomplete? }.last
+  end
 end

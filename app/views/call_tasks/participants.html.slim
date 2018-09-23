@@ -1,0 +1,57 @@
+.text-center
+  h1 Calling List
+br
+
+
+/ .ct_details_section
+/   h5.d-inline
+/     i Calling Task Details
+/   a data-toggle="collapse" href="#ct_details" role="button" aria-expanded="false" aria-controls="collapseExample"
+/     = " show/hide >"
+/   br
+/
+/   .collapse#ct_details
+/     = render partial: 'table', locals: {call_tasks: [@call_task]}
+/   br
+
+
+
+
+.participants-index
+  .jumbotron
+
+    .text-center
+      h3 Search
+      h5
+        i Enter one or more search condition to find meditators
+      br
+
+
+    = search_form_for @search, url: call_task_participants_path(@call_task) do |f|
+
+      = f.condition_fields do |c|
+        = render partial: "participants/condition_fields", locals: {f: c}
+
+      => link_to_add_participant_fields "Add Condition ", f, :condition
+      br
+
+      .submit.text-center = f.submit "SEARCH", class: 'btn btn-success btn-sm', name: 'submit-search'
+
+      br
+
+      - if params[:q]
+        br
+        .text-center
+          h5 = "#{@participants.count} new results found"
+          = f.submit 'Add Results to Calling List', class: 'btn btn-info btn-sm', name: 'submit-post'
+
+
+- if (list_size = @call_task.participants.count) > 0
+.row.justify-content-between
+  .col-auto
+    = "Calling List size: #{list_size} "
+    br
+    = link_to 'Click here to reset the list', call_task_participants_destroy_path(@call_task), data: {confirm: 'This will delete the entire calling list. Are you sure?'}, method: :post
+
+  .col.col-auto
+    = link_to 'Next Step', call_task_callers_path(@call_task), class: 'btn btn-lg btn-info'

@@ -1,0 +1,58 @@
+.row.justify-content-between
+  .col-auto
+    h1 Edit Volunteers List
+  .col-auto
+    - unless @assigned_callers.empty?
+      = link_to 'Next Step', call_task_path(@call_task), class: 'btn btn-info btn-lg', flash_notice: ''
+
+br
+
+/ .ct_details_section
+/   h5.d-inline
+/     i Calling Task Details
+/   a data-toggle="collapse" href="#ct_details" role="button" aria-expanded="false" aria-controls="collapseExample"
+/     = " show/hide >"
+/   br
+/
+/   .collapse#ct_details
+/     = render partial: 'table', locals: {call_tasks: [@call_task]}
+/   br
+
+
+- unless @assigned_callers.empty?
+  h5
+    i Selected Volunteers
+
+  .table-responsive
+    table.table.table-striped.table-bordered.table-sm
+      thead
+        tr
+          th Name
+          th Phone
+
+      tbody
+        - @assigned_callers.each do |cl|
+          tr
+            td = cl.name
+            td = cl.phone
+            td = link_to 'Delete', edit_call_task_caller_path(@call_task.id, cl.id), method: :delete, class: 'btn btn-danger btn-sm'
+    br
+
+
+h5.d-inline
+  i Add Volunteers to list
+= link_to 'Create more volunteers', new_user_path(flash_notice: "After creating volunteers, click on the navbar link 'Current Calling Task"), class: 'btn btn-primary btn-sm ml-2 mb-2'
+
+.table-responsive
+  table.table.table-striped.table-bordered.table-sm
+    thead
+      tr
+        th Name
+        th Phone
+
+    tbody
+      - @unassigned_callers.each do |user|
+        tr
+          td = user.name
+          td = user.phone
+          td = link_to 'Add', edit_call_task_caller_path(@call_task.id, user.id), method: :put, class: 'btn btn-sm btn-success'

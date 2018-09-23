@@ -1,74 +1,133 @@
 class CallTasksController < ApplicationController
-  before_action :set_call_task, only: [:show, :edit, :update, :destroy]
+  before_action :set_call_task, only: [:show, :edit, :update, :destroy, :callers, :participants, :participants_destroy]
 
-  # GET /call_tasks
-  # GET /call_tasks.json
+
+  ##-------------------------------------------------------------
+  ## Scaffold
+  ##-------------------------------------------------------------
+
+
   def index
-    @call_tasks = CallTask.all.includes :creator, call_task_callers: [:caller], call_task_participants: [:participant]
+    @call_tasks = CallTask
+      .where(creator_id: current_user.id)
+      .includes :creator, call_task_callers: [:caller], call_task_participants: [:participant]
   end
 
-  # GET /call_tasks/1
-  # GET /call_tasks/1.json
   def show
   end
 
-  # GET /call_tasks/new
   def new
     @call_task = CallTask.new
   end
 
-  # GET /call_tasks/1/edit
   def edit
   end
 
-  # POST /call_tasks
-  # POST /call_tasks.json
   def create
-    @call_task = CallTask.new(call_task_params)
+    @call_task = CallTask.new(call_task_params.merge creator_id: current_user.id)
 
-    respond_to do |format|
-      if @call_task.save
-        format.html { redirect_to @call_task, notice: 'Call task was successfully created.' }
-        format.json { render :show, status: :created, location: @call_task }
-      else
-        format.html { render :new }
-        format.json { render json: @call_task.errors, status: :unprocessable_entity }
-      end
+    if @call_task.save
+      redirect_to call_task_participants_path(@call_task.id), notice: 'Here you can create the Calling List for this task. Make a search, and those meditators can be added to the list.'
+    else
+      render :new
     end
   end
 
-  # PATCH/PUT /call_tasks/1
-  # PATCH/PUT /call_tasks/1.json
   def update
-    respond_to do |format|
-      if @call_task.update(call_task_params)
-        format.html { redirect_to @call_task, notice: 'Call task was successfully updated.' }
-        format.json { render :show, status: :ok, location: @call_task }
-      else
-        format.html { render :edit }
-        format.json { render json: @call_task.errors, status: :unprocessable_entity }
-      end
+    if @call_task.update(call_task_params)
+      redirect_to @call_task, notice: 'Call task was successfully updated.'
+    else
+      render :edit
     end
   end
 
-  # DELETE /call_tasks/1
-  # DELETE /call_tasks/1.json
   def destroy
     @call_task.destroy
-    respond_to do |format|
-      format.html { redirect_to call_tasks_url, notice: 'Call task was successfully destroyed.' }
-      format.json { head :no_content }
+    redirect_to call_tasks_url, notice: 'Call task was successfully destroyed.'
+  end
+
+
+  ##-------------------------------------------------------------
+  ## Callers Mgmnt
+  ##-------------------------------------------------------------
+
+
+  def callers
+    @assigned_callers = @call_task.callers
+    @unassigned_callers = User.where(center_id: current_user.center_id) - @assigned_callers
+    flash.now[:notice] = 'Here you can add volunteers to make calls. Either add them from the list below, or create new volunteers.' unless flash.now[:notice]
+  end
+
+  def caller_toggle
+    if request.put?
+      CallTaskCaller.create! caller_id: params[:c_id], call_task_id: params[:id]
+      notice = "Volunteer created."
+
+    elsif request.delete?
+      CallTaskCaller.find_by(caller_id: params[:c_id]).destroy
+      notice = "Volunteer deleted."
+    end
+
+    redirect_to call_task_callers_path(params[:id]), notice: notice
+  end
+
+
+  ##-------------------------------------------------------------
+  ## Participants Mgmnt
+  ##-------------------------------------------------------------
+
+
+  def participants
+    @search = build_ransack_search Participant
+
+    @assigned_participants = @call_task.participants
+
+    @participants = @search .result .valid_phone - @assigned_participants
+
+    ## Dislay notice for results if searched
+    if params[:q]
+      flash.now[:notice] = "#{@participants.count} results found. Add results to calling list or search again."
+    end
+
+    ## If add to list list button clicked
+    if params.keys.include?('submit-post')
+      @participants.each do |parti|
+        CallTaskParticipant.create participant_id: parti.id, call_task_id: @call_task.id
+      end
+
+      flash[:notice] = "#{@participants.count} results added to calling list. Add more or #{click_here_link_to_ct('call_task_callers_path')} if list is complete."
+
+      # Redirect to reset the params & search query
+      redirect_to(call_task_participants_path)
     end
   end
+
+  def participants_destroy
+    @call_task.call_task_participants.destroy_all
+    flash.now[:alert] = 'Calling list deleted.'
+    redirect_to call_task_participants_path
+  end
+
+
+  ##-------------------------------------------------------------
+  ## Private
+  ##-------------------------------------------------------------
+
 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_call_task
-      @call_task = CallTask.find(params[:id])
+      @call_task = CallTask
+        .includes(:creator, call_task_callers: [:caller], call_task_participants: [:participant])
+        .find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def call_task_params
-      params.fetch(:call_task, {})
+      params.require(:call_task).permit(:name, :creator_id)
+    end
+
+    def click_here_link_to_ct path
+      view_context.link_to 'Click here', send(path, id: params[:id])
     end
 end

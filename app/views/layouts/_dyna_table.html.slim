@@ -1,0 +1,17 @@
+.table-responsive
+  table.table.table-striped.table-bordered.table-sm
+    thead
+      tr
+        - attrs.keys.each do |key|
+          th = key
+
+    tbody
+      - objs.each do |obj|
+        tr
+
+          - attrs.values.each do |val|
+            td = obj.send(val)
+
+          - if defined?(links)
+            - links.each do |name, path_obj|
+              td = link_to name, instance_eval(* path_obj)

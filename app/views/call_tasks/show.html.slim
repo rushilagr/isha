@@ -1,6 +1,31 @@
-p#notice = notice
+h1.text-center Manage Calling Task
+br
+
+h5
+  i Current Task Details
+== render partial: 'table', locals: {call_tasks: [@call_task], disable_actions: true}
+
+br
+br
 
 
-=> link_to 'Edit', edit_call_task_path(@call_task)
-'|
-=< link_to 'Back', call_tasks_path
+- [:callers, :participants].each do |type|
+
+  - heading = 'Volunteers List' if type == :callers
+  - heading = 'Calling List' if type == :participants
+
+  h5.d-inline
+    i = heading
+
+  - if !@call_task.send(type).empty?
+    a data-toggle="collapse" href="##{type}-list" role="button" aria-expanded="false" show/hide >
+
+    = link_to "Edit List", instance_eval("call_task_#{type}_path(@call_task)"), class: 'btn btn-primary ml-3 mb-2'
+
+    .collapse id="#{type}-list"
+      == render partial: 'layouts/dyna_table', locals: {objs: @call_task.send(type), attrs: {name: :name}}
+
+  - else
+    = link_to "Create List", instance_eval("call_task_#{type}_path(@call_task)"), class: 'btn btn-success ml-3 mb-2'
+
+  br

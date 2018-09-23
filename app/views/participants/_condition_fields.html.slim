@@ -2,7 +2,7 @@
   = f.attribute_fields do |a|
     = a.attribute_select associations: [:pin_code, :pin_code_center, :pin_code_center_sector, :pin_code_center_sector_circle]
 
-  = f.predicate_select
+  = f.predicate_select :only => [:cont, :not_cont, :eq, :not_eq, :blank, :not_blank, :null, :not_null]
 
   = f.value_fields do |v|
     = v.text_field :value
