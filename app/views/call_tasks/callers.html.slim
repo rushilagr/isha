@@ -3,22 +3,41 @@
     h1 Add Volunteers to calling task
   .col-auto
     - unless @assigned_callers.empty?
-      = link_to 'Next Step', call_task_limit_path(@call_task), class: 'btn btn-info btn-lg', flash_notice: ''
-
-br
-
-.ct_details_section
-  h5.d-inline
-    i Calling Task Details
-  br
-
-  = render partial: 'table', locals: {call_tasks: [@call_task]}
-  br
+      = button_to 'Click here when all volunteers added', call_task_update_status_path(id: @call_task, status: 'callers'), class: 'btn btn-info btn-lg'
 
 
-- unless @assigned_callers.empty?
-  h5
-    i Selected Volunteers
+.ct_details_section.mt-5
+  == render partial: 'layouts/dyna_table', locals: {objs: [@call_task], attrs: {'Calling Task Name' => :name, 'Volunteers List Size' => ['participants', 'count'], 'Calling List Size' => ['callers', 'count']}}
+
+
+
+.selected-pool
+  - unless @assigned_callers.empty?
+    .mt-5
+
+    h5.d-inline Selected Volunteers
+    a.ml-2 data-toggle="collapse" href="#selected" show / hide
+
+    .collapse.show#selected
+      .table-responsive
+        table.table.table-striped.table-bordered.table-sm
+          thead
+            tr
+              th Name
+              th Phone
+
+          tbody
+            - @assigned_callers.each do |cl|
+              tr
+                td = cl.name
+                td = cl.phone
+                td = link_to 'Delete', edit_call_task_caller_path(@call_task.id, cl.id), method: :delete, class: 'btn btn-danger btn-sm'
+
+
+
+.volunteer-pool.mt-5
+  h5.d-inline Volunteer Pool
+  = link_to 'Create more volunteers', new_user_path(flash_notice: "After creating volunteers, click the button on top  'Current Calling Task'"), class: 'btn btn-primary btn-sm ml-2 mb-2'
 
   .table-responsive
     table.table.table-striped.table-bordered.table-sm
@@ -28,28 +47,8 @@ br
           th Phone
 
       tbody
-        - @assigned_callers.each do |cl|
+        - @unassigned_callers.each do |user|
           tr
-            td = cl.name
-            td = cl.phone
-            td = link_to 'Delete', edit_call_task_caller_path(@call_task.id, cl.id), method: :delete, class: 'btn btn-danger btn-sm'
-    br
-
-
-h5.d-inline
-  i Unselected Volunteers
-= link_to 'Create more volunteers', new_user_path(flash_notice: "After creating volunteers, click the button on top  'Current Calling Task'"), class: 'btn btn-primary btn-sm ml-2 mb-2'
-
-.table-responsive
-  table.table.table-striped.table-bordered.table-sm
-    thead
-      tr
-        th Name
-        th Phone
-
-    tbody
-      - @unassigned_callers.each do |user|
-        tr
-          td = user.name
-          td = user.phone
-          td = link_to 'Add', edit_call_task_caller_path(@call_task.id, user.id), method: :put, class: 'btn btn-sm btn-success'
+            td = user.name
+            td = user.phone
+            td = link_to 'Add', edit_call_task_caller_path(@call_task.id, user.id), method: :put, class: 'btn btn-sm btn-success'

@@ -1,5 +1,5 @@
 class CallTasksController < ApplicationController
-  before_action :set_call_task, only: [:show, :edit, :update, :destroy, :callers, :participants, :participants_destroy, :limit]
+  before_action :set_call_task, only: [:show, :edit, :update, :destroy, :callers, :participants, :participants_destroy, :limit, :update_status]
 
 
   ##-------------------------------------------------------------
@@ -49,24 +49,36 @@ class CallTasksController < ApplicationController
 
 
   ##-------------------------------------------------------------
+  ## Creation Status
+  ##-------------------------------------------------------------
+
+  def update_status
+    status = params[:status]
+    method = (status + '_created').to_sym
+    @call_task.update! method => true
+
+    redirect_to @call_task
+  end
+
+  ##-------------------------------------------------------------
   ## Callers Mgmnt
   ##-------------------------------------------------------------
 
 
   def callers
     @assigned_callers = @call_task.callers
-    @unassigned_callers = User.where(center_id: current_user.center_id) - @assigned_callers
+    @unassigned_callers = User.where(center_id: current_user.center_id) - @assigned_callers - [current_user]
     flash.now[:notice] = 'Here you can add volunteers to make calls. Either add them from the list below, or create new volunteers.' unless flash.now[:notice]
   end
 
   def caller_toggle
     if request.put?
       CallTaskCaller.create! caller_id: params[:c_id], call_task_id: params[:id]
-      notice = "Volunteer added."
+      notice = "Volunteer added. Click the blue button when done."
 
     elsif request.delete?
       CallTaskCaller.find_by(caller_id: params[:c_id]).destroy
-      notice = "Volunteer deleted."
+      notice = "Volunteer deleted. Click the blue button when done."
     end
 
     redirect_to call_task_callers_path(params[:id]), notice: notice
@@ -125,13 +137,13 @@ class CallTasksController < ApplicationController
   private
     def redirect_to_call_task_step_if_pending
       sequence = [
-        {action: :participants, condition: 'participants'},
-        {action: :callers, condition: 'callers'},
+        {action: :participants, condition: 'participants_created'},
+        {action: :callers, condition: 'callers_created'},
         {action: :limit, condition: 'max_calls_per_caller'},
       ]
 
       sequence.each do |map|
-        @call_task.send(map[:condition]).present? ? next : (redirect_to(action: map[:action]) and return)
+        @call_task.send(map[:condition]) ? next : (redirect_to(action: map[:action]) and return)
       end
     end
 

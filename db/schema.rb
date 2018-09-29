@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180923183201) do
+ActiveRecord::Schema.define(version: 20180929134250) do
 
   create_table "call_task_callers", force: :cascade do |t|
     t.bigint "caller_id"
@@ -40,6 +40,8 @@ ActiveRecord::Schema.define(version: 20180923183201) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "max_calls_per_caller"
+    t.boolean "participants_created", default: false
+    t.boolean "callers_created", default: false
     t.index ["creator_id"], name: "index_call_tasks_on_creator_id"
   end
 

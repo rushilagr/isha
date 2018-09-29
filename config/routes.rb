@@ -24,6 +24,9 @@ Rails.application.routes.draw do
 
   resources :call_tasks
 
+  # CT Creation Status
+  post 'call_tasks/:id/update_status', to: 'call_tasks#update_status', as: 'call_task_update_status'
+
   # CT Callers dashboard
   get 'call_tasks/:id/callers', to: 'call_tasks#callers', as: 'call_task_callers'
   # CT Add / Remove Callers
