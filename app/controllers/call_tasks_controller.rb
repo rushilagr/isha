@@ -1,5 +1,5 @@
 class CallTasksController < ApplicationController
-  before_action :set_call_task, only: [:show, :edit, :update, :destroy, :callers, :participants, :participants_destroy, :limit, :update_status]
+  before_action :set_call_task, only: [:show, :edit, :update, :destroy, :callers, :participants, :participants_destroy, :limit, :update_status, :new_users, :caller_toggle]
 
 
   ##-------------------------------------------------------------
@@ -14,6 +14,9 @@ class CallTasksController < ApplicationController
   end
 
   def show
+    session.delete :persistent_flash
+    flash.delete :persistent
+
     redirect_to_call_task_step_if_pending
   end
 
@@ -74,14 +77,23 @@ class CallTasksController < ApplicationController
   def caller_toggle
     if request.put?
       CallTaskCaller.create! caller_id: params[:c_id], call_task_id: params[:id]
-      notice = "Volunteer added. Click the blue button when done."
+      flash[:notice] = "Volunteer added. Click the blue button when done."
 
     elsif request.delete?
       CallTaskCaller.find_by(caller_id: params[:c_id]).destroy
-      notice = "Volunteer deleted. Click the blue button when done."
+      flash[:notice] = "Volunteer deleted. Click the blue button when done."
     end
 
-    redirect_to call_task_callers_path(params[:id]), notice: notice
+    ## To assign callers instance vars
+    callers
+  end
+
+  def new_users
+    session[:persistent_flash] = {
+      message: 'Click here after creating all volunteers',
+      link: call_task_path(@call_task.id)
+    }
+    redirect_to new_user_path
   end
 
 

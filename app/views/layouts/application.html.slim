@@ -23,7 +23,6 @@ html
             = link_to('Meditators', participants_path, class: 'nav-item nav-link')
             = link_to('Volunteers', users_path, class: 'nav-item nav-link')
             = link_to('Calling Tasks', call_tasks_path, class: 'nav-item nav-link')
-            = link_to('Current Calling Task', call_task_path(current_user.last_incomplete_calling_task.id), class: 'nav-item nav-link btn btn-success d-inline') if current_user.incomplete_calling_task?
 
           -if current_user
             - if current_user.role == 'admin'
@@ -31,11 +30,16 @@ html
               = link_to('Import PinCodes', admin_import_pin_codes_path, class: 'nav-item nav-link')
               = link_to('Import Participants', admin_import_participants_path, class: 'nav-item nav-link')
 
-            = link_to('Logout', destroy_user_session_path, method: :delete, class: 'nav-item nav-link ml-auto')
+            = link_to('Current Calling Task', call_task_path(current_user.last_incomplete_calling_task.id), class: 'nav-item nav-link d-inline ml-auto') if current_user.incomplete_calling_task?
+            = link_to('Logout', destroy_user_session_path, method: :delete, class: 'nav-item nav-link')
     br
     br
 
     .container
+
+      - if flash[:persistent]
+        .alert.alert-info
+          = link_to flash[:persistent]['message'], flash[:persistent]['link'], class: 'btn-success btn'
 
       - if flash[:info]
         p.alert.alert-warning = flash[:info].html_safe

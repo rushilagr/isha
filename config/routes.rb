@@ -24,6 +24,9 @@ Rails.application.routes.draw do
 
   resources :call_tasks
 
+  # New users creating
+  get 'call_tasks/:id/new_users', to: 'call_tasks#new_users', as: 'call_task_new_users'
+
   # CT Creation Status
   post 'call_tasks/:id/update_status', to: 'call_tasks#update_status', as: 'call_task_update_status'
 

@@ -3,7 +3,7 @@
     h1 Add Volunteers to calling task
   .col-auto
     - unless @assigned_callers.empty?
-      = button_to 'Click here when all volunteers added', call_task_update_status_path(id: @call_task, status: 'callers'), class: 'btn btn-info btn-lg'
+      = button_to 'Click here when volunteer list final.', call_task_update_status_path(id: @call_task, status: 'callers'), class: 'btn btn-success btn-lg'
 
 
 .ct_details_section.mt-5
@@ -18,37 +18,13 @@
     h5.d-inline Selected Volunteers
     a.ml-2 data-toggle="collapse" href="#selected" show / hide
 
-    .collapse.show#selected
-      .table-responsive
-        table.table.table-striped.table-bordered.table-sm
-          thead
-            tr
-              th Name
-              th Phone
-
-          tbody
-            - @assigned_callers.each do |cl|
-              tr
-                td = cl.name
-                td = cl.phone
-                td = link_to 'Delete', edit_call_task_caller_path(@call_task.id, cl.id), method: :delete, class: 'btn btn-danger btn-sm'
-
+    .collapse.show#selected.table-div
+      == render partial: 'call_tasks/callers/table', locals: {users: @assigned_callers, action: 'delete'}
 
 
 .volunteer-pool.mt-5
   h5.d-inline Volunteer Pool
-  = link_to 'Create more volunteers', new_user_path(flash_notice: "After creating volunteers, click the button on top  'Current Calling Task'"), class: 'btn btn-primary btn-sm ml-2 mb-2'
+  = link_to 'Create more volunteers', call_task_new_users_path(@call_task.id), class: 'btn btn-primary btn-sm ml-2 mb-2'
 
-  .table-responsive
-    table.table.table-striped.table-bordered.table-sm
-      thead
-        tr
-          th Name
-          th Phone
-
-      tbody
-        - @unassigned_callers.each do |user|
-          tr
-            td = user.name
-            td = user.phone
-            td = link_to 'Add', edit_call_task_caller_path(@call_task.id, user.id), method: :put, class: 'btn btn-sm btn-success'
+  .table-div
+    == render partial: 'call_tasks/callers/table', locals: {users: @unassigned_callers, action: 'add'}

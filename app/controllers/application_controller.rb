@@ -1,8 +1,12 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
-  before_action :set_raven_context, :set_flash_from_params
+  before_action :set_raven_context, :set_flash_from_params, :set_persistent_flash_from_session
 
   private
+
+  def set_persistent_flash_from_session
+    flash.now[:persistent] = session[:persistent_flash] if session[:persistent_flash]
+  end
 
   def set_raven_context
     # Raven.user_context(id: session[:current_user_id])
