@@ -10,8 +10,4 @@
         tr
 
           - attrs.values.each do |val|
-            td = obj.send(val)
-
-          - if defined?(links)
-            - links.each do |name, path_obj|
-              td = link_to name, instance_eval(* path_obj)
+            td = obj.send_chain(val)

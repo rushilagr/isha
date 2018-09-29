@@ -1,40 +1,24 @@
 h1.text-center Manage Calling Task
 br
 
-== render partial: 'table', locals: {call_tasks: [@call_task], disable_actions: true}
+== render partial: 'table', locals: {call_tasks: [@call_task]}
 
 br
 br
 
 
-.lists
-  - [:callers, :participants].each do |type|
+.row
 
-    - heading = 'Volunteers List' if type == :callers
-    - heading = 'Calling List' if type == :participants
+  .col-md-6
+    h5.d-inline Volunteers List
+    a.ml-2 data-toggle="collapse" href="#volunteers-list" show / hide
 
-    h5.d-inline
-      i = heading
+    .collapse.show id="volunteers-list"
+      == render partial: 'layouts/dyna_table', locals: {objs: @call_task.callers, attrs: {name: :name}}
 
-    - if !@call_task.send(type).empty?
-      a.ml-2 data-toggle="collapse" href="##{type}-list" role="button" aria-expanded="false" show / hide
+  .col-md-6
+    h5.d-inline Calling List
+    a.ml-2 data-toggle="collapse" href="#calling-list" show / hide
 
-      = link_to "Edit", instance_eval("call_task_#{type}_path(@call_task)"), class: 'btn btn-primary ml-3 mb-2'
-
-      .collapse id="#{type}-list"
-        == render partial: 'layouts/dyna_table', locals: {objs: @call_task.send(type), attrs: {name: :name}}
-
-    - else
-      = link_to "Create List", instance_eval("call_task_#{type}_path(@call_task)"), class: 'btn btn-success ml-3 mb-2'
-
-    br
-
-h5.d-inline
-  i Volunteer call limit
-
-  - if @call_task.max_calls_per_caller.nil?
-    = link_to "Set Limit", call_task_limit_path(@call_task), class: 'btn btn-success ml-3 mb-2'
-
-  - else
-    = ": #{@call_task.max_calls_per_caller}"
-    = link_to "Edit", call_task_limit_path(@call_task), class: 'btn btn-primary ml-3 mb-2'
+    .collapse.show id="calling-list"
+      == render partial: 'layouts/dyna_table', locals: {objs: @call_task.participants, attrs: {name: :name}}

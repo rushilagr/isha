@@ -14,6 +14,7 @@ class CallTasksController < ApplicationController
   end
 
   def show
+    redirect_to_call_task_step_if_pending
   end
 
   def new
@@ -84,28 +85,20 @@ class CallTasksController < ApplicationController
 
     @participants = @search .result .valid_phone - @assigned_participants
 
-    ## Dislay notice for results if searched
-    if params[:q]
-      flash.now[:notice] = "#{@participants.count} results found. Add results to calling list or search again."
-    end
-
     ## If add to list list button clicked
     if params.keys.include?('submit-post')
       @participants.each do |parti|
         CallTaskParticipant.create participant_id: parti.id, call_task_id: @call_task.id
       end
 
-      flash[:notice] = "#{@participants.count} results added to calling list. Add more or #{click_here_link_to_ct('call_task_callers_path')} if list is complete."
-
       # Redirect to reset the params & search query
-      redirect_to(call_task_participants_path)
+      redirect_to(call_task_participants_path(added_count: @participants.count) ,anchor: 'search') and return
     end
   end
 
   def participants_destroy
     @call_task.call_task_participants.destroy_all
-    flash.now[:alert] = 'Calling list deleted.'
-    redirect_to call_task_participants_path
+    redirect_to call_task_participants_path(list_deleted: true, anchor: 'search')
   end
 
 
@@ -116,8 +109,10 @@ class CallTasksController < ApplicationController
   def limit
     if request.post?
       if @call_task.update(call_task_params)
-        redirect_to call_task_path(@call_task), notice: 'Calling task successfully created.'
+        redirect_to call_task_path(@call_task), notice: 'Calling task created. Your volunteers will receive SMSs to start calling.'
       end
+    else
+      flash.now[:notice] = 'Set a limit for the number of calls each volunteer will make. Details are provided below to help you.'
     end
   end
 
@@ -128,6 +123,18 @@ class CallTasksController < ApplicationController
 
 
   private
+    def redirect_to_call_task_step_if_pending
+      sequence = [
+        {action: :participants, condition: 'participants'},
+        {action: :callers, condition: 'callers'},
+        {action: :limit, condition: 'max_calls_per_caller'},
+      ]
+
+      sequence.each do |map|
+        @call_task.send(map[:condition]).present? ? next : (redirect_to(action: map[:action]) and return)
+      end
+    end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_call_task
       @call_task = CallTask

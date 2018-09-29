@@ -20,10 +20,10 @@ html
             = link_to('Sign Up', new_user_registration_path, class: 'nav-item nav-link')
             = link_to('Sign In', new_user_session_path, class: 'nav-item nav-link')
           - else
-            = link_to('Participants', participants_path, class: 'nav-item nav-link')
+            = link_to('Meditators', participants_path, class: 'nav-item nav-link')
             = link_to('Volunteers', users_path, class: 'nav-item nav-link')
             = link_to('Calling Tasks', call_tasks_path, class: 'nav-item nav-link')
-            = link_to('Current Calling Task', call_task_path(current_user.last_incomplete_calling_task.id), class: 'nav-item nav-link') if current_user.incomplete_calling_task?
+            = link_to('Current Calling Task', call_task_path(current_user.last_incomplete_calling_task.id), class: 'nav-item nav-link btn btn-success') if current_user.incomplete_calling_task?
 
           -if current_user &.role == 'admin'
             = link_to('Centers', centers_path, class: 'nav-item nav-link')

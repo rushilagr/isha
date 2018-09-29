@@ -1,22 +1,19 @@
 .row.justify-content-between
   .col-auto
-    h1 Edit Volunteers List
+    h1 Add Volunteers to calling task
   .col-auto
     - unless @assigned_callers.empty?
       = link_to 'Next Step', call_task_limit_path(@call_task), class: 'btn btn-info btn-lg', flash_notice: ''
 
 br
 
-/ .ct_details_section
-/   h5.d-inline
-/     i Calling Task Details
-/   a data-toggle="collapse" href="#ct_details" role="button" aria-expanded="false" aria-controls="collapseExample"
-/     = " show/hide >"
-/   br
-/
-/   .collapse#ct_details
-/     = render partial: 'table', locals: {call_tasks: [@call_task]}
-/   br
+.ct_details_section
+  h5.d-inline
+    i Calling Task Details
+  br
+
+  = render partial: 'table', locals: {call_tasks: [@call_task]}
+  br
 
 
 - unless @assigned_callers.empty?
@@ -40,8 +37,8 @@ br
 
 
 h5.d-inline
-  i Add Volunteers to list
-= link_to 'Create more volunteers', new_user_path(flash_notice: "After creating volunteers, click on the navbar link 'Current Calling Task"), class: 'btn btn-primary btn-sm ml-2 mb-2'
+  i Unselected Volunteers
+= link_to 'Create more volunteers', new_user_path(flash_notice: "After creating volunteers, click the button on top  'Current Calling Task'"), class: 'btn btn-primary btn-sm ml-2 mb-2'
 
 .table-responsive
   table.table.table-striped.table-bordered.table-sm

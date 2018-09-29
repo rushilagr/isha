@@ -40,7 +40,6 @@ User.create!([
   { name: 'Bhushan', phone: '1234123410', password: 'asdasdasd', center_id: 3, role: 'volunteer' },
 ])
 
-## Participants
 Participant.create!([
   {i_e_teacher: 'SADHGURU', shoonya_date: '', bsp_date: '', silence_date: '', hata_yoga_date: '', pid: "0080359405280270", name: 'RENUKA  TANEJA', pin_code_id: 1, phone: '9718655300', email: 'ltaneja@ymail.com', occupation: 'TGT', company: 'SKV  ', gender: 'F', dob: Date.current, i_e_program_type: 'INNER ENGINEERING 4 DAYS', i_e_date: Date.current, i_e_center: 'DELHI' },
   {i_e_teacher: 'SADHGURU', shoonya_date: '', bsp_date: '', silence_date: '', hata_yoga_date: '', pid: "04303594129273199", name: 'Sunil Kumar Gupta', pin_code_id: 2, phone: '7838556049', email: '', occupation: 'SERVICE', company: 'Tihar Jail', gender: 'M', dob: Date.current, i_e_program_type: 'INNER ENGINEERING 3 DAYS ', i_e_date: Date.current, i_e_center: 'DELHI' },

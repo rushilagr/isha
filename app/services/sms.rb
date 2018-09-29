@@ -15,7 +15,7 @@ Login at isha-ops.com/sign_in.
 
 You can change your password later."
 
-    send phone, msg
+    rails.env.production? ? send(phone, msg) : true
   end
 
   def send phone, msg

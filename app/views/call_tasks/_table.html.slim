@@ -19,22 +19,25 @@
             .row
               .col-2
                 = ct.callers.count
-              .col-2
-                = link_to 'Edit', call_task_callers_path(ct.id)
+              - unless defined?(disable_actions)
+                .col-2
+                  = link_to 'Edit', call_task_callers_path(ct.id)
 
           td
             .row
               .col-2
                 = ct.participants.count
-              .col-2
-                = link_to 'Edit', call_task_participants_path(ct.id)
+              - unless defined?(disable_actions)
+                .col-2
+                  = link_to 'Edit', call_task_participants_path(ct.id)
 
           td
             .row
               .col-2
                 = ct.max_calls_per_caller
-              .col-2
-                = link_to 'Edit', call_task_limit_path(ct.id)
+              - unless defined?(disable_actions)
+                .col-2
+                  = link_to 'Edit', call_task_limit_path(ct.id)
 
           - unless defined?(disable_actions)
             td = link_to 'View Details', ct, class: 'btn btn-sm btn-info'
