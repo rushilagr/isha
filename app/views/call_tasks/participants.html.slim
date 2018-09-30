@@ -54,4 +54,4 @@ br
             = link_to 'Click here to delete calling list', call_task_participants_destroy_path(@call_task), data: {confirm: 'This will delete the entire calling list. Are you sure?'}, method: :post
 
         .col-auto.text-center
-            = button_to 'Click here if all meditators have been added', call_task_update_status_path(id: @call_task.id, status: 'participants'), class: 'btn btn-primary btn-sm'
+            = button_to 'Click here if all meditators have been added', call_task_update_status_path(id: @call_task.id, status: 'participants'), class: 'btn btn-info btn-sm'

@@ -8,7 +8,11 @@ class CallTask < ApplicationRecord
   has_many :participants, through: :call_task_participants
 
   validates :name, presence: true
+
   validates :max_calls_per_caller, numericality: {greater_than: 0}, allow_blank: true
+  validate do
+   errors.add(:max_calls_per_caller, 'Must be <= size of calling list') if max_calls_per_caller > participants.count
+  end
 
   def incomplete?
     (!participants_created || !callers_created || max_calls_per_caller.nil? ) ? true : false
