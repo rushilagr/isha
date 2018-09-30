@@ -1,0 +1,26 @@
+nav.navbar.navbar-expand-lg.navbar-dark.bg-primary
+  = link_to 'IshaOps', root_path, class: 'navbar-brand'
+
+  button.navbar-toggler aria-controls="navbarSupportedContent" aria-expanded="false" aria-label=("Toggle navigation") data-target="#navbarSupportedContent" data-toggle="collapse" type="button"
+    span.navbar-toggler-icon
+
+  #navbarSupportedContent.collapse.navbar-collapse
+    .navbar-nav style='width:100%'
+    
+      - if !current_user
+        = link_to('Sign Up', new_user_registration_path, class: 'nav-item nav-link')
+        = link_to('Sign In', new_user_session_path, class: 'nav-item nav-link')
+
+      - else
+        = link_to('Volunteers', users_path, class: 'nav-item nav-link')
+        = link_to('Calling Tasks', call_tasks_path, class: 'nav-item nav-link')
+
+        - if current_user.admin?
+          = link_to('Meditators', participants_path, class: 'nav-item nav-link')
+          = link_to('Centers', centers_path, class: 'nav-item nav-link')
+          = link_to('Import PinCodes', admin_import_pin_codes_path, class: 'nav-item nav-link')
+          = link_to('Import Participants', admin_import_participants_path, class: 'nav-item nav-link')
+
+        - if current_user.incomplete_calling_task?
+          = link_to('Current Calling Task', call_task_path(current_user.last_incomplete_calling_task.id), class: 'nav-item nav-link d-inline ml-auto')
+        = link_to('Logout', destroy_user_session_path, method: :delete, class: 'nav-item nav-link')

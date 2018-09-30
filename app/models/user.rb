@@ -39,4 +39,16 @@ class User < ApplicationRecord
   def last_incomplete_calling_task
     created_call_tasks.select { |ct| ct.incomplete? }.last
   end
+
+  def admin?
+    role == 'admin'
+  end
+
+  def coordinator?
+    role == 'coordinator'
+  end
+
+  def volunteer?
+    role == 'volunteer'
+  end
 end
