@@ -110,7 +110,12 @@ class CallTasksController < ApplicationController
 
     @assigned_participants = @call_task.participants
 
-    @participants = @search .result .valid_phone - @assigned_participants
+    @participants = begin
+      ps = @search.result.valid_phone
+      ps = ps.joins(:pin_code).where(pin_codes: {center_id: current_user.center_id}) unless current_user.admin?
+      ps - @assigned_participants
+    end
+
 
     ## If add to list list button clicked
     if params.keys.include?('submit-post')
