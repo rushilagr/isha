@@ -77,15 +77,16 @@ class CallTasksController < ApplicationController
   def caller_toggle
     if request.put?
       CallTaskCaller.create! caller_id: params[:c_id], call_task_id: params[:id]
-      flash[:notice] = "Volunteer added. Click the blue button when done."
+      flash[:notice] = "Volunteer added. Click the greeh button when done."
 
     elsif request.delete?
       CallTaskCaller.find_by(caller_id: params[:c_id]).destroy
-      flash[:notice] = "Volunteer deleted. Click the blue button when done."
+      flash[:notice] = "Volunteer deleted. Click the greeh button when done."
     end
 
     ## To assign callers instance vars
     callers
+    # redirect_to call_task_callers_path(id: @call_task.id)
   end
 
   def new_users

@@ -1,2 +1,9 @@
+<% if @assigned_callers.present?  %>
+  $(".selected-pool").removeClass('d-none');
+  $(".continue-button").removeClass('d-none');
+<% else %>
+  $(".continue-button").addClass('d-none');
+<% end %>
+
 $(".volunteer-pool .table-div").html("<%= escape_javascript (render partial: 'call_tasks/callers/table', locals: {users: @unassigned_callers, action: 'add'}) %>")
 $(".selected-pool .table-div").html("<%= escape_javascript (render partial: 'call_tasks/callers/table', locals: {users: @assigned_callers, action: 'delete'}) %>")
