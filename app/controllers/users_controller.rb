@@ -8,6 +8,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new user_params
     @user.password = User.generate_password
+    @user.center_id = current_user.center_id unless current_user.role == 'admin'
 
     if !@user.save
       render :new and return
@@ -23,7 +24,11 @@ class UsersController < ApplicationController
   end
 
   def index
-    @users = User.all
+    if current_user.role == 'admin'
+      @users = User.all
+    else
+      @users = User.where(center_id: current_user.center_id)
+    end
   end
 
   def show

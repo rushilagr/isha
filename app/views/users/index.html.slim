@@ -1,4 +1,8 @@
-h1 Volunteers
+.row.align-items-center.mb-4
+  .col-auto
+    h1 Volunteers
+  .col-auto
+    = link_to 'Create New Volunteer', new_user_path, class: 'btn btn-primary m-0'
 
 .table-responsive
   table.table.table-striped.table-bordered.table-sm
@@ -19,7 +23,3 @@ h1 Volunteers
           td = link_to 'Show', user
           td = link_to 'Edit', edit_user_path(user)
           td = link_to 'Destroy', user, data: { confirm: 'Are you sure?' }, method: :delete
-
-br
-
-= link_to 'Create New Volunteer', new_user_path

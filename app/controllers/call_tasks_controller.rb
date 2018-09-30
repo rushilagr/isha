@@ -11,6 +11,8 @@ class CallTasksController < ApplicationController
     @call_tasks = CallTask
       .where(creator_id: current_user.id)
       .includes :creator, call_task_callers: [:caller], call_task_participants: [:participant]
+
+    redirect_to(new_call_task_path) unless @call_tasks.present?
   end
 
   def show
