@@ -4,26 +4,4 @@
   .col-4
     = button_to 'Confirm Details', call_task_review_confirm_path(@call_task), class: 'btn btn-success btn-lg btn-block m-0', data: {confirm: 'This will send out SMSs to all volunteers to start calling. Have you double checked all details?'}
 
-
-.details.mb-5
-  == render partial: 'table', locals: {call_tasks: [@call_task]}
-
-
-.row
-
-  .col-md-6
-    h5.d-inline Volunteers List
-    = link_to 'Edit', call_task_participants_path(@call_task.id), class: 'ml-3 text-white bg-primary p-1'
-    a.ml-2 data-toggle="collapse" href="#volunteers-list" show / hide
-
-    .collapse.show id="volunteers-list"
-      == render partial: 'layouts/dyna_table', locals: {objs: @call_task.callers, attrs: {name: :name}}
-
-
-  .col-md-6
-    h5.d-inline Calling List
-    = link_to 'Edit', call_task_callers_path(@call_task.id), class: 'ml-3 text-white bg-primary p-1'
-    a.ml-2 data-toggle="collapse" href="#calling-list" show / hide
-
-    .collapse.show id="calling-list"
-      == render partial: 'layouts/dyna_table', locals: {objs: @call_task.participants, attrs: {name: :name}}
+= render partial: 'details', locals: {call_task: @call_task}
