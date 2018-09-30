@@ -41,5 +41,5 @@
                   = link_to 'Edit', call_task_limit_path(ct.id)
 
 
-          - unless defined?(disable_actions)
+          - if !defined?(disable_actions) && defined?(view_details)
             td = link_to 'View Details', ct

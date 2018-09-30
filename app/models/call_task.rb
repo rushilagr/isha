@@ -11,15 +11,26 @@ class CallTask < ApplicationRecord
 
   validates :max_calls_per_caller, numericality: {greater_than: 0}, allow_blank: true
   validate do
-   errors.add(:max_calls_per_caller, 'Must be <= size of calling list') if max_calls_per_caller > participants.count
+    if max_calls_per_caller && participants.present? && max_calls_per_caller > participants.count
+      errors.add(:max_calls_per_caller, 'Must be <= size of calling list')
+    end
   end
 
   def incomplete?
-    (!participants_created || !callers_created || max_calls_per_caller.nil? ) ? true : false
+    !complete?
+  end
+
+  def complete?
+    participants_confirmed && callers_confirmed && max_calls_per_caller && confirmed
   end
 
   def calculate_average_calls_per_caller
     (participants.count / callers.count.to_f).to_i
   end
 
+  def send_confirmed_sms_to_callers
+    callers.each do |caller|
+      SMS.send_call_task_to_caller caller.name, caller.phone, name, creator.name, creator.phone
+    end
+  end
 end

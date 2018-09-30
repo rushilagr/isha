@@ -1,5 +1,5 @@
 class CallTasksController < ApplicationController
-  before_action :set_call_task, only: [:show, :edit, :update, :destroy, :callers, :participants, :participants_destroy, :limit, :update_status, :new_users, :caller_toggle]
+  before_action :set_call_task, only: [:show, :edit, :update, :destroy, :callers, :participants, :participants_destroy, :limit, :update_status, :new_users, :caller_toggle, :callers_confirm, :review, :review_confirm]
 
 
   ##-------------------------------------------------------------
@@ -19,7 +19,9 @@ class CallTasksController < ApplicationController
     session.delete :persistent_flash
     flash.delete :persistent
 
-    redirect_to_call_task_step_if_pending
+    unless redirect_to_call_task_step_if_pending
+      flash[:notice] = 'Calling task created. Your volunteers have received SMSs to start calling.'
+    end
   end
 
   def new
@@ -54,25 +56,17 @@ class CallTasksController < ApplicationController
 
 
   ##-------------------------------------------------------------
-  ## Creation Status
-  ##-------------------------------------------------------------
-
-  def update_status
-    status = params[:status]
-    method = (status + '_created').to_sym
-    @call_task.update! method => true
-
-    redirect_to @call_task
-  end
-
-  ##-------------------------------------------------------------
   ## Callers Mgmnt
   ##-------------------------------------------------------------
 
 
   def callers
     @assigned_callers = @call_task.callers
-    @unassigned_callers = User.where(center_id: current_user.center_id) - @assigned_callers - [current_user]
+    @unassigned_callers = begin
+      cs = current_user.admin? ? User.all : User.where(center_id: current_user.center_id)
+      cs - @assigned_callers - [current_user]
+    end
+
     flash.now[:notice] = 'Here you can add volunteers to make calls. Either add them from the list below, or create new volunteers.' unless flash.now[:notice]
   end
 
@@ -99,6 +93,11 @@ class CallTasksController < ApplicationController
     redirect_to new_user_path
   end
 
+  def callers_confirm
+    @call_task.update! callers_confirmed: true
+    redirect_to call_task_path(@call_task)
+  end
+
 
   ##-------------------------------------------------------------
   ## Participants Mgmnt
@@ -106,33 +105,38 @@ class CallTasksController < ApplicationController
 
 
   def participants
-    @search = build_ransack_search Participant
+    if request.put? || request.get?
+      @search = build_ransack_search Participant
 
-    @assigned_participants = @call_task.participants
+      @assigned_participants = @call_task.participants
 
-    @participants = begin
-      ps = @search.result.valid_phone
-      ps = ps.joins(:pin_code).where(pin_codes: {center_id: current_user.center_id}) unless current_user.admin?
-      ps - @assigned_participants
-    end
-
-
-    ## If add to list list button clicked
-    if params.keys.include?('submit-post')
-      @participants.each do |parti|
-        CallTaskParticipant.create participant_id: parti.id, call_task_id: @call_task.id
+      @participants = begin
+        ps = @search.result.valid_phone
+        ps = ps.joins(:pin_code).where(pin_codes: {center_id: current_user.center_id}) unless current_user.admin?
+        ps - @assigned_participants
       end
 
-      # Redirect to reset the params & search query
-      redirect_to(call_task_participants_path(added_count: @participants.count) ,anchor: 'search') and return
+      ## If add to list list button clicked
+      if params.keys.include?('submit-post')
+        @participants.each do |parti|
+          CallTaskParticipant.create participant_id: parti.id, call_task_id: @call_task.id
+        end
+
+        # Redirect to reset the params & search query
+        redirect_to(call_task_participants_path(added_count: @participants.count) ,anchor: 'search') and return
+      end
+    end
+
+    if request.delete?
+      @call_task.call_task_participants.destroy_all
+      redirect_to call_task_participants_path(list_deleted: true, anchor: 'search')
+    end
+
+    if request.post?
+      @call_task.update! participants_confirmed: true
+      redirect_to call_task_path(@call_task)
     end
   end
-
-  def participants_destroy
-    @call_task.call_task_participants.destroy_all
-    redirect_to call_task_participants_path(list_deleted: true, anchor: 'search')
-  end
-
 
   ##-------------------------------------------------------------
   ## Call Limit
@@ -150,6 +154,23 @@ class CallTasksController < ApplicationController
 
 
   ##-------------------------------------------------------------
+  ## Confirm
+  ##-------------------------------------------------------------
+
+  def review
+    flash.now[:notice] = 'Review the details and press confirm.'
+  end
+
+  def review_confirm
+    unless @call_task.confirmed
+      @call_task.update! confirmed: true
+      @call_task.send_confirmed_sms_to_callers
+    end
+
+    redirect_to call_task_path(@call_task)
+  end
+
+  ##-------------------------------------------------------------
   ## Private
   ##-------------------------------------------------------------
 
@@ -157,14 +178,19 @@ class CallTasksController < ApplicationController
   private
     def redirect_to_call_task_step_if_pending
       sequence = [
-        {action: :participants, condition: 'participants_created'},
-        {action: :callers, condition: 'callers_created'},
-        {action: :limit, condition: 'max_calls_per_caller'},
+        {action: :participants, conditions: ['participants_confirmed', ['participants', 'present?']]},
+        {action: :callers, conditions: ['callers_confirmed', ['callers', 'present?']]},
+        {action: :limit, conditions: ['max_calls_per_caller']},
+        {action: :review, conditions: ['confirmed']},
       ]
 
       sequence.each do |map|
-        @call_task.send(map[:condition]) ? next : (redirect_to(action: map[:action]) and return)
+        map[:conditions].each do |condition|
+          @call_task.send_chain(condition) ? next : (redirect_to(action: map[:action]) and return true)
+        end
       end
+
+      return false
     end
 
     # Use callbacks to share common setup or constraints between actions.

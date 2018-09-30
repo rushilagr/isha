@@ -11,14 +11,32 @@ Your password is #{password}
 
 Don't share this with anyone.
 
-Login at isha-ops.com/sign_in.
+Login at #{self.login_url}.
 
 You can change your password later."
 
-    Rails.env.production? ? send(phone, msg) : true
+    send(phone, msg)
+  end
+
+  def send_call_task_to_caller name, phone, call_task_name, assigner_name, assigner_phone
+    msg =
+"Namaskaram, #{name.capitalize}.
+
+You have been assigned to calling task '#{call_task_name}'
+
+Login at #{self.login_url} and look for the instructions there.
+
+For doubts, please contact #{assigner_name} at #{assigner_phone}"
+
+    send(phone, msg)
   end
 
   def send phone, msg
+    if !Rails.env.production?
+      Rails.logger.info msg
+      return true
+    end
+
     response = HttpApi.request({
       url: 'http://www.myvaluefirst.com/smpp/sendsms',
       method: 'get',
@@ -32,5 +50,9 @@ You can change your password later."
     })
 
     response.body == 'Sent.' ? true : false
+  end
+
+  def login_url
+    'http://isha-ops.org'
   end
 end

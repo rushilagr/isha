@@ -3,7 +3,7 @@
     h1 Add Volunteers to calling task
   .col-auto
     .continue-button class="#{@assigned_callers.empty? ? 'd-none' : ''}"
-      = button_to 'Click here when volunteer list final.', call_task_update_status_path(id: @call_task, status: 'callers'), class: 'btn btn-success btn-lg'
+      = button_to 'Click here when volunteer list final.', call_task_callers_confirm_path(@call_task), class: 'btn btn-success btn-lg'
 
 
 .ct_details_section.mt-5

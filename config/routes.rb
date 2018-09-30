@@ -24,23 +24,31 @@ Rails.application.routes.draw do
 
   resources :call_tasks
 
+
+  # Participants dashboard
+  match 'call_tasks/:id/participants', to: 'call_tasks#participants', as: 'call_task_participants', via: [:get, :post, :put, :delete]
+  # Destroy Participants
+  post 'call_tasks/:id/participants/destroy', to: 'call_tasks#participants_destroy', as: 'call_task_participants_destroy'
+
+
+  # Callers dashboard
+  get 'call_tasks/:id/callers', to: 'call_tasks#callers', as: 'call_task_callers'
+  # Add / Remove Callers
+  match 'call_tasks/:id/callers/:c_id', to: 'call_tasks#caller_toggle', as: 'edit_call_task_caller', via: [:delete, :put]
+  ## Confirm Callers
+  post 'call_tasks/:id/callers/confirm', to: 'call_tasks#callers_confirm', as: 'call_task_callers_confirm'
   # New users creating
   get 'call_tasks/:id/new_users', to: 'call_tasks#new_users', as: 'call_task_new_users'
 
-  # CT Creation Status
-  post 'call_tasks/:id/update_status', to: 'call_tasks#update_status', as: 'call_task_update_status'
 
-  # CT Callers dashboard
-  get 'call_tasks/:id/callers', to: 'call_tasks#callers', as: 'call_task_callers'
-  # CT Add / Remove Callers
-  match 'call_tasks/:id/callers/:c_id', to: 'call_tasks#caller_toggle', as: 'edit_call_task_caller', via: [:delete, :put]
-
-  # CT Participants dashboard
-  match 'call_tasks/:id/participants', to: 'call_tasks#participants', as: 'call_task_participants', via: [:get, :post]
-  # CT Destroy Participants
-  post 'call_tasks/:id/participants/destroy', to: 'call_tasks#participants_destroy', as: 'call_task_participants_destroy'
-
+  # Max calls per caller
   match 'call_tasks/:id/limit', to: 'call_tasks#limit', as: 'call_task_limit', via: [:get, :post]
+
+
+  # Review
+  get 'call_tasks/:id/review', to: 'call_tasks#review', as: 'call_task_review'
+  # Review Confirm
+  post 'call_tasks/:id/review_confirm', to: 'call_tasks#review_confirm', as: 'call_task_review_confirm'
 
 
   ## -----------------------------------------------

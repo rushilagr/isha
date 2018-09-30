@@ -3,7 +3,7 @@ br
 
 
 .ct_details_section.mb-5
-  == render partial: 'layouts/dyna_table', locals: {objs: [@call_task], attrs: {'Calling Task Name' => :name, 'Volunteers List Size' => ['participants', 'count']}}
+  == render partial: 'layouts/dyna_table', locals: {objs: [@call_task], attrs: {'Calling Task Name' => :name, 'Calling List Size' => ['participants', 'count']}}
 
 .participants-index.row.align-items-center#search
   .jumbotron
@@ -14,7 +14,7 @@ br
         i Enter one or more search condition to find meditators
 
 
-    = search_form_for @search, url: call_task_participants_path(@call_task, anchor: 'search') do |f|
+    = search_form_for @search, url: call_task_participants_path(@call_task, anchor: 'search'), method: :put do |f|
 
       = f.condition_fields do |c|
         = render partial: "participants/condition_fields", locals: {f: c}
@@ -54,4 +54,4 @@ br
             = link_to 'Click here to delete calling list', call_task_participants_destroy_path(@call_task), data: {confirm: 'This will delete the entire calling list. Are you sure?'}, method: :post
 
         .col-auto.text-center
-            = button_to 'Click here if all meditators have been added', call_task_update_status_path(id: @call_task.id, status: 'participants'), class: 'btn btn-info btn-sm'
+            = button_to 'Click here if all meditators have been added', call_task_participants_path(@call_task.id), class: 'btn btn-info'

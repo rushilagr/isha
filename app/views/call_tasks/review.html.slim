@@ -1,10 +1,12 @@
-h1.text-center Calling Task Details
-br
+.row.align-items-center.justify-content-between.mb-5
+  .col-auto
+    h1 Review task details
+  .col-4
+    = button_to 'Confirm Details', call_task_review_confirm_path(@call_task), class: 'btn btn-success btn-lg btn-block m-0', data: {confirm: 'This will send out SMSs to all volunteers to start calling. Have you double checked all details?'}
 
-== render partial: 'table', locals: {call_tasks: [@call_task]}
 
-br
-br
+.details.mb-5
+  == render partial: 'table', locals: {call_tasks: [@call_task]}
 
 
 .row
@@ -16,6 +18,7 @@ br
 
     .collapse.show id="volunteers-list"
       == render partial: 'layouts/dyna_table', locals: {objs: @call_task.callers, attrs: {name: :name}}
+
 
   .col-md-6
     h5.d-inline Calling List
