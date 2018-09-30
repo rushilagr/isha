@@ -14,7 +14,7 @@ class UsersController < ApplicationController
       render :new and return
     end
 
-    if !SMS.send_password(@user.name, @user.phone, @user.password)
+    if !SMS.send_password(@user.name, @user.phone, @user.password, current_user.name, current_user.phone)
       @sms_failed = true
       @user.destroy
       render :new and return

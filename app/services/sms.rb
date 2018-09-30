@@ -1,7 +1,7 @@
 module SMS
   module_function
 
-  def send_password name, phone, password
+  def send_password name, phone, password, assigner_name, assigner_phone
     msg =
 "Namaskaram, #{name.capitalize}.
 
@@ -12,8 +12,10 @@ Your password is #{password}
 Don't share this with anyone.
 
 Login at #{self.login_url}.
+You can change your password later.
 
-You can change your password later."
+For doubts, please contact #{assigner_name} at #{assigner_phone}
+"
 
     send(phone, msg)
   end
@@ -33,7 +35,9 @@ For doubts, please contact #{assigner_name} at #{assigner_phone}"
 
   def send phone, msg
     if !Rails.env.production?
+      Rails.logger.info 'SMS start ---------------------------------------------'
       Rails.logger.info msg
+      Rails.logger.info 'SMS end -----------------------------------------------'
       return true
     end
 
