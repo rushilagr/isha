@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180930132840) do
+ActiveRecord::Schema.define(version: 20181001114156) do
 
   create_table "call_task_callers", force: :cascade do |t|
     t.bigint "caller_id"
@@ -43,6 +43,7 @@ ActiveRecord::Schema.define(version: 20180930132840) do
     t.boolean "participants_confirmed", default: false
     t.boolean "callers_confirmed", default: false
     t.boolean "confirmed", default: false
+    t.text "script"
     t.index ["creator_id"], name: "index_call_tasks_on_creator_id"
   end
 

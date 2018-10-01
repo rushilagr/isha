@@ -16,6 +16,7 @@
 //= require popper
 //= require bootstrap-sprockets
 //= require select2
+//= require trix
 
 //= require participants
 

@@ -14,6 +14,9 @@
  *= require select2-bootstrap
  */
 
+@import 'trix';
+.trix-content {background: white;}
+
 @import 'colors';
 @import "bootstrap";
 @import 'defaults';

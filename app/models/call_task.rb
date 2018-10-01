@@ -8,6 +8,7 @@ class CallTask < ApplicationRecord
   has_many :participants, through: :call_task_participants
 
   validates :name, presence: true
+  validates :script, presence: true
 
   validates :max_calls_per_caller, numericality: {greater_than: 0}, allow_blank: true
   validate do

@@ -1,8 +1,8 @@
-h1 Editing call_task
+= link_to '< Back', call_tasks_path
 
-== render 'form'
+.row.justify-content-center
+  .col-auto
+    .jumbotron
+      h2.text-center.mb-5 Edit Calling Task Details
 
-=> link_to 'Show', @call_task
-'|
-=< link_to 'Back', call_tasks_path
-
+      == render 'form'

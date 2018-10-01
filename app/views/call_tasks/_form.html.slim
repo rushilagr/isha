@@ -3,7 +3,8 @@
 
   .form-inputs.mb-4
     = f.input :name, label: 'Calling task name'
+    = f.input :script, label: 'Calling task call script', as: :trix_editor
 
 
   .form-actions
-    = f.button :submit, 'Create', class: 'btn btn-block'
+    = f.button :submit, 'Submit', class: 'btn btn-block'

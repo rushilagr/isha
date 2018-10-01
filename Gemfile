@@ -63,6 +63,7 @@ gem 'jquery-rails'
 gem 'simple_form'
 gem 'bootstrap_form'
 gem "select2-rails"
+gem "trix"
 
 gem 'kaminari'
 # gem 'pg'

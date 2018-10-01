@@ -2,8 +2,9 @@
   table.table.table-striped.table-bordered.table-sm
     thead
       tr
-        th Name
         th Created By
+        th Name
+        th Script Present?
         th Calling List
         th Volunteer List
         th Calls per volunteer
@@ -12,33 +13,29 @@
     tbody
       - call_tasks.each do |ct|
         tr
-          td = ct.name
           td = ct.creator.name
-
+          td
+            = ct.name
+            = link_to 'Edit', edit_call_task_path(ct.id), class: 'ml-2'
 
           td
-            .row
-              .col-2
-                = ct.participants.count
-              - unless defined?(disable_actions)
-                .col-2
-                  = link_to 'Edit', call_task_participants_path(ct.id)
+            = ct.script.present? ? 'Yes' : 'No'
+            = link_to 'Edit', edit_call_task_path(ct.id), class: 'ml-2'
 
           td
-            .row
-              .col-2
-                = ct.callers.count
-              - unless defined?(disable_actions)
-                .col-2
-                  = link_to 'Edit', call_task_callers_path(ct.id)
+            = ct.participants.count
+            - unless defined?(disable_actions)
+              = link_to 'Edit', call_task_participants_path(ct.id), class: 'ml-2'
 
           td
-            .row
-              .col-2
-                = ct.max_calls_per_caller
-              - unless defined?(disable_actions)
-                .col-2
-                  = link_to 'Edit', call_task_limit_path(ct.id)
+            = ct.callers.count
+            - unless defined?(disable_actions)
+              = link_to 'Edit', call_task_callers_path(ct.id), class: 'ml-2'
+
+          td
+            = ct.max_calls_per_caller
+            - unless defined?(disable_actions)
+              = link_to 'Edit', call_task_limit_path(ct.id), class: 'ml-2'
 
 
           - if !defined?(disable_actions) && defined?(view_details)
