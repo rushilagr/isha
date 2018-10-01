@@ -58,16 +58,16 @@ Participant.create!([
 ])
 
 CallTask.create!([
-  { name: 'YnT JNT', creator_id: User.first.id, max_calls_per_caller: 5 },
+  { name: 'YnT JNT', script: 'this is script', creator_id: User.first.id, max_calls_per_caller: 5, participants_confirmed: true, callers_confirmed: true, review_confirmed: true },
 ])
 
 CallTaskCaller.create!([
   { call_task_id: CallTask.first.id, caller_id: User.last.id },
 ])
 
-CallTaskParticipant.create!([
-  { call_task_id: CallTask.first.id, participant_id: Participant.first.id},
-  { call_task_id: CallTask.first.id, participant_id: Participant.second.id, call_task_caller_id: CallTaskCaller.first.id, status: 'currently_shown' },
-  { call_task_id: CallTask.first.id, participant_id: Participant.third.id, call_task_caller_id: CallTaskCaller.first.id, status: 'dnd', caller_comment: 'freak' },
-  { call_task_id: CallTask.first.id, participant_id: Participant.fourth.id, call_task_caller_id: CallTaskCaller.first.id },
-])
+# CallTaskParticipant.create!([
+#   { call_task_id: CallTask.first.id, participant_id: Participant.first.id},
+#   { call_task_id: CallTask.first.id, participant_id: Participant.second.id, call_task_caller_id: CallTaskCaller.first.id, status: 'currently_shown' },
+#   { call_task_id: CallTask.first.id, participant_id: Participant.third.id, call_task_caller_id: CallTaskCaller.first.id, status: 'dnd', caller_comment: 'freak' },
+#   { call_task_id: CallTask.first.id, participant_id: Participant.fourth.id, call_task_caller_id: CallTaskCaller.first.id },
+# ])
