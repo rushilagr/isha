@@ -58,7 +58,7 @@ Participant.create!([
 ])
 
 CallTask.create!([
-  { name: 'YnT JNT', script: 'this is script', creator_id: User.first.id, max_calls_per_caller: 5, participants_confirmed: true, callers_confirmed: true, review_confirmed: true },
+  { name: 'YnT JNT', script: 'this is script', creator_id: User.first.id, max_calls_per_caller: 5, participants_confirmed: true, callers_confirmed: true, confirmed: true },
 ])
 
 CallTaskCaller.create!([
