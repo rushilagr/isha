@@ -15,7 +15,7 @@ class CreateCallTask < ActiveRecord::Migration[5.1]
     add_foreign_key :call_task_callers, :users, column: :caller_id, primary_key: :id
 
     create_table :call_task_participants do |t|
-      t.string :status
+      t.string :status, default: 'unassigned'
       t.string :caller_comment
       t.references :participant
       t.references :call_task

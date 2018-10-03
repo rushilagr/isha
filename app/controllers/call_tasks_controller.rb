@@ -1,5 +1,5 @@
 class CallTasksController < ApplicationController
-  before_action :set_call_task, only: [:show, :edit, :update, :destroy, :callers, :participants, :participants_destroy, :limit, :update_status, :new_users, :caller_toggle, :callers_confirm, :review, :review_confirm]
+  before_action :set_call_task, except: [:index, :new, :create]
 
 
   ##-------------------------------------------------------------
@@ -119,7 +119,7 @@ class CallTasksController < ApplicationController
       ## If add to list list button clicked
       if params.keys.include?('submit-post')
         @participants.each do |parti|
-          CallTaskParticipant.create participant_id: parti.id, call_task_id: @call_task.id
+          CallTaskParticipant.create participant_id: parti.id, call_task_id: @call_task.id, status: 'unassigned'
         end
 
         # Redirect to reset the params & search query

@@ -1,0 +1,2 @@
+module CallTask::ConsumeHelper
+end

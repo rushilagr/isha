@@ -51,4 +51,12 @@ class User < ApplicationRecord
   def volunteer?
     role == 'volunteer'
   end
+
+  def pending_call_task_participants ct_id
+    call_task_callers.find_by(call_task_id: ct_id).pending_participants
+  end
+
+  def completed_call_task_participants ct_id
+    call_task_callers.find_by(call_task_id: ct_id).completed_participants
+  end
 end

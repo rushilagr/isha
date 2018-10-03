@@ -19,6 +19,7 @@
 //= require trix
 
 //= require participants
+//= require call_task/consume
 
 $(document).on("turbolinks:before-cache", function() {
     $('select').select2('destroy');

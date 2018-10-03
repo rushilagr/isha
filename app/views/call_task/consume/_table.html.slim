@@ -1,0 +1,19 @@
+.table-responsive
+  table.table.table-striped.table-bordered.table-sm
+    thead
+      tr
+        / th Created By
+        th Name
+        th Target
+        th Progress
+        th Pending Calls
+
+    tbody
+      - ctcs.each do |ctc|
+        tr
+          / td = ctc.call_task.creator.name
+          td = ctc.call_task_name
+          td = ctc.call_task_max_calls_per_caller
+          td = ctc.completed_participants.count.to_s + ' / ' + ctc.call_task_max_calls_per_caller.to_s
+          td = ctc.call_back_participants.count
+          td = link_to 'Resume', consume_call_task_path(ctc.call_task.id) unless defined?(disable_actions)

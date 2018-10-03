@@ -1,0 +1,40 @@
+- if ctp.nil?
+  h5 All Calls Done
+
+
+- else
+  h4.text-center.mb-5 Call Details
+
+  .row.justify-content-center.mb-5
+    .card
+      .card-body
+        span.mr-5
+          b.mr-2 Name
+          = ctp.name.titleize
+
+        span
+          b.mr-2 Phone
+          = ctp.phone
+
+  .text-center.called-button.mb-4 class="#{@errors ? 'd-none' : ''}"
+    .btn.btn-success.btn-block Click Here After Calling
+
+  - if defined? pending_call
+    = link_to 'Skip and go to next pending call', consume_call_task_path(id: @ctc.id, previous_ctp_id: @ctp.id), class: 'mt-3 btn btn-warning btn-block skip-call-button'
+
+  .submit-section class="#{@errors ? '' : 'd-none'}"
+    .row.justify-content-center
+      .col-md-10.card
+        .card-body
+
+          h6.mb-4 Give call feedback
+
+          = simple_form_for ctp, url: consume_call_task_feedback_path(id: ctc.id, ctp_id: ctp.id) + '#current-call', method: :post do |f|
+            = f.error_notification
+
+            .form-inputs
+              = f.input :status, as: :select, collection: ctp.class.caller_submittable_statuses, label_method: :humanize, input_html: {style: "width: 100%"}
+              = f.input :caller_comment, label: 'Give Reason or Comments'
+
+            .form-actions
+              = f.submit 'Submit Feedback', class: 'btn btn-success btn-block'

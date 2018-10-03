@@ -34,4 +34,10 @@ class CallTask < ApplicationRecord
       SMS.send_call_task_to_caller caller.name, caller.phone, name, creator.name, creator.phone
     end
   end
+
+  def assign_new_participant_to_caller ctc_id
+    ctp = call_task_participants.unassigned.limit(1).first
+    ctp &.update call_task_caller_id: ctc_id, status: 'currently_shown'
+    ctp
+  end
 end

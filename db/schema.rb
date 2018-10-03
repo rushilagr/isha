@@ -22,7 +22,7 @@ ActiveRecord::Schema.define(version: 20181001114156) do
   end
 
   create_table "call_task_participants", force: :cascade do |t|
-    t.string "status"
+    t.string "status", default: "unassigned"
     t.string "caller_comment"
     t.bigint "participant_id"
     t.bigint "call_task_id"
