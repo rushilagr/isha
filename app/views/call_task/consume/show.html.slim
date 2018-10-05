@@ -2,10 +2,10 @@
 
 - call_type = session[:consume_call_type]
 
-- if params[:target_reached] == true
+- if params[:target_reached]
   - if @ctc.call_back_participants.present?
     javascript:
-      alert('After complete your pending calls, you can stop.');
+      alert('After finishing the incomlpete calls, you would have completed your target. Then you continue making more if you wish, or stop.');
   - else
     javascript:
       alert('You have completed your assigned calls. You can continue making more if you wish or stop.');
