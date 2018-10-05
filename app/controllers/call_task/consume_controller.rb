@@ -3,13 +3,13 @@ class CallTask::ConsumeController < ApplicationController
 
   def index
     @ctcs = CallTaskCaller
-      .includes(call_task: [:creator, call_task_participants: [:participant]])
+      .includes(call_task_participants: [:participant], call_task: [:creator])
       .where(caller_id: current_user.id)
   end
 
   def show
     ## If First attempt at calling?
-    if @ctc.participants.empty?
+    if @ctc.ctps.empty?
       next_new_call
       session[:consume_call_type] = 'new_call'
       render and return
@@ -17,7 +17,7 @@ class CallTask::ConsumeController < ApplicationController
 
     ## Set session if empty, might reset over time.
     if session[:consume_call_type].nil?
-      session[:consume_call_type] = @ctc.pending_participants ? 'pending_call' : 'new_call'
+      session[:consume_call_type] = @ctc.call_back_participants ? 'pending_call' : 'new_call'
     end
 
     ## If session == pending call
@@ -74,7 +74,7 @@ class CallTask::ConsumeController < ApplicationController
 
   def set_call_task_caller
     @ctc = CallTaskCaller
-      .includes(call_task: [:creator, call_task_participants: [:participant]])
+      .includes(call_task_participants: [:participant], call_task: [:creator])
       .find(params[:id])
   end
 

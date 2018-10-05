@@ -10,16 +10,8 @@ class CallTaskCaller < ApplicationRecord
 
   delegate :phone, :name, :max_calls_per_caller, to: :call_task, prefix: 'call_task'
 
-  def pending_participants
-    call_task_participants.pending
-  end
-
-  def completed_participants
-    call_task_participants.completed
-  end
-
-  def call_back_participants
-    call_task_participants.call_back
+  [:call_back, :got_reply, :never_contact, :completed, :pending, :unassigned, :currently_shown].each do |type|
+    define_method (type.to_s + '_participants') { call_task_participants.send type }
   end
 
   def current_participant
@@ -29,4 +21,6 @@ class CallTaskCaller < ApplicationRecord
   def assign_new_participant
     call_task.assign_new_participant_to_caller(id)
   end
+
+  alias :ctps :call_task_participants
 end

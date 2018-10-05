@@ -66,7 +66,10 @@ CallTaskCaller.create!([
 ])
 
 CallTaskParticipant.create!([
-  { call_task_id: CallTask.first.id, participant_id: Participant.first.id},
-  { call_task_id: CallTask.first.id, participant_id: Participant.second.id, call_task_caller_id: CallTaskCaller.first.id, status: 'currently_shown' },
-  { call_task_id: CallTask.first.id, participant_id: Participant.third.id, call_task_caller_id: CallTaskCaller.first.id, status: 'dnd', caller_comment: 'freak' },
+  { call_task_id: CallTask.first.id, participant_id: Participant.first.id },
+  { call_task_id: CallTask.first.id, participant_id: Participant.second.id, call_task_caller_id: CallTaskCaller.first.id, status: CallTaskParticipant.auto_assigned_statuses.first },
+  { call_task_id: CallTask.first.id, participant_id: Participant.third.id, call_task_caller_id: CallTaskCaller.first.id, status: CallTaskParticipant.auto_assigned_statuses.second },
+  { call_task_id: CallTask.first.id, participant_id: Participant.fourth.id, call_task_caller_id: CallTaskCaller.first.id, status: CallTaskParticipant.call_back_statuses.sample },
+  { call_task_id: CallTask.first.id, participant_id: Participant.fifth.id, call_task_caller_id: CallTaskCaller.first.id, status: CallTaskParticipant.completed_statuses.sample },
+  { call_task_id: CallTask.first.id, participant_id: Participant.all[5].id, call_task_caller_id: CallTaskCaller.first.id, status: CallTaskParticipant.never_contact_statuses.sample, caller_comment: 'freak' },
 ])

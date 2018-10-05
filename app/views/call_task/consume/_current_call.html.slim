@@ -33,7 +33,7 @@
             = f.error_notification
 
             .form-inputs
-              = f.input :status, as: :select, collection: ctp.class.caller_submittable_statuses, label_method: :humanize, input_html: {style: "width: 100%"}
+              = f.input :status, as: :select, collection: ctp.class.caller_submittable_statuses.reverse, input_html: {style: "width: 100%"}
               = f.input :caller_comment, label: 'Give Reason or Comments'
 
             .form-actions
