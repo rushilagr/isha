@@ -1,0 +1,15 @@
+.modal#script-modal role="dialog" tabindex="-1"
+  .modal-dialog role="document"
+    .modal-content
+
+      .modal-header
+        h5.modal-title Calling Task Script
+        button.close data-dismiss="modal" type="button"
+          span &times;
+
+      .modal-body
+        p = text.html_safe
+
+      .modal-footer
+        / button.btn.btn-secondary data-dismiss="modal" type="button"  Close
+        / button.btn.btn-primary type="button"  Save changes
