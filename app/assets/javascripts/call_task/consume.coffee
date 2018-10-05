@@ -4,6 +4,5 @@
 
 $( document ).on 'turbolinks:load', ->
   $('.called-button').click ->
-    $('.called-button').addClass('d-none');
-    $('.skip-call-button').addClass('d-none');
+    $('.called-section').addClass('d-none');
     $('.submit-section').removeClass('d-none');

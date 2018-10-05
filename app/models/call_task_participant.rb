@@ -22,7 +22,7 @@ class CallTaskParticipant < ApplicationRecord
 
   validates :status, presence: true, inclusion: {in: self.statuses}
   validate do
-    if status == 'dnd' && (caller_comment.nil? || caller_comment.empty?)
+    if self.class.never_contact_statuses.include?(status) && (caller_comment.nil? || caller_comment.empty?)
       errors.add(:caller_comment, "Can't be empty")
     end
   end

@@ -5,8 +5,9 @@
         / th Created By
         th Name
         th Target
-        th Progress
-        th People to Call Back
+        th Completed Calls
+        th Incomplete Calls
+        th Total Progress
         - if defined?(view_script)
           th Script
 
@@ -15,9 +16,10 @@
         tr
           / td = ctc.call_task.creator.name
           td = ctc.call_task_name
-          td = ctc.call_task_max_calls_per_caller
-          td = ctc.progress
+          td = "Complete #{ctc.call_task_max_calls_per_caller.to_s} calls"
+          td = ctc.completed_participants.count
           td = ctc.call_back_participants.count
+          td = ctc.call_back_participants.count + ctc.completed_participants.count
           - if defined?(view_script)
             td
               a href='#' data-toggle="modal" data-target="#script-modal" View Script

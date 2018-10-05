@@ -1,36 +1,45 @@
+= render partial: 'script_modal', locals: {text: @ctc.call_task.script}
+
 - call_type = session[:consume_call_type]
 
-- if @target_reached
-  javascript:
-    alert('You have completed your assigned calls. You can continue making more if you wish or stop.');
+- if params[:target_reached] == true
+  - if @ctc.call_back_participants.present?
+    javascript:
+      alert('After complete your pending calls, you can stop.');
+  - else
+    javascript:
+      alert('You have completed your assigned calls. You can continue making more if you wish or stop.');
 
 
 h1.mb-4.text-center Calling Task
 
 .details.mb-3
-  = render partial: 'table', locals: {ctcs: [@ctc], disable_actions: true}
+  = render partial: 'table', locals: {ctcs: [@ctc], disable_actions: true, view_script: true}
 
 
 // Navbar tabs
 ul.nav.nav-tabs.justify-content-center.mb-5
-  li.nav-item.new-call-nav
-    = link_to 'Make a new call', consume_call_set_call_type_path(@ctc.id, :consume_call_type => 'new_call'), class: "nav-link #{ 'active' if call_type == 'new_call'}"
+
+  - if @ctc.current_or_new_call_present?
+    li.nav-item.new-call-nav
+      = link_to "Make a new call", consume_call_set_call_type_path(@ctc.id, :consume_call_type => 'new_call'), class: "nav-link #{ 'active' if call_type == 'new_call'}"
+
   - if @ctc.call_back_participants.present?
     li.nav-item.pending-call-nav
-      = link_to 'Complete Pending Calls', consume_call_set_call_type_path(@ctc.id, :consume_call_type => 'pending_call'), class: "nav-link #{ 'active' if call_type == 'pending_call'}"
+      = link_to "Incomplete Calls (#{@ctc.call_back_participants.count})", consume_call_set_call_type_path(@ctc.id, :consume_call_type => 'pending_call'), class: "nav-link #{ 'active' if call_type == 'pending_call'}"
 
 
 // Current Call Section
 .row.justify-content-center#current-call
   .col-md-6
-    .jumbotron.p-5.text-center.
+    .jumbotron.p-5
 
       // New Call tab
       - if call_type == 'new_call'
         .new-call.current-call
 
             - if @errors.nil? && @ctp.blank?
-              .next-call-button
+              .next-call-button.text-center
                 = button_to 'Click here to make another call', consume_call_next_new_call_path(@ctc.id), class: 'btn btn-success btn-lg'
 
             - else
@@ -40,3 +49,6 @@ ul.nav.nav-tabs.justify-content-center.mb-5
       - if call_type == 'pending_call'
         .pending-call.current-call
             = render partial: 'current_call', locals: {ctc: @ctc, ctp: @ctp, pending_call: true}
+
+      - if call_type.nil?
+        h5 You are all done

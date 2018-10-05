@@ -5,13 +5,15 @@ class CallTask::ConsumeController < ApplicationController
     @ctcs = CallTaskCaller
       .includes(call_task_participants: [:participant], call_task: [:creator])
       .where(caller_id: current_user.id)
+
+      redirect_to consume_call_task_path(@ctcs.first.id) if @ctcs.count == 1
   end
 
   def show
     ## If First attempt at calling?
     if @ctc.ctps.empty?
-      next_new_call
       session[:consume_call_type] = 'new_call'
+      @ctp = @ctc.assign_new_participant
       render and return
     end
 
@@ -20,17 +22,7 @@ class CallTask::ConsumeController < ApplicationController
       session[:consume_call_type] = @ctc.call_back_participants ? 'pending_call' : 'new_call'
     end
 
-    ## If session == pending call
-    if session[:consume_call_type] == 'pending_call'
-      @ctp = get_next_pending_call
-      session[:consume_call_type] = 'new_call' if @ctp.nil? ## If pending calls exhausted, shift to new call tab
-    end
-
-    ## If session == new call
-    if session[:consume_call_type] == 'new_call'
-      @ctp = get_currently_show_call if get_currently_show_call.present?
-      @target_reached = true if @ctc.completed_participants.count == @ctc.call_task_max_calls_per_caller
-    end
+    session[:consume_call_type] = process_and_get_call_type session[:consume_call_type]
   end
 
   def set_call_type
@@ -39,15 +31,17 @@ class CallTask::ConsumeController < ApplicationController
   end
 
   def next_new_call
-    @ctp = get_currently_show_call || @ctc.assign_new_participant
-    render :show
+    @ctp = @ctc.current_participant || @ctc.assign_new_participant
+    redirect_to consume_call_task_path(@ctc.id)
   end
 
   def feedback
+    redirect_to consume_call_task_path(@ctc.id) if request.get?
+
     @ctp = CallTaskParticipant.find params[:ctp_id]
 
     if @ctp.update ctp_params
-      redirect_to consume_call_task_path(@ctc.id), notice: 'Feedback taken. Process next call please.'
+      redirect_to consume_call_task_path(id: @ctc.id, target_reached: @ctc.target_reached? ? true : nil), notice: 'Feedback taken. Process next call please.'
 
     else
       @errors = true
@@ -55,22 +49,9 @@ class CallTask::ConsumeController < ApplicationController
     end
   end
 
+
   private
 
-  def get_next_pending_call
-    ctps = @ctc.call_back_participants
-
-    if params[:previous_ctp_id].nil?
-      ctp = ctps.first
-    else
-      prev_ctp = ctps.find(params[:previous_ctp_id])
-      ctp = ctps.to_a.find_element_after prev_ctp
-    end
-  end
-
-  def get_currently_show_call
-    @ctc.current_participant
-  end
 
   def set_call_task_caller
     @ctc = CallTaskCaller
@@ -80,5 +61,31 @@ class CallTask::ConsumeController < ApplicationController
 
   def ctp_params
     params.require(:call_task_participant).permit(:caller_comment, :status)
+  end
+
+  def process_and_get_call_type call_type
+    map = {
+      'pending_call' => {
+        condition: @ctc.call_back_participants.present?,
+        block: -> {
+          ctps = @ctc.call_back_participants
+          @ctp = params[:previous_ctp_id].nil? ? ctps.first : ctps.to_a.find_element_after(ctps.find params[:previous_ctp_id])
+        }
+      },
+
+      'new_call' => {
+        condition: @ctc.current_or_new_call_present?,
+        block: -> { @ctp = @ctc.current_participant }
+      }
+    }
+
+    loop do
+      item = map.delete(call_type)
+      item[:condition] ? (item[:block].call; break) : call_type = map.keys.first
+
+      break if map.keys.empty?
+    end
+
+    call_type
   end
 end

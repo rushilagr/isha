@@ -4,6 +4,7 @@ class CallTaskCaller < ApplicationRecord
 
   has_many :call_task_participants
   has_many :participants, through: :call_task_participants
+  alias :ctps :call_task_participants
 
   ## Each caller for a call_task should be unique
   validates :caller_id, uniqueness: { scope: :call_task_id }
@@ -22,5 +23,15 @@ class CallTaskCaller < ApplicationRecord
     call_task.assign_new_participant_to_caller(id)
   end
 
-  alias :ctps :call_task_participants
+  def target_reached?
+    completed_participants.count == call_task_max_calls_per_caller
+  end
+
+  def current_or_new_call_present?
+    current_participant || call_task.call_task_participants.unassigned.present?
+  end
+
+  def completed?
+    target_reached? && !current_participant && pending_participants.empty?
+  end
 end

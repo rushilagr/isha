@@ -36,8 +36,8 @@ CreateUnknownPinCodes.call
 ## Volunteers
 User.create!([
   { name: 'Rushil Agrawal', phone: '9886477775', password: 'asdasdasd', center_id: 1, role: 'admin' },
-  { name: 'Rohan C', phone: '1234123412', password: 'asdasdasd', center_id: 2, role: 'coordinator' },
-  { name: 'Bhushan', phone: '1234123410', password: 'asdasdasd', center_id: 3, role: 'volunteer' },
+  { name: 'Rohan C', phone: '1111111111', password: 'asdasdasd', center_id: 2, role: 'coordinator' },
+  { name: 'Bhushan', phone: '2222222222', password: 'asdasdasd', center_id: 3, role: 'volunteer' },
 ])
 
 Participant.create!([
@@ -58,18 +58,28 @@ Participant.create!([
 ])
 
 CallTask.create!([
-  { name: 'YnT JNT', script: 'this is script', creator_id: User.first.id, max_calls_per_caller: 5, participants_confirmed: true, callers_confirmed: true, confirmed: true },
+  { name: 'YnT JNT (No calling happening)', script: 'this is script', creator_id: User.first.id, max_calls_per_caller: 3, participants_confirmed: true, callers_confirmed: true, confirmed: true },
+  { name: 'YnT 2', script: 'this is script', creator_id: User.first.id, max_calls_per_caller: 3, participants_confirmed: true, callers_confirmed: true, confirmed: true },
 ])
 
 CallTaskCaller.create!([
   { call_task_id: CallTask.first.id, caller_id: User.last.id },
+
+  { call_task_id: CallTask.second.id, caller_id: User.last.id },
 ])
 
+participants = Participant.all.to_a
+
 CallTaskParticipant.create!([
-  { call_task_id: CallTask.first.id, participant_id: Participant.first.id },
-  { call_task_id: CallTask.first.id, participant_id: Participant.second.id, call_task_caller_id: CallTaskCaller.first.id, status: CallTaskParticipant.auto_assigned_statuses.first },
-  { call_task_id: CallTask.first.id, participant_id: Participant.third.id, call_task_caller_id: CallTaskCaller.first.id, status: CallTaskParticipant.auto_assigned_statuses.second },
-  { call_task_id: CallTask.first.id, participant_id: Participant.fourth.id, call_task_caller_id: CallTaskCaller.first.id, status: CallTaskParticipant.call_back_statuses.sample },
-  { call_task_id: CallTask.first.id, participant_id: Participant.fifth.id, call_task_caller_id: CallTaskCaller.first.id, status: CallTaskParticipant.completed_statuses.sample },
-  { call_task_id: CallTask.first.id, participant_id: Participant.all[5].id, call_task_caller_id: CallTaskCaller.first.id, status: CallTaskParticipant.never_contact_statuses.sample, caller_comment: 'freak' },
+  { call_task_id: CallTask.first.id, participant_id: participants.pop.id },
+  { call_task_id: CallTask.first.id, participant_id: participants.pop.id },
+  { call_task_id: CallTask.first.id, participant_id: participants.pop.id },
+  { call_task_id: CallTask.first.id, participant_id: participants.pop.id },
+  { call_task_id: CallTask.first.id, participant_id: participants.pop.id },
+  { call_task_id: CallTask.first.id, participant_id: participants.pop.id },
+
+  { call_task_id: CallTask.second.id, participant_id: participants.pop.id, call_task_caller_id: CallTaskCaller.second.id, status: CallTaskParticipant.auto_assigned_statuses.second },
+  { call_task_id: CallTask.second.id, participant_id: participants.pop.id, call_task_caller_id: CallTaskCaller.second.id, status: CallTaskParticipant.call_back_statuses.sample },
+  { call_task_id: CallTask.second.id, participant_id: participants.pop.id, call_task_caller_id: CallTaskCaller.second.id, status: CallTaskParticipant.completed_statuses.sample },
+  { call_task_id: CallTask.second.id, participant_id: participants.pop.id, call_task_caller_id: CallTaskCaller.second.id, status: CallTaskParticipant.never_contact_statuses.sample, caller_comment: 'freak' },
 ])
