@@ -1,0 +1,18 @@
+.table-responsive
+  table.table.table-striped.table-bordered.table-sm
+    thead
+      tr
+        td Name
+        td Phone
+        td Completed Calls
+        td To Call Back
+        td Total Progress
+
+    tbody
+      - call_task.call_task_callers.each do |ctc|
+        tr
+          td = ctc.caller.name
+          td = ctc.caller.phone
+          td = ctc.completed_participants.count
+          td = ctc.call_back_participants.count
+          td = (ctc.call_back_participants + ctc.completed_participants).count.to_s + ' / ' + ctc.call_task_max_calls_per_caller.to_s

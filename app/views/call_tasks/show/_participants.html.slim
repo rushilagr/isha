@@ -1,0 +1,14 @@
+.table-responsive
+  table.table.table-striped.table-bordered.table-sm
+    thead
+      tr
+        td Name
+        td Status
+        td Volunteer
+
+    tbody
+      - call_task.call_task_participants.each do |ctp|
+        tr
+          td = ctp.participant.name
+          td = ctp.currently_shown? ? 'Currently being called' : ctp.status
+          td = ctp.caller&.name

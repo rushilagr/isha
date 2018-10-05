@@ -3,9 +3,11 @@ class CallTask < ApplicationRecord
 
   has_many :call_task_callers
   has_many :callers, through: :call_task_callers, class_name: 'User'
+  alias :ctcs :call_task_callers
 
   has_many :call_task_participants
   has_many :participants, through: :call_task_participants
+  alias :ctps :call_task_participants
 
   validates :name, presence: true
   validates :script, presence: true

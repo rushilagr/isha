@@ -1,0 +1,14 @@
+.table-responsive.mb-3
+  table.table.table-striped.table-bordered.table-sm
+    thead
+      tr
+        td All
+        td Started
+        td Target Completed
+        td Target Incomplete
+    tbody
+      tr
+        td = call_task.ctcs.count
+        td = call_task.ctcs.select(&:started?).count
+        td = call_task.ctcs.select(&:target_reached?).count
+        td = call_task.ctcs.count - call_task.ctcs.select(&:target_reached?).count

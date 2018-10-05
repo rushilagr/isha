@@ -1,0 +1,30 @@
+.table-responsive.mb-3
+  table.table.table-striped.table-bordered.table-sm
+    thead
+      tr
+        td All
+        td Completed
+        td To call back
+        td Pending
+    tbody
+      tr
+        td = call_task.ctps.count
+        td = call_task.ctps.completed.count
+        td = call_task.ctps.call_back.count
+        td = call_task.ctps.pending.count
+
+.table-responsive.mb-3
+  table.table.table-striped.table-bordered.table-sm
+    thead
+      tr
+        td Coming
+        td Not coming
+        td Repeatedly unreachable
+        td DND / Wrong Number
+
+    tbody
+      tr
+        td = call_task.ctps.coming.count
+        td = call_task.ctps.not_coming.count
+        td = call_task.ctps.repeatedly_unreachable.count
+        td = call_task.ctps.never_contact.count

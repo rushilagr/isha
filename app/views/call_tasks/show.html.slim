@@ -1,4 +1,30 @@
-h1.text-center Calling Task Details
-br
+h1.text-center.mb-4 Calling Task Details
 
-= render partial: 'details', locals: {call_task: @call_task}
+.details.mb-5
+  == render partial: 'table', locals: {call_tasks: [@call_task]}
+
+
+.row
+
+  / Volunteers Lists
+  .col-md-6
+
+    h5.d-inline-block.mb-3 Volunteers List
+    = link_to 'Edit', call_task_callers_path(@call_task.id), class: 'ml-3 text-white bg-primary p-1'
+    a.ml-2 data-toggle="collapse" href="#volunteers-list" show / hide
+
+    .collapse.show id="volunteers-list"
+      = render partial: 'call_tasks/show/callers_overview', locals: {call_task: @call_task}
+      = render partial: 'call_tasks/show/callers', locals: {call_task: @call_task}
+
+
+  / Participants Lists
+  .col-md-6
+
+    h5.d-inline-block.mb-3 Calling List
+    = link_to 'Edit', call_task_participants_path(@call_task.id), class: 'ml-3 text-white bg-primary p-1'
+    a.ml-2 data-toggle="collapse" href="#calling-list" show / hide
+
+    .collapse.show id="calling-list"
+      = render partial: 'call_tasks/show/participants_overview', locals: {call_task: @call_task}
+      = render partial: 'call_tasks/show/participants', locals: {call_task: @call_task}

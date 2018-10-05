@@ -34,4 +34,8 @@ class CallTaskCaller < ApplicationRecord
   def completed?
     target_reached? && !current_participant && pending_participants.empty?
   end
+
+  def started?
+    ctps.present?
+  end
 end

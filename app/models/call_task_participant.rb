@@ -32,14 +32,21 @@ class CallTaskParticipant < ApplicationRecord
     user.status = :unassigned if user.status.nil?
   end
 
+  scope :coming, -> { where status: 'Will attend' }
+  scope :not_coming, -> { where status: 'Cannot attend' }
+  scope :repeatedly_unreachable, -> { where status: 'Repeatedly Unreachable / Off / No Answer' }
   scope :call_back, -> { where status: self.call_back_statuses }
   scope :got_reply, -> { where status: self.got_reply_statuses }
   scope :never_contact, -> { where status: self.never_contact_statuses }
   scope :completed, -> { where status: self.completed_statuses }
 
-  scope :pending, -> {where status: self.call_back_statuses + ['currently_shown']}
   scope :unassigned, -> {where(status: 'unassigned')}
   scope :currently_shown, -> {where(status: 'currently_shown')}
+  scope :pending, -> {where status: self.auto_assigned_statuses}
 
   delegate :phone, :name, to: :participant
+
+  def currently_shown?
+    status == 'currently_shown'
+  end
 end
