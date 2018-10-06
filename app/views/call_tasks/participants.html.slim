@@ -9,7 +9,7 @@ br
   .col-md-8
     .jumbotron
 
-      // Footer
+      // Header with list size & NEXT button
       - if (list_size = @call_task.participants.count) > 0
 
         .row.justify-content-between.align-items-center
@@ -41,6 +41,7 @@ br
           .btn.btn-info.search-again-button.mx-auto Add more meditators
 
 
+      // Main Search Form
       .search-form class="#{'d-none' if params[:added_count]  }"
 
         = search_form_for @search, url: call_task_participants_path(@call_task, anchor: 'search'), method: :put do |f|
@@ -59,6 +60,7 @@ br
 
             .submit.text-center = f.submit "SEARCH", class: 'btn btn-warning btn-sm', name: 'submit-search'
 
+          // Alert & Buttons after submitting search
           - if params[:q]
             .text-center.mt-5
               .alert.alert-success
