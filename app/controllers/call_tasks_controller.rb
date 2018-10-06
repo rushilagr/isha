@@ -10,7 +10,7 @@ class CallTasksController < ApplicationController
   def index
     @call_tasks = CallTask
       .where(creator_id: current_user.id)
-      .includes :creator, call_task_callers: [:caller], call_task_participants: [:participant]
+      .includes(:creator, call_task_callers: [:caller], call_task_participants: [:participant])
 
     redirect_to(new_call_task_path) unless @call_tasks.present?
   end
@@ -22,6 +22,9 @@ class CallTasksController < ApplicationController
     unless redirect_to_call_task_step_if_pending
       flash[:notice] = 'Calling task created. Your volunteers have received SMSs to start calling.'
     end
+
+    @ctcs = params[:caller_scope].present? ? @call_task.ctcs.send(params[:caller_scope]) : @call_task.ctcs
+    @ctps = params[:participant_scope].present? ? @call_task.ctps.send(params[:participant_scope]) : @call_task.ctps
   end
 
   def new

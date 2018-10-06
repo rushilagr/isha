@@ -7,7 +7,7 @@
         td Volunteer
 
     tbody
-      - call_task.call_task_participants.each do |ctp|
+      - ctps.each do |ctp|
         tr
           td = ctp.participant.name
           td = ctp.currently_shown? ? 'Currently being called' : ctp.status

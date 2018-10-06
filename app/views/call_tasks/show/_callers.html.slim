@@ -9,7 +9,7 @@
         td Total Progress
 
     tbody
-      - call_task.call_task_callers.each do |ctc|
+      - ctcs.each do |ctc|
         tr
           td = ctc.caller.name
           td = ctc.caller.phone

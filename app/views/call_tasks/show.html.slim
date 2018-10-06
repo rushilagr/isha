@@ -13,9 +13,9 @@ h1.text-center.mb-4 Calling Task Details
     = link_to 'Edit', call_task_callers_path(@call_task.id), class: 'ml-3 text-white bg-primary p-1'
     a.ml-2 data-toggle="collapse" href="#volunteers-list" show / hide
 
-    .collapse.show id="volunteers-list"
+    .collapse.show#volunteers-list
       = render partial: 'call_tasks/show/callers_overview', locals: {call_task: @call_task}
-      = render partial: 'call_tasks/show/callers', locals: {call_task: @call_task}
+      = render partial: 'call_tasks/show/callers', locals: {call_task: @call_task, ctcs: @ctcs}
 
 
   / Participants Lists
@@ -25,6 +25,6 @@ h1.text-center.mb-4 Calling Task Details
     = link_to 'Edit', call_task_participants_path(@call_task.id), class: 'ml-3 text-white bg-primary p-1'
     a.ml-2 data-toggle="collapse" href="#calling-list" show / hide
 
-    .collapse.show id="calling-list"
+    .collapse.show#calling-list
       = render partial: 'call_tasks/show/participants_overview', locals: {call_task: @call_task}
-      = render partial: 'call_tasks/show/participants', locals: {call_task: @call_task}
+      = render partial: 'call_tasks/show/participants', locals: {call_task: @call_task, ctps: @ctps}

@@ -15,6 +15,10 @@ class CallTaskCaller < ApplicationRecord
     define_method (type.to_s + '_participants') { call_task_participants.send type }
   end
 
+  scope :started, -> { joins(:call_task_participants).distinct }
+  scope :target_reached, -> { select { |ctc| ctc.target_reached? } }
+  scope :target_not_reached, -> { select { |ctc| !ctc.target_reached? } }
+
   def current_participant
     call_task_participants.currently_shown.first
   end
@@ -24,7 +28,7 @@ class CallTaskCaller < ApplicationRecord
   end
 
   def target_reached?
-    completed_participants.count == call_task_max_calls_per_caller
+    completed_participants.count >= call_task_max_calls_per_caller
   end
 
   def current_or_new_call_present?

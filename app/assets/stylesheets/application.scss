@@ -24,3 +24,8 @@
 @import 'nav';
 @import 'participants';
 @import 'call_tasks';
+
+.disable-link {
+  text-decoration: underline;
+  color: black !important;
+}

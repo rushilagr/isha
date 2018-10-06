@@ -2,10 +2,10 @@
   table.table.table-striped.table-bordered.table-sm
     thead
       tr
-        td All
-        td Completed
-        td To call back
-        td Pending
+        td = dashboard_overview_link_with_auto_disable 'All', call_task.id, :participant_scope, nil
+        td = dashboard_overview_link_with_auto_disable 'Completed', call_task.id, :participant_scope, 'completed'
+        td = dashboard_overview_link_with_auto_disable 'To call back', call_task.id, :participant_scope, 'call_back'
+        td = dashboard_overview_link_with_auto_disable 'Pending', call_task.id, :participant_scope, 'pending'
     tbody
       tr
         td = call_task.ctps.count
@@ -17,10 +17,10 @@
   table.table.table-striped.table-bordered.table-sm
     thead
       tr
-        td Coming
-        td Not coming
-        td Repeatedly unreachable
-        td DND / Wrong Number
+        td = dashboard_overview_link_with_auto_disable 'Coming', call_task.id, :participant_scope, 'coming'
+        td = dashboard_overview_link_with_auto_disable 'Not coming', call_task.id, :participant_scope, 'not_coming'
+        td = dashboard_overview_link_with_auto_disable 'Repeatedly unreachable', call_task.id, :participant_scope, 'repeatedly_unreachable'
+        td = dashboard_overview_link_with_auto_disable 'DND / Wrong Number', call_task.id, :participant_scope, 'never_contact'
 
     tbody
       tr
