@@ -130,15 +130,15 @@ class CallTasksController < ApplicationController
       end
     end
 
-    if request.delete?
-      @call_task.call_task_participants.destroy_all
-      redirect_to call_task_participants_path(list_deleted: true, anchor: 'search')
-    end
-
     if request.post?
       @call_task.update! participants_confirmed: true
       redirect_to call_task_path(@call_task)
     end
+  end
+
+  def participants_destroy
+    @call_task.call_task_participants.unassigned.destroy_all
+    redirect_to call_task_participants_path(list_deleted: true, anchor: 'search')
   end
 
   ##-------------------------------------------------------------
