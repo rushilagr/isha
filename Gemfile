@@ -64,6 +64,7 @@ gem 'simple_form'
 gem 'bootstrap_form'
 gem "select2-rails"
 gem "trix"
+gem 'bootstrap-datepicker-rails'
 
 gem 'kaminari'
 # gem 'pg'

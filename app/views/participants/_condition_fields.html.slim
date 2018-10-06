@@ -1,10 +1,49 @@
 .field
-  = f.attribute_fields do |a|
-    = a.attribute_select associations: [:pin_code, :pin_code_center, :pin_code_center_sector, :pin_code_center_sector_circle]
 
-  = f.predicate_select :only => [:cont, :not_cont, :eq, :not_eq, :blank, :not_blank, :null, :not_null]
+  .attr_field.d-inline
+    = f.attribute_fields do |a|
+      - if defined?(limited_attributes)
+        = a.attribute_select
+      - else
+        = a.attribute_select associations: [:pin_code, :pin_code_center, :pin_code_center_sector, :pin_code_center_sector_circle]
+
+  = f.predicate_select :only => ['cont', 'not_cont', 'blank', 'not_blank', 'gt', 'lt', 'eq'], compounds: false
 
   = f.value_fields do |v|
-    = v.text_field :value
+    = v.text_field :value, class: 'value_field', input_html: {'data-date-format' => 'dd-mm-yy'}
 
   = link_to "Remove", '#', class: "remove_fields"
+
+
+
+  / This is to set and remove datepicker on value field depending on attribute selected
+  javascript:
+
+    // Set datepicker on given element depending on value
+    smart_datepicker = (value, els) => {
+      if( ['i_e_date', 'dob', 'shoonya_date', 'bsp_date', 'hata_yoga_date', 'silence_date'].includes(value) ) {
+        els.datepicker({ format: 'dd/mm/yyyy' });
+      }
+      else { els.datepicker('remove'); }
+    }
+
+
+    // Call smart_datepicker on load and on attr field value change.
+    $(document).on('turbolinks:load', () => {
+
+      // On Load set field type
+      $.each( $('.attr_field select'), (index, sel) => {
+        value = $(sel).val();
+        els = $(sel).parent().siblings('.value_field');
+
+        smart_datepicker(value, els);
+      })
+
+      // On Change set field type
+      $('.attr_field select').change( (event) => {
+        value = $(event.target).val();
+        els = $(event.target).parent().siblings('.value_field');
+
+        smart_datepicker(value, els);
+      })
+    });

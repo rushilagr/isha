@@ -53,9 +53,9 @@ br
                 i Enter one or more search condition to find meditators
 
             = f.condition_fields do |c|
-              = render partial: "participants/condition_fields", locals: {f: c}
+              = render partial: "participants/condition_fields", locals: {f: c, limited_attributes: true}
 
-            => link_to_add_participant_fields "Add Condition ", f, :condition
+            => link_to_add_participant_fields "Add Condition ", f, :condition, limited_attributes: true
             br
 
             .submit.text-center = f.submit "SEARCH", class: 'btn btn-warning btn-sm', name: 'submit-search'

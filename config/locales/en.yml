@@ -31,3 +31,18 @@
 
 en:
   hello: "Hello world"
+  activerecord:
+    attributes:
+      pin_code:
+        string: Pincode
+      center:
+        name: Center
+        coordinator: Center coordinator
+      sector:
+        name: Sector
+        coordinator: Sector coordinator
+      circle:
+        name: Circle
+        coordinator: Circle coordinator
+      participant:
+        dob: Date of birth

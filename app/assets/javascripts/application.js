@@ -17,6 +17,7 @@
 //= require bootstrap-sprockets
 //= require select2
 //= require trix
+//= require bootstrap-datepicker
 
 //= require participants
 //= require call_task
