@@ -11,4 +11,7 @@
         tr data-user-id="#{user.id}"
           td = user.name
           td = user.phone
-          td = link_to action, edit_call_task_caller_path(@call_task.id, user.id), method: (action == 'delete' ? :delete : :put), class: 'btn btn-sm', remote: true
+          - unless user.call_task_callers.find_by(call_task_id: @call_task.id)&.started?
+            td = link_to action, edit_call_task_caller_path(@call_task.id, user.id), method: (action == 'delete' ? :delete : :put), remote: true
+          - else
+            td.text-black Cannot Delete - already started calling
