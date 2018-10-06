@@ -5,53 +5,61 @@ br
 .ct_details_section.mb-5
   == render partial: 'layouts/dyna_table', locals: {objs: [@call_task], attrs: {'Calling Task Name' => :name, 'Calling List Size' => ['participants', 'count']}}
 
-.participants-index.row.align-items-center#search
-  .jumbotron
+.row.justify-content-center#search
+  .col-md-8
+    .jumbotron
 
-    .text-center
-      h3 Search
-      p.mb-4
-        i Enter one or more search condition to find meditators
+      // Footer
+      - if (list_size = @call_task.participants.count) > 0
+
+        .row.justify-content-between.align-items-center
+          .col-auto.text-center
+              b.d-block = "Calling List size: #{list_size} "
+              = link_to 'Click here to delete calling list', call_task_participants_destroy_path(@call_task), data: {confirm: 'This will delete the entire calling list. Are you sure?'}, method: :post
+
+          .col-auto.text-center
+              = button_to 'Click here if list final', call_task_participants_path(@call_task.id), class: 'btn btn-success btn-lg'
+
+        hr.mb-4.mt-4
+
+      .search-form class="#{'d-none' if params[:added_count]  }"
+
+        = search_form_for @search, url: call_task_participants_path(@call_task, anchor: 'search'), method: :put do |f|
+          .main-search class="#{'d-none' if params[:q]  }"
+
+            .text-center
+              h3 Search
+              p.mb-4
+                i Enter one or more search condition to find meditators
+
+            = f.condition_fields do |c|
+              = render partial: "participants/condition_fields", locals: {f: c}
+
+            => link_to_add_participant_fields "Add Condition ", f, :condition
+            br
+
+            .submit.text-center = f.submit "SEARCH", class: 'btn btn-warning btn-sm', name: 'submit-search'
+
+          - if params[:q]
+            .text-center.mt-5
+              .alert.alert-success
+                pre.mb-0
+                  = "#{@participants.count} new results found"
+
+              = f.submit 'Add Results to Calling List', class: 'btn btn-info mx-3 ', name: 'submit-post'
+              = link_to 'Search Again', call_task_participants_path(@call_task), class: 'btn btn-warning mx-3 '
 
 
-    = search_form_for @search, url: call_task_participants_path(@call_task, anchor: 'search'), method: :put do |f|
-
-      = f.condition_fields do |c|
-        = render partial: "participants/condition_fields", locals: {f: c}
-
-      => link_to_add_participant_fields "Add Condition ", f, :condition
-      br
-
-      .submit.text-center = f.submit "SEARCH", class: 'btn btn-success btn-sm', name: 'submit-search'
-
+      // List deleted alert
       - if params[:list_deleted]
         .text-center.mt-5
           .alert.alert-danger List Deleted
 
-      - if params[:q]
-        .text-center.mt-5
-          .alert.alert-info
-            pre.mb-0
-              = "#{@participants.count} new results found.\nEither add to calling list, or search again"
 
-          = f.submit 'Add Results to Calling List', class: 'btn btn-info btn-block', name: 'submit-post'
-
-
+      // Added count footer
       - if params[:added_count]
-        .text-center.mt-5
+        .text-center.added-section
           .alert.alert-success
             pre.mb-0
-              = "#{params[:added_count]} results added to calling list. \nSearch again or click the button below if done."
-
-
-
-    - if (list_size = @call_task.participants.count) > 0
-      hr.mt-5
-
-      .row.justify-content-between.align-items-center
-        .col-auto.text-center
-            b.d-block = "Calling List size: #{list_size} "
-            = link_to 'Click here to delete calling list', call_task_participants_destroy_path(@call_task), data: {confirm: 'This will delete the entire calling list. Are you sure?'}, method: :post
-
-        .col-auto.text-center
-            = button_to 'Click here if all meditators have been added', call_task_participants_path(@call_task.id), class: 'btn btn-info'
+              = "#{params[:added_count]} results added to calling list"
+          .btn.btn-info.search-again-button.mx-auto Add more meditators
