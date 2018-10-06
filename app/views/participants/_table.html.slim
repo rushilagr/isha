@@ -31,11 +31,11 @@
           td = p.email
           td = p.pin_code &.center &.name
           td = p.occupation &.capitalize
-          td = p.i_e_date &.to_formatted_s(:short)
+          td = p.i_e_date &.to_formatted_s(:long_ordinal)
           td = p.shoonya_date
-          td = p.bsp_date &.to_formatted_s(:short)
-          td = p.silence_date &.to_formatted_s(:short)
-          td = p.hata_yoga_date &.to_formatted_s(:short)
+          td = p.bsp_date &.to_formatted_s(:long_ordinal)
+          td = p.silence_date &.to_formatted_s(:long_ordinal)
+          td = p.hata_yoga_date &.to_formatted_s(:long_ordinal)
 
           / td = p.gender
           / td = p.company  .capitalize
