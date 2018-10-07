@@ -1,0 +1,18 @@
+.row.justify-content-center
+  .col-md-7
+    .jumbotron.p-5
+      h3.mb-4 Update Meditator Details
+
+      = simple_form_for @participant do |f|
+        = f.error_notification
+
+        = f.input :name
+        = f.input :phone
+        = f.input :email
+        = f.input :gender
+        = f.input :occupation
+        = f.input :company
+        = f.input :dob
+        = f.association :pin_code, label_method: :string
+        
+        = f.submit 'SUBMIT', class: 'btn btn-success btn-block mt-5', data: {confirm: 'These details will be permanently updated. Have you double-checked ? '}

@@ -114,7 +114,7 @@ class CallTasksController < ApplicationController
       @assigned_participants = @call_task.participants
 
       @participants = begin
-        ps = @search.result.valid_phone
+        ps = @search.result.valid_phone.not_dnd
         ps = ps.joins(:pin_code).where(pin_codes: {center_id: current_user.center_id}) unless current_user.admin?
         ps - @assigned_participants
       end

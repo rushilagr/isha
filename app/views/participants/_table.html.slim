@@ -1,4 +1,5 @@
-= paginate participants, window: 1
+- unless defined?(details_only)
+  = paginate participants, window: 1
 
 
 .participants-table.table-responsive
@@ -37,6 +38,10 @@
           td = p.silence_date &.to_formatted_s(:long_ordinal)
           td = p.hata_yoga_date &.to_formatted_s(:long_ordinal)
 
+          td = link_to 'Edit Details', edit_participant_path(p) unless defined?(details_only)
+          - unless defined?(details_only)
+            td = p.dnd? ? 'Marked DND' : link_to('Mark DND', participant_dnd_path(p) )
+
           / td = p.gender
           / td = p.company  .capitalize
           / td = p.dob  .to_formatted_s(:short)
@@ -45,4 +50,5 @@
           / td = p.i_e_teacher  .capitalize
 
 
-= paginate participants, window: 1
+- unless defined?(details_only)
+  = paginate participants, window: 1

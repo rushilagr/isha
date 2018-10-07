@@ -14,11 +14,8 @@ Rails.application.routes.draw do
 
 
   resources :centers
-
-
-  get 'participants', to: 'participants#index', as: 'participants'
-  get 'participants/:id', to: 'participants#show', as: 'participant'
-
+  resources :participants
+  match 'participants/:id/dnd', to: 'participants#dnd', as: 'participant_dnd', via: [:get, :post]
 
   match 'admin/import_participants', to: 'admin#import_participants', as: 'admin_import_participants', via: [:get, :post]
   match 'admin/import_pin_codes', to: 'admin#import_pin_codes', as: 'admin_import_pin_codes', via: [:get, :post]

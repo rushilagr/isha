@@ -32,6 +32,18 @@
 }
 
 form {
+  .help-block {
+    color: red;
+  }
+
+  .select2-container--bootstrap {
+    display: inline-block;
+    margin-right: 10px;
+    min-width: fit-content;
+  }
+}
+
+.search-form {
   .warning-text {
     margin: -11px 0px 10px;
   }
@@ -39,14 +51,10 @@ form {
   .select2-container--bootstrap {
     display: inline-block;
     margin-right: 10px;
-    min-width: 150px;
+    min-width: 180px;
   }
 
   .remove_fields {
     margin: 0 10px;
-  }
-
-  .submit .btn{
-    width: 10rem;
   }
 }

@@ -6,27 +6,28 @@
   .jumbotron
       h3.text-center.mb-5 Search Meditators
 
-      = search_form_for @search do |f|
+      .search-form
+        = search_form_for @search do |f|
 
-        // Search Conditions
-        h6 Search Conditions
+          // Search Conditions
+          h6 Search Conditions
 
-        / = f.date_field :dob_gt
-        = f.condition_fields do |c|
-           = render "condition_fields", f: c
+          / = f.date_field :dob_gt
+          = f.condition_fields do |c|
+             = render "condition_fields", f: c
 
-        = link_to_add_participant_fields "Add Condition ", f, :condition
-        span.warning-text.small.text-dark All conditions are simultaneously applied
-
-
-        // Sort Condition
-        h6.mt-5 Sort Column
-        .mb-5= f.sort_fields do |s|
-          = s.sort_select associations: [:pin_code, :pin_code_center, :pin_code_center_sector, :pin_code_center_sector_circle]
+          = link_to_add_participant_fields "Add Condition ", f, :condition
+          span.warning-text.small.text-dark All conditions are simultaneously applied
 
 
-        / Submit Search Btn
-        .submit.text-center = f.submit "SEARCH", class: 'btn btn-success btn-s'
+          // Sort Condition
+          h6.mt-5 Sort Column
+          .mb-5= f.sort_fields do |s|
+            = s.sort_select associations: [:pin_code, :pin_code_center, :pin_code_center_sector, :pin_code_center_sector_circle]
+
+
+          / Submit Search Btn
+          .submit.text-center = f.submit "SEARCH", class: 'btn btn-success btn-s'
 
 
 

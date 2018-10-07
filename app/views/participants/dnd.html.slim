@@ -1,0 +1,15 @@
+h3.mb-4.text-center Mark Meditator DND
+
+== render partial: 'table', locals: {participants: Array.wrap(@participant), details_only: true}
+
+.row.justify-content-center.mt-4
+  .col-md-4
+    .jumbotron.p-4
+      = simple_form_for @participant, url: participant_dnd_path(@participant), method: :post do |f|
+        = f.error_notification
+
+        .form-inputs
+          h5.text-center Give Reason
+          = f.input :dnd_reason, label: false, as: :text
+
+        = f.submit 'SUBMIT', class: 'btn btn-success btn-block mt-3', data: {confirm: "This meditator will become permanently uncontactable. Are you SURE ? "}

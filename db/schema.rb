@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181001114156) do
+ActiveRecord::Schema.define(version: 20181007132358) do
 
   create_table "call_task_callers", force: :cascade do |t|
     t.bigint "caller_id"
@@ -83,6 +83,9 @@ ActiveRecord::Schema.define(version: 20181001114156) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "pin_code_id"
+    t.bigint "dnd_marker_id"
+    t.string "dnd_reason"
+    t.index ["dnd_marker_id"], name: "index_participants_on_dnd_marker_id"
     t.index ["pin_code_id"], name: "index_participants_on_pin_code_id"
   end
 
@@ -131,6 +134,7 @@ ActiveRecord::Schema.define(version: 20181001114156) do
   add_foreign_key "call_tasks", "users", column: "creator_id"
   add_foreign_key "centers", "sectors"
   add_foreign_key "participants", "pin_codes"
+  add_foreign_key "participants", "users", column: "dnd_marker_id"
   add_foreign_key "pin_codes", "centers"
   add_foreign_key "sectors", "circles"
   add_foreign_key "users", "centers"
