@@ -2,7 +2,7 @@
   table.table.table-striped.table-bordered.table-sm
     thead
       tr
-        td = dashboard_overview_link_with_auto_disable 'All', call_task.id, :caller_scope, nil
+        td = dashboard_overview_link_with_auto_disable 'All', call_task.id, :caller_scope, ''
         td = dashboard_overview_link_with_auto_disable 'Started', call_task.id, :caller_scope, 'started'
         td = dashboard_overview_link_with_auto_disable 'Target Completed', call_task.id, :caller_scope, 'target_reached'
         td = dashboard_overview_link_with_auto_disable 'Target Incomplete', call_task.id, :caller_scope, 'target_not_reached'

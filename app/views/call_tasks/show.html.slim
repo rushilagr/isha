@@ -1,4 +1,4 @@
-h1.text-center.mb-4 Calling Task Details
+h1.text-center.mb-4 Calling task dashboard
 
 .details.mb-5
   == render partial: 'table', locals: {call_tasks: [@call_task]}
@@ -13,7 +13,7 @@ h1.text-center.mb-4 Calling Task Details
     = link_to 'Edit', call_task_callers_path(@call_task.id), class: 'ml-3 text-white bg-primary p-1'
     a.ml-2 data-toggle="collapse" href="#volunteers-list" show / hide
 
-    .collapse.show#volunteers-list
+    .collapse#volunteers-list class="#{params[:caller_scope] ? 'show' : '' }"
       = render partial: 'call_tasks/show/callers_overview', locals: {call_task: @call_task}
       = render partial: 'call_tasks/show/callers', locals: {call_task: @call_task, ctcs: @ctcs}
 
@@ -25,6 +25,6 @@ h1.text-center.mb-4 Calling Task Details
     = link_to 'Edit', call_task_participants_path(@call_task.id), class: 'ml-3 text-white bg-primary p-1'
     a.ml-2 data-toggle="collapse" href="#calling-list" show / hide
 
-    .collapse.show#calling-list
+    .collapse#calling-list class="#{params[:participant_scope] ? 'show' : '' }"
       = render partial: 'call_tasks/show/participants_overview', locals: {call_task: @call_task}
       = render partial: 'call_tasks/show/participants', locals: {call_task: @call_task, ctps: @ctps}

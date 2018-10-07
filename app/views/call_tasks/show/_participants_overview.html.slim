@@ -2,7 +2,7 @@
   table.table.table-striped.table-bordered.table-sm
     thead
       tr
-        td = dashboard_overview_link_with_auto_disable 'All', call_task.id, :participant_scope, nil
+        td = dashboard_overview_link_with_auto_disable 'All', call_task.id, :participant_scope, ''
         td = dashboard_overview_link_with_auto_disable 'Completed', call_task.id, :participant_scope, 'completed'
         td = dashboard_overview_link_with_auto_disable 'To call back', call_task.id, :participant_scope, 'call_back'
         td = dashboard_overview_link_with_auto_disable 'Pending', call_task.id, :participant_scope, 'pending'
