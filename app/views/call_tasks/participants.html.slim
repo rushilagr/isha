@@ -37,7 +37,7 @@ br
         .text-center.added-section
           .alert.alert-success
             pre.mb-0
-              = "#{params[:added_count]} results added to calling list"
+              = "#{params[:added_count]} meditator added to calling list"
           .btn.btn-info.search-again-button.mx-auto Add more meditators
 
 
@@ -63,7 +63,7 @@ br
             .text-center.mt-5
               .alert.alert-success
                 pre.mb-0
-                  = "#{@participants.count} new results found"
+                  = "#{@participants.count} meditators found"
 
-              = f.submit 'Add Results to Calling List', class: 'btn btn-info mx-3 ', name: 'submit-post'
+              = f.submit 'Add them to Calling List', class: 'btn btn-info mx-3 ', name: 'submit-post'
               = link_to 'Search Again', call_task_participants_path(@call_task), class: 'btn btn-warning mx-3 '

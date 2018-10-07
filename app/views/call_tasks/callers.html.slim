@@ -7,7 +7,7 @@
 
 
 .ct_details_section.mt-5
-  == render partial: 'layouts/dyna_table', locals: {objs: [@call_task], attrs: {'Calling Task Name' => :name, 'Volunteers List Size' => ['participants', 'count'], 'Calling List Size' => ['callers', 'count']}}
+  == render partial: 'layouts/dyna_table', locals: {objs: [@call_task], attrs: {'Calling Task Name' => :name, 'Calling list size' => ['participants', 'count'], 'Volunteers list size' => ['callers', 'count']}}
 
 
 

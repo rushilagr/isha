@@ -2,18 +2,18 @@
   table.table.table-striped.table-bordered.table-sm
     thead
       tr
-        td Created By
         td Name
         td Script Present?
-        td Calling List
-        td Volunteer List
         td Calls per volunteer
-        td
+        td Total calls to make
+        td Num of volunteers
+        td Calls completed
+        td Calls pending
+        td Total Attending
 
     tbody
       - call_tasks.each do |ct|
         tr
-          td = ct.creator.name
           td
             = ct.name
             = link_to 'Edit', edit_call_task_path(ct.id), class: 'ml-2'
@@ -23,20 +23,17 @@
             = link_to 'Edit', edit_call_task_path(ct.id), class: 'ml-2'
 
           td
-            = ct.participants.count
-            - unless defined?(disable_actions)
-              = link_to 'Edit', call_task_participants_path(ct.id), class: 'ml-2'
-
-          td
-            = ct.callers.count
-            - unless defined?(disable_actions)
-              = link_to 'Edit', call_task_callers_path(ct.id), class: 'ml-2'
-
-          td
             = ct.max_calls_per_caller
             - unless defined?(disable_actions)
               = link_to 'Edit', call_task_limit_path(ct.id), class: 'ml-2'
 
+          td = ct.participants.count
+          td = ct.callers.count
+
+          td = ct.ctps.completed.count
+          td = ct.ctps.pending.count
+          td = ct.ctps.coming.count
+
 
           - if !defined?(disable_actions) && defined?(view_details)
-            td = link_to 'View Details', ct
+            td = link_to 'View Details', ct, class: 'btn btn-info btn-sm'

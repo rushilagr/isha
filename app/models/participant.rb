@@ -33,7 +33,7 @@ class Participant < ApplicationRecord
       end
   end
 
-  UNRANSACKABLE_ATTRIBUTES = ["id", "updated_at", "created_at", 'pin_code_id']
+  UNRANSACKABLE_ATTRIBUTES = ["id", "updated_at", "created_at", 'pin_code_id', 'dnd_reason', 'dnd_marker_id']
 
   def self.ransackable_attributes auth_object = nil
     (column_names - UNRANSACKABLE_ATTRIBUTES) + _ransackers.keys
