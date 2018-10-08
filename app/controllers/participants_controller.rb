@@ -4,7 +4,7 @@ class ParticipantsController < ApplicationController
   # GET /participants
   # GET /participants.json
   def index
-    @search = build_ransack_search Participant
+    @search = get_participant_search_obj
 
     @participants = @search.result.not_dnd
     .page(params[:page] || 1) .per(10)

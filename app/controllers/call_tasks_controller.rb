@@ -109,8 +109,8 @@ class CallTasksController < ApplicationController
 
   def participants
     if request.put? || request.get?
-      @search = build_ransack_search Participant
-
+      
+      @search = get_participant_search_obj
       @assigned_participants = @call_task.participants
 
       @participants = begin

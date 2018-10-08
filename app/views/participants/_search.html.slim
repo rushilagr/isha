@@ -1,0 +1,39 @@
+- nav_link_path = -> (args) { send path[:base], *( Array.wrap(path[:args]) << args ) }
+- search_type = params[:search_type]
+- simple_search = search_type == 'simple'
+- advanced_search = search_type == 'advanced'
+
+
+.text-center.mb-4
+  h3 Search for meditators
+
+
+// Navs for simple / advanced search
+ul.nav.nav-tabs.justify-content-center.mb-4
+  li.nav-item.simple-search-nav
+    = link_to "Simple Search", nav_link_path.call(search_type: 'simple'), class: "nav-link #{'active' if simple_search}"
+  li.nav-item.advanced-search-nav
+    = link_to "Advanced Search", nav_link_path.call(search_type: 'advanced'), class: "nav-link #{'active' if advanced_search}"
+
+.card.p-2
+  .card-body
+    - if simple_search
+
+        .d-inline = f.label :i_e_date_gt, 'Find meditators who have done IE on or after', class: 'mr-4'
+        = f.select :i_e_date_gteq, current_user.center.last_x_ie_dates(10), hint: 'Displaying last 10 IE dates'
+
+        = hidden_field_tag(:search_type, search_type)
+        .submit.text-center.mt-3 = f.submit "SEARCH", class: 'btn btn-warning btn-sm', name: 'submit-search'
+
+
+    - if advanced_search
+
+        i.mb-4.d-block Enter one or more search condition to find meditators
+
+        = f.condition_fields do |c|
+          = render "participants/condition_fields", f: c, limited_attributes: limited_search
+
+        = link_to_add_participant_fields "Add Condition ", f, :condition, limited_attributes: limited_search, class: 'mt-3 d-block'
+
+        = hidden_field_tag(:search_type, search_type)
+        .submit.text-center.mt-3 = f.submit "SEARCH", class: 'btn btn-warning btn-sm', name: 'submit-search'

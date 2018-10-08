@@ -19,6 +19,7 @@
 //= require trix
 //= require bootstrap-datepicker
 
+//= require search
 //= require participants
 //= require call_task
 //= require call_task/consume

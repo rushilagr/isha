@@ -43,20 +43,10 @@ br
 
       // Main Search Form
       .search-form class="#{'d-none' if params[:added_count]  }"
-
         = search_form_for @search, url: call_task_participants_path(@call_task, anchor: 'search'), method: :put do |f|
+
           .main-search class="#{'d-none' if params[:q]  }"
-
-            .text-center
-              h3 Search
-              p.mb-4
-                i Enter one or more search condition to find meditators
-
-            = f.condition_fields do |c|
-              = render partial: "participants/condition_fields", locals: {f: c, limited_attributes: true}
-            = link_to_add_participant_fields "Add Condition ", f, :condition, limited_attributes: true
-
-            .submit.text-center.mt-3 = f.submit "SEARCH", class: 'btn btn-warning btn-sm', name: 'submit-search'
+            = render 'participants/search', f: f, path: {base: 'call_task_participants_path', args: @call_task.id}, limited_search: true
 
           // Alert & Buttons after submitting search
           - if params[:q]
