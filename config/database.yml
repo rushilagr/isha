@@ -1,74 +1,55 @@
-# default: &default
-#   adapter: mysql2
-#   encoding: utf8
-#   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-#   username: root
-#   password: infinity
-#   host: localhost
-#
-# development:
-#   <<: *default
-#   database: isha_ops_development
-#
-# test:
-#   <<: *default
-#   database: isha_ops_test
-#
-# production:
-#   <<: *default
-#   database: isha_ops_production
-#   username: appname
-#   password: <%= ENV['ISHA_OPS_DATABASE_PASSWORD'] %>
-
-# Rename the tables correctly
-# Make sure the environment variables are set
-
-# default: &default
-#   adapter: postgresql
-#   prepared_statements: false
-#   encoding: SQL_ASCII
-#   pool: <%= ENV["DB_POOL"] || ENV['MAX_THREADS'] || 5 %>
-#   min_messages: warning
-#   username: <%= ENV['POSTGRES_USERNAME'] %>
-#   password: <%= ENV['POSTGRES_PASSWORD'] %>
-#
-# development:
-#   <<: *default
-#   database: isha_development
-#   host: localhost
-#   reaping_frequency: <%= ENV['DB_REAPING_FREQUENCY'] || 10 %>
-#
-# test:
-#   <<: *default
-#   database: isha_test
-#   host: localhost
-#
-# production:
-#   <<: *default
-#   database: <%= ENV['postgres_database'] %>
-#   host: <%= ENV['postgres_host'] %>
-#   timeout: 5000
 
 default: &default
-  adapter: sqlserver
-  host: localhost
-  username: sa
-  password: Infinity!1
-
-  # username: <%= ENV['POSTGRES_USERNAME'] %>
-  # password: <%= ENV['POSTGRES_PASSWORD'] %>
+  adapter: postgresql
+  prepared_statements: false
+  encoding: unicode
+  template: template0
+  pool: <%= ENV["DB_POOL"] || ENV['MAX_THREADS'] || 5 %>
+  min_messages: warning
+  username: <%= ENV['POSTGRES_USERNAME'] %>
+  password: <%= ENV['POSTGRES_PASSWORD'] %>
 
 development:
   <<: *default
   database: isha_development
+  host: localhost
+  reaping_frequency: <%= ENV['DB_REAPING_FREQUENCY'] || 10 %>
 
 test:
   <<: *default
   database: isha_test
+  host: localhost
 
 production:
   <<: *default
-  ## SET THESE!!!
-  # database: <%= ENV['postgres_database'] %>
-  # host: <%= ENV['postgres_host'] %>
-  # timeout: 5000
+  database: <%= ENV['postgres_database'] %>
+  host: <%= ENV['postgres_host'] %>
+  timeout: 5000
+
+##--------------------------------------------
+## SqlServer
+##--------------------------------------------
+
+# default: &default
+#   adapter: sqlserver
+#   host: localhost
+#   username: sa
+#   password: Infinity!1
+#
+#   # username: <%= ENV['POSTGRES_USERNAME'] %>
+#   # password: <%= ENV['POSTGRES_PASSWORD'] %>
+#
+# development:
+#   <<: *default
+#   database: isha_development
+#
+# test:
+#   <<: *default
+#   database: isha_test
+#
+# production:
+#   <<: *default
+#   ## SET THESE!!!
+#   # database: <%= ENV['postgres_database'] %>
+#   # host: <%= ENV['postgres_host'] %>
+#   # timeout: 5000

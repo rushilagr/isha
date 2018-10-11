@@ -67,10 +67,11 @@ gem "trix"
 gem 'bootstrap-datepicker-rails'
 
 gem 'kaminari'
-# gem 'pg'
+
+gem 'pg'
 # gem 'mysql2'
-gem 'tiny_tds'
-gem 'activerecord-sqlserver-adapter'
+# gem 'tiny_tds'
+# gem 'activerecord-sqlserver-adapter'
 
 gem 'devise'
 

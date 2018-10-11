@@ -12,6 +12,9 @@
 
 ActiveRecord::Schema.define(version: 20181007132358) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "call_task_callers", force: :cascade do |t|
     t.bigint "caller_id"
     t.bigint "call_task_id"
@@ -127,7 +130,7 @@ ActiveRecord::Schema.define(version: 20181007132358) do
     t.bigint "center_id"
     t.index ["center_id"], name: "index_users_on_center_id"
     t.index ["phone"], name: "index_users_on_phone", unique: true
-    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, where: "([reset_password_token] IS NOT NULL)"
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
   add_foreign_key "call_task_callers", "users", column: "caller_id"
