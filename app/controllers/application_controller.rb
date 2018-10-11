@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
-  protect_from_forgery with: :exception
+  protect_from_forgery with: :exception, prepend: true
   before_action :set_raven_context, :set_flash_from_params, :set_persistent_flash_from_session
+  before_action :authenticate_user!
 
   private
 

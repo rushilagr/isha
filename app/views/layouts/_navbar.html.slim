@@ -8,7 +8,7 @@ nav.main-navbar.navbar.navbar-expand-lg.navbar-dark.bg-primary
     .navbar-nav style='width:100%'
 
       - if !current_user
-        = link_to('Sign Up', new_user_registration_path, class: 'nav-item nav-link')
+        / = link_to('Sign Up', new_user_registration_path, class: 'nav-item nav-link')
         = link_to('Sign In', new_user_session_path, class: 'nav-item nav-link')
 
       - else

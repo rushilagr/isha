@@ -6,8 +6,8 @@ Rails.application.routes.draw do
 
   devise_for :users, controllers: {
     sessions: 'users/sessions',
-    registrations: 'users/registrations',
     password: 'users/password'
+    # registrations: 'users/registrations',
   }
   resources :users
   post 'users/create', to: 'users#create', as: 'create_user'
