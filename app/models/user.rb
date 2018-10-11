@@ -1,5 +1,5 @@
 class User < ApplicationRecord
-  devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable, :authentication_keys => [:phone]
+  devise :database_authenticatable, :recoverable, :rememberable, :trackable, :validatable, :authentication_keys => [:phone]
 
   belongs_to :center
   has_many :created_call_tasks, foreign_key: 'creator_id', class_name: 'CallTask'
@@ -50,5 +50,9 @@ class User < ApplicationRecord
 
   def volunteer?
     role == 'volunteer'
+  end
+
+  def send_reset_password_instructions_notification(token)
+    SMS.send_password_reset token, id, name, phone
   end
 end

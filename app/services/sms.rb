@@ -33,6 +33,17 @@ For doubts, please contact #{assigner_name} at #{assigner_phone}"
     send(phone, msg)
   end
 
+  def send_password_reset token, user_id, name, phone
+    link = Rails.application.routes.url_helpers.edit_user_password_url(user_id, reset_password_token: token)
+    msg =
+"Namaskaram, #{name.capitalize}.
+
+Click on the link below to reset your password
+#{link}"
+
+    send(phone, msg)
+  end
+
   def send phone, msg
     if !Rails.env.production?
       Rails.logger.info 'SMS start ---------------------------------------------'
@@ -57,6 +68,6 @@ For doubts, please contact #{assigner_name} at #{assigner_phone}"
   end
 
   def login_url
-    'http://isha-ops.org'
+    Rails.application.routes.url_helpers.new_user_session_url
   end
 end
