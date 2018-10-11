@@ -83,6 +83,6 @@ CallTaskParticipant.create!([
 
   { call_task_id: CallTask.second.id, participant_id: participants.pop.id, call_task_caller_id: CallTaskCaller.second.id, status: CallTaskParticipant.auto_assigned_statuses.second },
   { call_task_id: CallTask.second.id, participant_id: participants.pop.id, call_task_caller_id: CallTaskCaller.second.id, status: CallTaskParticipant.call_back_statuses.sample },
-  { call_task_id: CallTask.second.id, participant_id: participants.pop.id, call_task_caller_id: CallTaskCaller.second.id, status: CallTaskParticipant.completed_statuses.sample },
+  { call_task_id: CallTask.second.id, participant_id: participants.pop.id, call_task_caller_id: CallTaskCaller.second.id, status: CallTaskParticipant.got_reply_statuses.sample },
   { call_task_id: CallTask.second.id, participant_id: participants.pop.id, call_task_caller_id: CallTaskCaller.second.id, status: CallTaskParticipant.never_contact_statuses.sample, caller_comment: 'freak' },
 ])
