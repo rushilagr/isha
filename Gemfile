@@ -96,10 +96,12 @@ gem 'faraday'
 
 gem 'sucker_punch'
 
+gem "figaro"
+
 group :development, :test do
   gem 'rspec-rails', '~> 3.7'
 
-  gem 'dotenv-rails'
+  # gem 'dotenv-rails'
 
   gem "better_errors"
   gem 'pry'
