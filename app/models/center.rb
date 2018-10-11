@@ -14,6 +14,6 @@ class Center < ApplicationRecord
   end
 
   def last_x_ie_dates x
-    participants.select(:i_e_date).map(&:i_e_date).uniq.sort.reverse.first(x)
+    participants.select(:i_e_date).map(&:i_e_date).compact.uniq.sort.reverse.first(x)
   end
 end
