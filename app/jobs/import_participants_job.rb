@@ -1,8 +1,8 @@
-class ImportParticipantsJob
-  include SuckerPunch::Job
+module ImportParticipantsJob
+  def self.call file_path, async, caller_phone
+    required_headers = ['pin_code', 'pid', 'name', 'phone', 'email', 'occupation', 'company', 'gender', 'i_e_program_type', 'i_e_center', 'i_e_teacher', 'dob', 'i_e_date', 'shoonya_date', 'bsp_date', 'silence_date', 'hata_yoga_date', ]
 
-  def perform file_path
-    ImportCSV.for_each_row file_path do |row|
+    on_each_row_do = -> (row) {
       next if Participant.find_by(pid: row.fetch('pid'))
 
       pin_code = PinCode.find_by(string: row.fetch('pin_code')) || PinCode.find_by(string: '')
@@ -31,8 +31,8 @@ class ImportParticipantsJob
         silence_date: date_parser.( row.fetch 'silence_date' ),
         hata_yoga_date: date_parser.( row.fetch 'hata_yoga_date' ),
       })
-    end
+    }
 
-    Rails.logger.info "Participants Imported!"
+    ImportCSV.new(on_each_row_do, required_headers, file_path, async, caller_phone).call
   end
 end

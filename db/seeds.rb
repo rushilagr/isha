@@ -1,6 +1,5 @@
 case Rails.env
 
-
 when 'production'
   User.create!([
     { name: 'Rushil Agrawal', phone: '9886477775', password: 'asdasdasd', center_id: Center.find_by(name: 'South Delhi').id, role: 'admin' },

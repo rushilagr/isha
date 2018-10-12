@@ -17,11 +17,11 @@ namespace :import do
 
   ## Import PinCodes
   define_task_and_with_file_input :pin_codes do |file_path|
-    ImportPinCodesJob.new.perform file_path
+    ImportPinCodesJob.call file_path, false, false
   end
 
   ## Import participants
   define_task_and_with_file_input :participants do |file_path|
-    ImportParticipantsJob.new.perform file_path
+    ImportParticipantsJob.call file_path, false, false
   end
 end
