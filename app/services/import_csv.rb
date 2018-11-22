@@ -40,12 +40,12 @@ class ImportCSV
 
       rescue StandardError => ex
         ex_with_context = Error.new(ex, row.to_h, i + 2)
-        # SMS.send_import_job_error ex_with_context, caller_phone if caller_phone
+        SMS.send_import_job_error ex_with_context, caller_phone if caller_phone
         raise ex_with_context
       end
     end
 
-    #SMS.send_success caller_phone if caller_phone
+    SMS.send_import_job_success caller_phone if caller_phone
     Rails.logger.info 'Import Job Done!'
   end
 end

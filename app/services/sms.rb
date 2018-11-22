@@ -44,6 +44,27 @@ Click on the link below to reset your password
     send(phone, msg)
   end
 
+  def send_import_job_error ex_with_context, caller_phone
+    caller_msg =
+"Import Job failed.
+Call admin.
+Error: #{ex_with_context.inspect}"
+    send caller_phone, caller_msg
+
+    admin_msg =
+"Import Job failed.
+Called by: #{caller_phone}
+Error: #{ex_with_context.inspect}"
+    User.admin.each do |user|
+      send user.phone, admin_msg
+    end
+  end
+
+  def send_import_job_success caller_phone
+    msg = "Import Job success."
+    send caller_phone, msg
+  end
+
   def send phone, msg
     if !Rails.env.production?
       Rails.logger.info 'SMS start ---------------------------------------------'

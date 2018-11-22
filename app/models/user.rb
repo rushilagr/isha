@@ -12,6 +12,10 @@ class User < ApplicationRecord
   def self.roles; ['admin', 'volunteer', 'coordinator']; end
   validates :role, presence: true, inclusion: {in: self.roles}
 
+  scope :admin, -> {where role: 'admin'}
+  scope :volunteer, -> {where role: 'volunteer'}
+  scope :coordinator, -> {where role: 'coordinator'}
+
   ## ------------------------------
   ## Temp password for new users
   ## ------------------------------
