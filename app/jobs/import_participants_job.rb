@@ -6,9 +6,10 @@ module ImportParticipantsJob
       next if Participant.find_by(pid: row.fetch('pid'))
 
       pin_code = PinCode.find_by(string: row.fetch('pin_code')) || PinCode.find_by(string: '')
+      # pin_code = PinCode.find_by(string: row.fetch('pin_code')) || Center.find_by(name: 'South Delhi').pin_codes.first
 
       date_parser = -> (str) do
-        (str == '' || str.nil?) ? nil : Date.strptime(str, "%d-%m-%Y")
+        (str == '' || str.nil?) ? nil : Date.strptime(str.strip, "%d-%m-%Y")
       end
 
       Participant.create!({
