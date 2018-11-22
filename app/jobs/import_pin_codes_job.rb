@@ -1,6 +1,6 @@
 module ImportPinCodesJob
   def self.call file_path, async, caller_phone
-    CreateUnknownPinCodes.call
+    CreateDefaultPinCodes.pre_import_defaults
 
     required_headers = ['pin_code', 'circle', 'circle_coordinator', 'sector', 'sector_coordinator', 'center', 'center_coordinator', 'lat', 'lng', 'state']
     on_each_row_do = -> (row) {
@@ -13,6 +13,8 @@ module ImportPinCodesJob
       PinCode.create! string: row.fetch('pin_code'), lat: row.fetch('lat'), lng: row.fetch('lng'), state: row.fetch('state'), center_id: center.id
     }
 
-    ImportCSV.new(on_each_row_do, required_headers, file_path, async, caller_phone).call
+    post_import_block = -> { CreateDefaultPinCodes.post_import_defaults }
+
+    ImportCSV.new(on_each_row_do, required_headers, file_path, async, caller_phone, post_import_block).call
   end
 end

@@ -5,8 +5,9 @@ module ImportParticipantsJob
     on_each_row_do = -> (row) {
       next if Participant.find_by(pid: row.fetch('pid'))
 
-      pin_code = PinCode.find_by(string: row.fetch('pin_code')) || PinCode.find_by(string: '')
-      # pin_code = PinCode.find_by(string: row.fetch('pin_code')) || Center.find_by(name: 'South Delhi').pin_codes.first
+      # pin_code = PinCode.find_by(string: row.fetch('pin_code')) || PinCode.find_by(string: '')
+      ## Assuming empty pincodes are delhi belonging so assigning to 'delhi unknown'
+      pin_code = PinCode.find_by(string: row.fetch('pin_code')) || PinCode.find_by(string: 'Delhi Unknown')
 
       date_parser = -> (str) do
         (str == '' || str.nil?) ? nil : Date.strptime(str.strip, "%d-%m-%Y")

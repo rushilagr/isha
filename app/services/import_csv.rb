@@ -1,17 +1,21 @@
 require 'csv'
 
 class ImportCSV
-  def initialize block_on_each_row, required_headers, file_path, async, caller_phone
+  def initialize block_on_each_row, required_headers, file_path, async, caller_phone, post_import_block = -> {}
     @block_on_each_row = block_on_each_row
     @required_headers = required_headers
     @file_path = file_path
     @caller_phone = caller_phone
     @async = async
+    @post_import_block = post_import_block
   end
 
   def call
     validate_csv_headers! @file_path, @required_headers
-    LongRunningJob.start @async, -> { perform @file_path, @block_on_each_row, @caller_phone }
+    LongRunningJob.start @async, -> {
+      perform @file_path, @block_on_each_row, @caller_phone
+      @post_import_block.call
+    }
   end
 
   def validate_csv_headers! file_path, required_headers
