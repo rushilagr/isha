@@ -7,12 +7,7 @@ class Participant < ApplicationRecord
   validates :pid, presence: true
   validates :name, presence: true
 
-  validates_date :dob, allow_blank: true
   validates_date :i_e_date, allow_blank: true
-  validates_date :shoonya_date, allow_blank: true
-  validates_date :bsp_date, allow_blank: true
-  validates_date :silence_date, allow_blank: true
-  validates_date :hata_yoga_date, allow_blank: true
 
   validate { errors.add(:dnd_reason, 'Required') if dnd_marker_id && dnd_reason.blank? }
   validate { errors.add(:dnd_marker_id, 'Required') if !dnd_marker_id && dnd_reason.present? }

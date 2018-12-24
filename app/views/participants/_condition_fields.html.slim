@@ -21,7 +21,7 @@
 
     // Set datepicker on given element depending on value
     smart_datepicker = (value, els) => {
-      if( ['i_e_date', 'dob', 'shoonya_date', 'bsp_date', 'hata_yoga_date', 'silence_date'].includes(value) ) {
+      if( ['i_e_date'].includes(value) ) {
         els.datepicker({ format: 'dd/mm/yyyy' });
       }
       else { els.datepicker('remove'); }

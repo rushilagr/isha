@@ -5,7 +5,6 @@ module ImportParticipantsJob
     on_each_row_do = -> (row) {
       next if Participant.find_by(pid: row.fetch('pid'))
 
-      # pin_code = PinCode.find_by(string: row.fetch('pin_code')) || PinCode.find_by(string: '')
       ## Assuming empty pincodes are delhi belonging so assigning to 'delhi unknown'
       pin_code = PinCode.find_by(string: row.fetch('pin_code')) || PinCode.find_by(string: 'Delhi Unknown')
 
@@ -26,12 +25,12 @@ module ImportParticipantsJob
         i_e_center: row.fetch('i_e_center'),
         i_e_teacher: row.fetch('i_e_teacher'),
 
-        dob: date_parser.( row.fetch 'dob' ),
         i_e_date: date_parser.( row.fetch 'i_e_date' ),
-        shoonya_date: date_parser.( row.fetch 'shoonya_date' ),
-        bsp_date: date_parser.( row.fetch 'bsp_date' ),
-        silence_date: date_parser.( row.fetch 'silence_date' ),
-        hata_yoga_date: date_parser.( row.fetch 'hata_yoga_date' ),
+        dob: row.fetch('dob'),
+        shoonya_date: row.fetch('shoonya_date'),
+        bsp_date: row.fetch('bsp_date'),
+        silence_date: row.fetch('silence_date'),
+        hata_yoga_date: row.fetch('hata_yoga_date'),
       })
     }
 

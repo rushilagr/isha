@@ -34,9 +34,9 @@
           td = p.occupation &.capitalize
           td = p.i_e_date &.to_formatted_s(:long_ordinal)
           td = p.shoonya_date
-          td = p.bsp_date &.to_formatted_s(:long_ordinal)
-          td = p.silence_date &.to_formatted_s(:long_ordinal)
-          td = p.hata_yoga_date &.to_formatted_s(:long_ordinal)
+          td = p.bsp_date
+          td = p.silence_date
+          td = p.hata_yoga_date
 
           td = link_to 'Edit Details', edit_participant_path(p) unless defined?(details_only)
           - unless defined?(details_only)
