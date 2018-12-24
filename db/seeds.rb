@@ -40,8 +40,7 @@ else
     { string: '110028', state: 'DELHI', lat: 25.5, lng: 12.5, center_id: 1 },
     { string: '110029', state: 'DELHI', lat: 25.5, lng: 12.5, center_id: 1 },
   ])
-
-  CreateUnknownPinCodes.call
+  CreateDefaultPinCodes.all_defaults
 
   ## Volunteers
   User.create!([
@@ -82,7 +81,6 @@ else
   ])
 
   participants = Participant.all.to_a
-
   CallTaskParticipant.create!([
     { call_task_id: CallTask.first.id, participant_id: participants.pop.id },
     { call_task_id: CallTask.first.id, participant_id: participants.pop.id },

@@ -1,6 +1,11 @@
 module CreateDefaultPinCodes
   module_function
 
+  def all_defaults
+    pre_import_defaults
+    post_import_defaults
+  end
+
   def pre_import_defaults
     create_unknowns
   end
