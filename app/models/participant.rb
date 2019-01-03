@@ -16,6 +16,7 @@ class Participant < ApplicationRecord
   # validate { errors.add(:base, 'Phone & Email must be deleted if dnd') if dnd? && (name.present? || email.present?) }
 
   before_create :strip_all_strings
+  before_save :nullify_invalid_phone_numbers
 
   scope :valid_phone, -> {where.not(phone: nil)}
   scope :not_dnd, -> {where(dnd_reason: nil, dnd_marker_id: nil)}
@@ -26,6 +27,10 @@ class Participant < ApplicationRecord
         atr_value = instance_eval(atr)
         self.send("#{atr}=", atr_value.strip) if atr_value
       end
+  end
+
+  def nullify_invalid_phone_numbers
+    self.phone = nil if self.phone && self.phone.length < 10
   end
 
   UNRANSACKABLE_ATTRIBUTES = ["id", "updated_at", "created_at", 'pin_code_id', 'dnd_reason', 'dnd_marker_id']
