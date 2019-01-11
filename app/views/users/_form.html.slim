@@ -5,7 +5,7 @@
   .form-inputs
     = f.input :phone, required: true, autofocus: true, placeholder: '10 digit mobile number without symbols or country code'
     = f.input :name, required: true
-    = f.input :role, required: true, autofocus: true, collection: User.roles
+    = f.input :role, required: true, autofocus: true, collection: (current_user.admin? ? User.roles : User.roles - ['admin'])
     = f.association(:center, collection: Center.presentable) if current_user.admin?
 
   .form-actions

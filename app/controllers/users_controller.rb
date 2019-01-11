@@ -27,7 +27,7 @@ class UsersController < ApplicationController
     if current_user.admin?
       @users = User.all
     else
-      @users = User.where(center_id: current_user.center_id)
+      @users = User.where(center_id: current_user.center_id).where.not(role: 'admin')
     end
   end
 
