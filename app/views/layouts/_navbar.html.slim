@@ -27,4 +27,5 @@ nav.main-navbar.navbar.navbar-expand-lg.navbar-dark.bg-primary
             = link_to('Current Calling Task', call_task_path(current_user.last_incomplete_calling_task.id), class: 'nav-item nav-link') if current_user.incomplete_calling_task?
 
 
-        = link_to('Logout', destroy_user_session_path, method: :delete, class: 'nav-item nav-link d-inline-block ml-auto')
+        = link_to('Reset Password', edit_user_registration_path, method: :get, class: 'nav-item nav-link d-inline-block ml-auto')
+        = link_to('Logout', destroy_user_session_path, method: :delete, class: 'nav-item nav-link d-inline-block')

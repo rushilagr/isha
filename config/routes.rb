@@ -4,13 +4,19 @@ Rails.application.routes.draw do
   root to: 'home#root'
 
 
-  devise_for :users, controllers: {
+  devise_for :users, :skip => [:registrations], controllers: {
     sessions: 'users/sessions',
-    password: 'users/password'
-    # registrations: 'users/registrations',
+    password: 'users/password',
   }
-  resources :users
+
+  as :user do
+    get '/users/edit' => "users/registrations#edit", as: 'edit_user_registration'
+    put '/users/edit' => "users/registrations#update"
+  end
+
   post 'users/create', to: 'users#create', as: 'create_user'
+
+  resources :users
 
 
   resources :centers
