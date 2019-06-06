@@ -3,6 +3,7 @@
     thead
       tr
         td Name
+        td Creator
         td Script Present?
         td Calls per volunteer
         td Total calls to make
@@ -17,6 +18,9 @@
           td
             = ct.name
             = link_to 'Edit', edit_call_task_path(ct.id), class: 'ml-2'
+
+          td
+            = ct.creator.name
 
           td
             = ct.script.present? ? 'Yes' : 'No'
