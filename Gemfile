@@ -104,7 +104,7 @@ group :development, :test do
 
   # gem 'dotenv-rails'
 
-  gem "better_errors"
+  # gem "better_errors"
   gem 'pry'
   gem 'pry-rails'
   gem 'pry-doc'

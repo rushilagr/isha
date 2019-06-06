@@ -8,9 +8,10 @@ class CallTasksController < ApplicationController
 
 
   def index
+      # .joins(:creator).where(creator: {center_id: current_user.center_id} )
     @call_tasks = CallTask
-      .where(creator_id: current_user.id)
-      .includes(:creator, call_task_callers: [:caller], call_task_participants: [:participant])
+      .includes(call_task_callers: [:caller], call_task_participants: [:participant])
+      .select { |ct| ct.creator.center_id == current_user.center_id }
 
     redirect_to(new_call_task_path) unless @call_tasks.present?
   end
