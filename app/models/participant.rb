@@ -1,6 +1,6 @@
 class Participant < ApplicationRecord
   belongs_to :pin_code
-  has_many :call_task_participants
+  has_many :call_task_participants, dependent: :destroy
   has_many :call_tasks, through: :call_task_participants
   belongs_to :dnd_marker, class_name: 'User', optional: true
 
