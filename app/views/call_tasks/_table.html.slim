@@ -41,3 +41,6 @@
 
           - if !defined?(disable_actions) && defined?(view_details)
             td = link_to 'View Details', ct, class: 'btn btn-info btn-sm'
+
+          - if !defined?(disable_actions) && defined?(destroy)
+            td = link_to 'Destroy', ct, class: 'btn btn-info btn-sm', method: :delete

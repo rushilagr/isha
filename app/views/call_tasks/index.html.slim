@@ -4,4 +4,4 @@
   .col-auto
     = link_to 'Create new calling task', new_call_task_path, class: 'btn btn-success m-0'
 
-== render(partial: 'table', locals: {call_tasks: @call_tasks, view_details: true})
+== render(partial: 'table', locals: {call_tasks: @call_tasks, view_details: true, destroy: true})
