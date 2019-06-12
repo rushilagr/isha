@@ -24,4 +24,4 @@
             td
               a href='#' data-toggle="modal" data-target="#script-modal" View Script
           - unless defined?(disable_actions)
-            td = link_to 'Resume', consume_call_task_path(ctc.call_task.id)
+            td = link_to 'Resume', consume_call_task_path(ctc.id)
