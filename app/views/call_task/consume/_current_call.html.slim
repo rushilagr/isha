@@ -14,7 +14,7 @@
 
         span
           b.mr-2 Phone
-          = ctp.phone
+          = link_to ctp.phone, "tel:#{@ctp.phone}"
 
   .text-center.called-section.mb-4 class="#{@errors ? 'd-none' : ''}"
     .btn.btn-success.btn-block.called-button After calling click here 
