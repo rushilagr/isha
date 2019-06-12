@@ -43,4 +43,4 @@
             td = link_to 'View Details', ct, class: 'btn btn-info btn-sm'
 
           - if !defined?(disable_actions) && defined?(destroy)
-            td = link_to 'Destroy', ct, class: 'btn btn-info btn-sm', method: :delete
+            td = link_to 'Destroy', ct, class: 'btn btn-danger btn-sm', method: :delete, data: {confirm: 'Are you sure ?'}
