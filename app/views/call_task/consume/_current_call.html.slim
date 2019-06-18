@@ -27,7 +27,12 @@
       .col-md-10.card
         .card-body.justify-content-start
 
-          b.mb-4.d-block Give call feedback
+          .mb-4
+            b.d-inline Give call feedback
+            #sms-button
+              .d-inline.float-right
+                = link_to 'Send SMS invite', consume_call_task_send_sms_path(participant_id: ctp.participant_id), class: 'btn btn-warning btn-sm', method: :post, remote: true, onclick: "$('#sms-button').hide();"
+
 
           = simple_form_for ctp, url: consume_call_task_feedback_path(id: ctc.id, ctp_id: ctp.id) + '#current-call', method: :post do |f|
             = f.error_notification

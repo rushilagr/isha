@@ -54,6 +54,7 @@ Rails.application.routes.draw do
   get 'consume_call_tasks', to: 'call_task/consume#index', as: 'consume_call_tasks'
   get 'consume_call_tasks/:id', to: 'call_task/consume#show', as: 'consume_call_task'
   match 'consume_call_tasks/:id/feedback/:ctp_id', to: 'call_task/consume#feedback', as: 'consume_call_task_feedback', via: [:get, :post]
+  post 'consume_call_tasks/:id/send_sms/:participant_id', to: 'call_task/consume#send_sms', as: 'consume_call_task_send_sms'
   post 'consume_call_tasks/:id/next_new_call', to: 'call_task/consume#next_new_call', as: 'consume_call_next_new_call'
   get 'consume_call_tasks/:id/next_pending_call', to: 'call_task/consume#next_pending_call', as: 'consume_call_next_pending_call'
   get 'consume_call_tasks/:id/set_call_type', to: 'call_task/consume#set_call_type', as: 'consume_call_set_call_type'

@@ -1,5 +1,5 @@
 class CallTask::ConsumeController < ApplicationController
-  before_action :set_call_task_caller, except: [:index]
+  before_action :set_call_task_caller, except: [:index, :send_sms]
 
   def index
     @ctcs = CallTaskCaller
@@ -49,6 +49,11 @@ class CallTask::ConsumeController < ApplicationController
     end
   end
 
+  def send_sms
+    phone = Participant.find(params[:participant_id]).phone
+    SMS.send_sms_to_call_task_participant phone
+    head :ok, content_type: "text/html"
+  end
 
   private
 
