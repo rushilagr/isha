@@ -65,11 +65,7 @@ Error: #{ex_with_context.inspect}"
     send caller_phone, msg
   end
 
-  def send_sms_to_call_task_participant caller_phone
-    msg = "Namaskaram, 
-Thanks for showing your interest to attend the Satsang with Sadhguru on Jun 25 at KD Jadhav Indoor Hall, Indira Gandhi Stadium, ND. 
-Please register at bit.ly/june25sathsang
-Pranam"
+  def send_sms_to_call_task_participant caller_phone, msg
     send caller_phone, msg
   end
 

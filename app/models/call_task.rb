@@ -33,7 +33,7 @@ class CallTask < ApplicationRecord
 
   def send_confirmed_sms_to_callers
     callers.each do |caller|
-      SMS.send_call_task_to_caller caller.name, caller.phone, name, creator.name, creator.phone
+      SMS.send_call_task_to_caller caller.name, caller.phone, name, current_user.name, current_user.phone
     end
   end
 
