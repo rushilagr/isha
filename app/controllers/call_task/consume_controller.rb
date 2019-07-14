@@ -50,8 +50,8 @@ class CallTask::ConsumeController < ApplicationController
   end
 
   def send_sms
-    phone = Participant.find(params[:participant_id]).phone
-    SMS.send_sms_to_call_task_participant phone
+    # phone = Participant.find(params[:participant_id]).phone
+    # SMS.send_sms_to_call_task_participant phone
     head :ok, content_type: "text/html"
   end
 

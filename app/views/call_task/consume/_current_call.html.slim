@@ -17,7 +17,7 @@
           = link_to ctp.phone, "tel:#{@ctp.phone}"
 
   .text-center.called-section.mb-4 class="#{@errors ? 'd-none' : ''}"
-    .btn.btn-success.btn-block.called-button After calling click here 
+    .btn.btn-success.btn-block.called-button After calling click here
 
     - if defined? pending_call
       = link_to 'Skip and go to next pending call', consume_call_task_path(id: @ctc.id, previous_ctp_id: @ctp.id), class: 'mt-3 btn btn-warning btn-block skip-call-button'
@@ -29,7 +29,7 @@
 
           .mb-4
             b.d-inline Give call feedback
-            #sms-button
+            / #sms-button
               .d-inline.float-right
                 = link_to 'Send SMS invite', consume_call_task_send_sms_path(participant_id: ctp.participant_id), class: 'btn btn-warning btn-sm', method: :post, remote: true, onclick: "$('#sms-button').hide();"
 
