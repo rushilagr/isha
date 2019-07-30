@@ -13,7 +13,7 @@ ul.nav.nav-tabs.justify-content-center.mb-4
   li.nav-item.simple-search-nav
     = link_to "Simple Search", nav_link_path.call(search_type: 'simple'), class: "nav-link #{'active' if simple_search}"
   li.nav-item.advanced-search-nav
-    = link_to "Advanced Search", nav_link_path.call(search_type: 'advanced'), class: "nav-link #{'active' if advanced_search}"
+    = link_to "Advanced Search", nav_link_path.call(search_type: 'advanced'), class: "nav-link #{'active' if advanced_search}", data: { turbolinks: false }
 
 .card.p-2
   .card-body
