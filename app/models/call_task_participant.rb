@@ -10,7 +10,7 @@ class CallTaskParticipant < ApplicationRecord
 
   ## Statuses
   define_singleton_method(:call_back_statuses) { ['Not reachable / Switched Off / No Answer', 'Asked to call back later',] }
-  define_singleton_method(:got_reply_statuses) { ['Will attend', 'Cannot attend', 'Will try to attend', 'Repeatedly Unreachable / Off / No Answer'] }
+  define_singleton_method(:got_reply_statuses) { ['Will attend', 'Cannot attend', 'Will try to attend', 'Repeatedly Unreachable / Off / No Answer', 'Call Done'] }
   define_singleton_method(:never_contact_statuses) { ['Incorrect number', 'Do not contact again',] }
 
   define_singleton_method(:completed_statuses) { got_reply_statuses + never_contact_statuses }
