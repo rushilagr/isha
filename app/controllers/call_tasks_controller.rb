@@ -212,7 +212,7 @@ class CallTasksController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def call_task_params
-      params.require(:call_task).permit(:name, :creator_id, :max_calls_per_caller, :script)
+      params.require(:call_task).permit(:name, :creator_id, :max_calls_per_caller, :script, :have_sms_script, :sms_script)
     end
 
     def click_here_link_to_ct path
