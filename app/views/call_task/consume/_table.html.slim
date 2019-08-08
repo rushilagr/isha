@@ -10,6 +10,8 @@
         th Total Progress
         - if defined?(view_script)
           th Script
+        - if defined?(view_sms_script)
+          th SMS Script
 
     tbody
       - ctcs.each do |ctc|
@@ -23,5 +25,8 @@
           - if defined?(view_script)
             td
               a href='#' data-toggle="modal" data-target="#script-modal" View Script
+          - if defined?(view_sms_script)
+            td
+              a href='#' data-toggle="modal" data-target="#sms-script-modal" View SMS Script
           - unless defined?(disable_actions)
             td = link_to 'Resume', consume_call_task_path(ctc.id)

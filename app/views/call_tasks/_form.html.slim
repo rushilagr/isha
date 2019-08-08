@@ -4,6 +4,8 @@
   .form-inputs.mb-4
     = f.input :name, label: 'Calling task name'
     = f.input :script, label: 'Calling task call script', as: :trix_editor
+    = f.input :have_sms_script, label: 'Have SMS Script?', as: :boolean, checked: true, input_html: {data: {toggle: "collapse", target: ".call_task_sms_script"}}
+    = f.input :sms_script, label: 'Calling task SMS Script', maxlength: 160
 
 
   .form-actions

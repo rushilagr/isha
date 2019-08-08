@@ -11,6 +11,7 @@ class CallTask < ApplicationRecord
 
   validates :name, presence: true
   validates :script, presence: true
+  validates_presence_of :sms_script, :if => :have_sms_script?
 
   validates :max_calls_per_caller, numericality: {greater_than: 0}, allow_blank: true
   validate do
